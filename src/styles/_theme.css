@@ -1,0 +1,10 @@
+:root {
+  /* foreground / background */
+  --text-color: light-dark(var(--blue-gray-950), var(--blue-gray-100));
+  --background-color: light-dark(var(--blue-gray-100), var(--blue-gray-950));
+
+  /* button */
+  --button-text-color: light-dark(var(--blue-100), var(--blue-gray-950));
+  --button-background-color: var(--blue-500);
+  --button-hover-background-color: var(--blue-600);
+}
