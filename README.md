@@ -1,59 +1,97 @@
-# vanilla-project-team4(SCRIPT DIRECTORS)
+<div align="center">
+  <h1>🎬 SCRIPT DIRECTORS</h1>
+  <p>
+    Script Directors는 영화 정보를 직관적인 UI와 인터랙션으로 제공하는
+    바닐라 자바스크립트 기반 콘텐츠 탐색 웹 서비스입니다.
+  </p>
+</div>
 
-## 🎬 영화 정보 시스템 (Movie Info System)
-영화에 대한 평점 및 상세 정보를 손쉽게 검색하고 발견할 수 있는 서비스
+<br>
 
-## 📅 프로젝트 기간
-2026.02.09 ~ 2026.03.04 (주말 및 공휴일 제외 20일)
+## ⚒️  기술 스택 (Tech Stack)
 
-## 👥 팀원 소개 (Team Members)
+| 분류 | 기술 |
+| ---- | ---- |
+| 프론트엔드 | ![HTML][html-url] ![CSS][css-url] ![JavaScript][js-url] |
+| 협업 도구 | ![GitHub][github-url] ![Discord][discord-url] ![Notion][notion-url] |
+| 디자인 | ![Figma][figma-url] |
 
-이름,담당 개발 범위 (Frontend),부가 역할 (Collaboration & Design)
-박성윤,메인 페이지 개발,"Team Lead: 프로젝트 전체 일정 수립, 리스크 관리 및 주요 의사결정 조율"
-이주연,영화 리스트 페이지 개발,UI System Designer: Figma 기반 와이어프레임 설계 및 공통 UI 컴포넌트·상태 패턴 정의
-이정론,영화 상세 페이지 개발,"Collaboration Manager: GitHub 이슈/PR 관리, 브랜치 전략(Git-flow) 및 코드 리뷰 프로세스 운영"
-정인우,헤더 및 푸터 개발,Documentation Manager: Notion 기반 데일리 스크럼 기록 및 프로젝트 기획 문서·커뮤니케이션 허브 관리
+<br>
 
-저희 팀은 모든 팀원이 **프론트엔드 개발(API 연동 및 기능 구현)**을 핵심 업무로 수행합니다. 
-효율적인 협업을 위해 각 영역별 담당자를 지정하여 모든 팀원과 함께 업무를 수행하고 
-담당자는 해당 업무를 주도적으로 관리하고 최종 검토하는 역할을 수행했습니다.
+## 📡 데이터 소스 (Data Source)
 
-## 🛠 기술 스택 (Tech Stack)
+- **TMDB (The Movie Database) API**
+  - 영화 상세 정보 및 실시간 평점 데이터 활용
+  - 현재 상영작 / 개봉 예정작 / 추천 콘텐츠 데이터 제공
 
-### 개발 언어
-HTML, CSS, JAVASCRIPT
-### 데이터 소스
-TMDB (The Movie Database) API: 영화 상세 정보 및 실시간 평점 데이터 활용
-
-## 🏗 협업 및 개발 환경 (Engineering Culture)
-저희 팀은 단순한 기능 구현을 넘어, 지속 가능한 코드 품질을 위해 다음과 같은 환경을 구축했습니다.
-
-- Vite: 빠른 번들링과 Hot Module Replacement(HMR)를 통한 효율적인 개발 환경 구축
-- Linting & Formatting: ESLint를 설정하여 코드의 문법 오류를 방지하고 팀원 간 코딩 스타일을 통일했습니다.
-- Git Hooks (Husky & Commitlint): Commitlint를 통해 팀 내 약속된 커밋 컨벤션을 강제하여 히스토리 가독성을 높였습니다.
-- Husky를 이용해 커밋 전 Lint 검사를 자동화하여 결함 있는 코드가 레포지토리에 올라가지 않도록 방지했습니다.
+<br>
 
 ## 🚀 주요 기능 (Key Features)
-
-1. 영화 탐색 및 검색
+###  🔎 영화 탐색 및 검색
 - 영화 리스트 & 개봉 예정 정보: TMDB API를 연동하여 현재 상영 중인 영화 및 개봉 예정인 영화 정보를 제공합니다.
 - 장르별 필터링: 다양한 영화 장르별로 리스트를 필터링하여 사용자의 취향에 맞는 영화를 빠르게 찾을 수 있습니다.
 - 통합 검색 기능: 영화 제목 키워드 검색을 통해 원하는 영화의 정보를 즉시 확인할 수 있습니다.
 - 연관 콘텐츠 추천: 사용자가 선택한 영화와 유사한 장르나 테마의 추천 영화 목록을 제시하여 탐색 경험을 확장합니다.
 
-2. 인터랙티브 UI/UX
+### 🎨 인터랙티브 UI/UX
 - 마우스 드래그/클릭 캐러셀: 메인 페이지 상단에 마우스를 이용한 슬라이드 기능을 구현하여 시각적으로 다채로운 영화 큐레이션을 제공합니다.
 
-## 💻 실행 방법 (Getting Started)
-프로젝트를 로컬 환경에서 실행하는 방법입니다.
+<br>
 
-```
-// 1. 저장소 복제 (Clone the repo)
-git clone https://github.com/your-repo-url/movie-info-system.git
-// 2. 의존성 설치 (Install dependencies)
-npm i
-// 3. 개발 서버 실행 (Run the project)
-npm run dev
+## 🏗 개발 환경 및 협업 방식
+
+- **Vite**: 빠른 번들링과 HMR을 통한 효율적인 개발 환경 구축
+- **ESLint**: 코드 문법 오류 방지 및 팀 내 코딩 스타일 통일
+- **Prettier**: 자동 코드 포맷팅을 통해 일관된 코드 스타일 유지
+- **Husky & Commitlint**: 커밋 컨벤션 강제 및 Lint 자동 검사를 통한 코드 품질 유지
+- **GitHub Milestone & Issue 기반 협업 관리**
+> 단순 기능 구현을 넘어,
+> 코드 품질과 협업 기록을 중시하는 개발 문화를 지향합니다.
+
+
+## 👥 팀원 소개 및 역할 분담 (Team Members)
+| <img src="https://github.com/psy0821-k.png" width="120"> | <img src="https://github.com/jyeonleee.png" width="120"> | <img src="https://github.com/holymolyRon.png" width="120"> | <img src="https://github.com/baakainu.png" width="120"> |
+|:--:|:--:|:--:|:--:|
+| 🎬 | 🎥 | 🎞 | 🧩 |
+| [박성윤](https://github.com/psy0821-k) | [이주연](https://github.com/jyeonleee) | [이정론](https://github.com/holymolyRon) | [정인우](https://github.com/baakainu) |
+| Main Page | Movie List Page | Movie Detail Page | Header / Footer / Search |
+| Team Lead | Figma Management | GitHub Management | Notion Documentation |
+
+<br>
+
+## 🗂 폴더 구조
+```bash
+project-name/
+├── public/              # 정적 파일 (빌드 시 루트로 복사됨, favicon 등)
+│   └── favicon.svg
+├── src/                 # 소스 코드 (실제 개발 작업 공간)
+│   ├── assets/          # 이미지, 폰트 등 정적 리소스
+│   │   ├── images/
+│   │   └── icons/
+│   ├── components/      # 재사용 가능한 UI 컴포넌트
+│   ├── styles/          # 스타일 시트
+│   │   ├── components/
+│   │   ├── base.css
+│   │   ├── theme.css
+│   │   └── main.css
+│   ├── utils/           # 공통 유틸 함수
+│   ├── api/             # API 호출 로직
+│   └── main.js          # JS 진입점 (Entry Point)
+├── index.html           # 메인 HTML
+├── package.json         # 의존성 관리
+├── .gitignore           # Git 제외 파일 목록
+└── vite.config.js       # Vite 설정 파일
 ```
 
-API관련은 추후에 업데이트 예정입니다
+<br>
+
+
+
+[html-url]: https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white
+[css-url]: https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white
+[js-url]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+
+[github-url]: https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white
+[discord-url]: https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white
+[notion-url]: https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white
+[figma-url]: https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
