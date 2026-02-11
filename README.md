@@ -83,3 +83,14 @@ project-name/
 ```
 
 <br>
+
+
+
+[html-url]: https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white
+[css-url]: https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white
+[js-url]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+
+[github-url]: https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white
+[discord-url]: https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white
+[notion-url]: https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white
+[figma-url]: https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
