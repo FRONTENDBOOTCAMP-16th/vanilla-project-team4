@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vanilla-project-team4</title>
+    <script defer type="module" src="/src/main.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background: var(--bg-page);
+        font-family: sans-serif;
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .panel {
+        background: var(--bg-section);
+        border: 1px solid var(--border-strong);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .swatch {
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 12px;
+        background: var(--bg-card);
+      }
+
+      .swatch .chip {
+        height: 44px;
+        border-radius: 10px;
+        border: 1px solid var(--border-subtle);
+        margin-bottom: 10px;
+      }
+
+      .label {
+        font-size: var(--fs-micro);
+        color: var(--text-muted);
+        margin: 0 0 6px;
+      }
+
+      .sample {
+        font-size: var(--fs-body);
+        margin: 0;
+      }
+
+      .t-title {
+        color: var(--text-title);
+        font-weight: 700;
+      }
+      .t-strong {
+        color: var(--text-strong);
+        font-weight: 600;
+      }
+      .t-body {
+        color: var(--text-body);
+      }
+      .t-muted {
+        color: var(--text-muted);
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border-subtle);
+        margin: 10px 0;
+      }
+      .divider.strong {
+        background: var(--border-strong);
+      }
+
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-card);
+      }
+
+      .display-text {
+        font-size: var(--fs-display);
+        color: var(--text-title);
+        font-weight: 700;
+        margin: 0 0 8px;
+      }
+
+      .section-title {
+        font-size: var(--fs-title);
+        color: var(--text-title);
+        font-weight: 600;
+        margin: 0 0 8px;
+      }
+
+      .body-text {
+        font-size: var(--fs-body);
+        color: var(--text-body);
+        margin: 0 0 8px;
+      }
+
+      .caption-text {
+        font-size: var(--fs-caption);
+        color: var(--text-muted);
+        margin: 0 0 16px;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .button-primary,
+      .button-secondary {
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: var(--fs-body);
+      }
+
+      .button-primary {
+        background: var(--accent-primary);
+        color: white;
+        border: none;
+      }
+      .button-primary:hover {
+        background: var(--accent-primary-hover);
+      }
+      .button-primary:focus-visible {
+        outline: 2px solid var(--rating-text);
+        outline-offset: 3px;
+      }
+
+      .button-secondary {
+        background: var(--bg-elevated);
+        color: var(--text-strong);
+        border: 1px solid var(--border-subtle);
+      }
+      .button-secondary:hover {
+        border-color: var(--border-strong);
+      }
+      .button-secondary:focus-visible {
+        outline: 2px solid var(--rating-text);
+        outline-offset: 3px;
+      }
+
+      .rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--rating-bg);
+        color: var(--rating-text);
+        border: 1px solid var(--border-subtle);
+        font-size: var(--fs-caption);
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="panel">
+        <p class="label">Token Preview</p>
+
+        <div class="grid">
+          <div class="swatch">
+            <div class="chip" style="background: var(--bg-page)"></div>
+            <p class="label">--bg-page</p>
+            <p class="sample t-body">Page background sample</p>
+          </div>
+
+          <div class="swatch" style="background: var(--bg-section)">
+            <div class="chip" style="background: var(--bg-section)"></div>
+            <p class="label">--bg-section</p>
+            <p class="sample t-body">Section background sample</p>
+          </div>
+
+          <div class="swatch">
+            <div class="chip" style="background: var(--bg-card)"></div>
+            <p class="label">--bg-card</p>
+            <p class="sample t-body">Card background sample</p>
+          </div>
+
+          <div class="swatch">
+            <div class="chip" style="background: var(--bg-elevated)"></div>
+            <p class="label">--bg-elevated</p>
+            <p class="sample t-body">Elevated background sample</p>
+          </div>
+
+          <div class="swatch">
+            <p class="label">Text</p>
+            <p class="sample t-title">Title text</p>
+            <p class="sample t-strong">Strong text</p>
+            <p class="sample t-body">Body text</p>
+            <p class="sample t-muted">Muted text</p>
+          </div>
+
+          <div class="swatch">
+            <p class="label">Borders</p>
+            <div class="divider"></div>
+            <p class="label">--border-subtle</p>
+            <div class="divider strong"></div>
+            <p class="label">--border-strong</p>
+          </div>
+
+          <div class="swatch">
+            <p class="label">Rating Badge</p>
+            <span class="rating">★ 8.7</span>
+          </div>
+
+          <div class="swatch">
+            <p class="label">Buttons</p>
+            <div class="btn-row">
+              <button class="button-primary">Primary</button>
+              <button class="button-secondary">Secondary</button>
+            </div>
+            <p class="label" style="margin-top: 10px">(Tab 키로 focus 확인)</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="card">
+          <h1 class="display-text">Echoes of Tomorrow</h1>
+          <h2 class="section-title">What's On</h2>
+          <p class="body-text">간단한 클릭만으로 영화 정보를 확인할 수 있습니다.</p>
+          <p class="caption-text">2024 · 액션 · 120분</p>
+          <div class="btn-row">
+            <button class="button-primary">Watch Trailer</button>
+            <button class="button-secondary">Add to List</button>
+          </div>
+        </div>
+      </section>
+      <section>
+        <p
+          style="
+            border-radius: 999px;
+            padding: 6px 10px;
+            background: var(--rating-bg);
+            color: var(--rating-text);
+          "
+        >
+          ⚠️ 주의: 위 코드는 CSS 변수 사용 예시를 위한 가이드 구조입니다. 실제 UI 구현 용도로는
+          사용하지 않습니다.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
