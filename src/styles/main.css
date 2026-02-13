@@ -7,3 +7,5 @@
 
 @import './common/_animation.css' layer(utilities);
 @import './common/_a11y.css' layer(utilities);
+
+@import './components/header.css' layer(components);
