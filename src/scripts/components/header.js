@@ -134,8 +134,10 @@ export const initHeader = (props = { isLoggedIn: false }) => {
   rightGroup.append(searchForm, userGroup);
   nav.append(leftGroup, rightGroup);
 
-  // 2. 최종 DOM 삽입
-  headerArea.innerHTML = '';
+  // 2. 최종 DOM 삽입 (DOM 청소)
+  while (headerArea.firstChild) {
+    headerArea.removeChild(headerArea.firstChild);
+  }
   headerArea.appendChild(nav);
 
   // 3. 내부 이벤트 바인딩 (인터랙션)
