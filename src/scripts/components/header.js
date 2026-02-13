@@ -39,7 +39,7 @@ export const initHeader = (props = { isLoggedIn: false }) => {
 
   const menuItems = [
     { name: '홈', href: '/index.html', active: true },
-    { name: '영화 목록', href: '/movie_list.html', active: false },
+    { name: '영화 목록', href: '/movies/index.html', active: false },
   ];
 
   menuItems.forEach((item) => {
