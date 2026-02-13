@@ -1,53 +1,5 @@
-/* [팀 가이드: 헤더 적용 방법]
-1. HTML: <body> 최상단에 <div id="header"></div>를 추가해주세요.
-2. CSS: _base.css, _theme.css, _animation.css 로드 후 header.css를 로드해주세요.
-3. JS: 아래 예시 코드를 js에 넣어서 활성화합니다.
-// 예시 코드
-import { header } from './scripts/components/header.js';
-
-const headerArea = document.querySelector('#header');
-
-if (headerArea) {
-  // 1. 헤더 컴포넌트 삽입
-  headerArea.appendChild(header({ isLoggedIn: false }));
-
-  // 2. 검색 인터랙션 관련 요소 찾기
-  const searchWrapper = document.querySelector('#search-wrapper');
-  const searchBtn = document.querySelector('#search-toggle-btn');
-  const clearBtn = document.querySelector('#search-clear-btn');
-  const input = document.querySelector('#search-input');
-
-  // 3. 스크롤 감지를 위한 헤더 본체 찾기
-  const nav = document.querySelector('.header__nav');
-
-  // [검색 인터랙션] 돋보기 클릭 시 확장
-  if (searchBtn && searchWrapper) {
-    searchBtn.addEventListener('click', () => {
-      searchWrapper.classList.add('is-active');
-      input.focus();
-    });
-  }
-
-  // [검색 인터랙션] X 버튼 클릭 시 축소
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      searchWrapper.classList.remove('is-active');
-      input.value = '';
-    });
-  }
-
-  // [스크롤 인터랙션] 배경색 전환 요소 추가
-  if (nav) {
-    window.addEventListener('scroll', () => {
-      // 스크롤이 20px 이상 내려가면 'is-scrolled' 클래스 추가
-      if (window.scrollY > 20) {
-        nav.classList.add('is-scrolled');
-      } else {
-        nav.classList.remove('is-scrolled');
-      }
-    });
-  }
-}
+/*
+HTML : <header id="headerArea"></header> 바디 최상단에 사용해주세요.
 */
 
 import searchIcon from '../../assets/icons/search_icon.svg';
@@ -55,60 +7,154 @@ import clearIcon from '../../assets/icons/clear_icon.svg';
 import userIcon from '../../assets/icons/user_icon.svg';
 import logoImg from '../../assets/images/logo.svg';
 
-export const header = function (props = { isLoggedIn: false }) {
-  const searchPlaceholder = '제목, 사람, 장르';
-  const serviceName = '스크립트 디렉터스';
+export const initHeader = (props = { isLoggedIn: false }) => {
+  const headerArea = document.querySelector('#headerArea');
+  if (!headerArea) return;
 
-  const headerTemplate = `
-    <nav class="header__nav" aria-label="메인 네비게이션">
-      <div class="header__left">
-        <h1 class="header__logo">
-          <a href="/index.html" aria-label="${serviceName} 홈으로 이동">
-            <img src="${logoImg}" alt="${serviceName}" class="header__logo-img">
-          </a>
-        </h1>
-        <ul class="header__menu">
-          <li><a href="/index.html" class="header__menu-link active" aria-current="page">홈</a></li>
-          <li><a href="/movie_list.html" class="header__menu-link">영화 목록</a></li>
-        </ul>
-      </div>
+  // 1. 최상위 nav 생성
+  const nav = document.createElement('nav');
+  nav.className = 'header-nav';
+  nav.setAttribute('aria-label', '메인 네비게이션');
 
-      <div class="header__right">
-        <form class="header__search-form" id="search-form" role="search">
-          <div class="header__search-wrapper" id="search-wrapper">
-            <button type="button" class="header__search-toggle" id="search-toggle-btn" aria-label="검색창 열기">
-              <img src="${searchIcon}" alt="" class="icon-search" aria-hidden="true">
-            </button>
+  // --- 왼쪽 그룹 (로고, 메뉴) ---
+  const leftGroup = document.createElement('div');
+  leftGroup.className = 'header-left';
 
-            <div class="header__search-input-group">
-              <label for="search-input" class="sr-only">영화 검색</label>
-              <input
-                type="search"
-                id="search-input"
-                class="header__search-input"
-                placeholder="${searchPlaceholder}"
-                autocomplete="off"
-              >
-              <button type="button" class="header__search-clear" id="search-clear-btn" aria-label="검색어 지우기">
-                <img src="${clearIcon}" alt="" class="icon-clear" aria-hidden="true">
-              </button>
-            </div>
-          </div>
-        </form>
+  const logoH1 = document.createElement('h1');
+  logoH1.className = 'header-logo';
+  const logoLink = document.createElement('a');
+  logoLink.href = '/index.html';
+  logoLink.setAttribute('aria-label', '스크립트 디렉터스 홈으로 이동');
 
-        <div class="header__user-group">
-          ${
-            props.isLoggedIn
-              ? `<a href="/mypage" class="header__mypage-link">
-                  <img src="${userIcon}" alt="마이페이지" class="icon-user">
-                </a>`
-              : `<a href="/login" class="header__login-link">로그인</a>`
-          }
-        </div>
-      </div>
-    </nav>
-  `;
+  const logo = document.createElement('img');
+  logo.src = logoImg;
+  logo.alt = '스크립트 디렉터스';
+  logo.className = 'header-logo-img';
 
-  const parser = new DOMParser();
-  return parser.parseFromString(headerTemplate, 'text/html').querySelector('nav');
+  logoLink.appendChild(logo);
+  logoH1.appendChild(logoLink);
+
+  const menuUl = document.createElement('ul');
+  menuUl.className = 'header-menu';
+
+  const menuItems = [
+    { name: '홈', href: '/index.html', active: true },
+    { name: '영화 목록', href: '/movie_list.html', active: false },
+  ];
+
+  menuItems.forEach((item) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.className = `header-menu-link ${item.active ? 'active' : ''}`;
+    if (item.active) a.setAttribute('aria-current', 'page');
+    a.textContent = item.name;
+    li.appendChild(a);
+    menuUl.appendChild(li);
+  });
+
+  leftGroup.append(logoH1, menuUl);
+
+  // --- 오른쪽 그룹 (검색, 유저, 로그인) ---
+  const rightGroup = document.createElement('div');
+  rightGroup.className = 'header-right';
+
+  const searchForm = document.createElement('form');
+  searchForm.className = 'header-search-form';
+  searchForm.id = 'search-form';
+  searchForm.setAttribute('role', 'search');
+
+  const searchWrapper = document.createElement('div');
+  searchWrapper.className = 'header-search-wrapper';
+  searchWrapper.id = 'search-wrapper';
+
+  const toggleBtn = document.createElement('button');
+  toggleBtn.type = 'button';
+  toggleBtn.className = 'header-search-toggle';
+  toggleBtn.id = 'search-toggle-btn';
+  toggleBtn.setAttribute('aria-label', '검색창 열기');
+
+  const sIcon = document.createElement('img');
+  sIcon.src = searchIcon;
+  sIcon.className = 'icon-search';
+  sIcon.setAttribute('aria-hidden', 'true');
+  toggleBtn.appendChild(sIcon);
+
+  const inputGroup = document.createElement('div');
+  inputGroup.className = 'header-search-input-group';
+
+  const label = document.createElement('label');
+  label.htmlFor = 'search-input';
+  label.className = 'sr-only';
+  label.textContent = '영화 검색';
+
+  const input = document.createElement('input');
+  input.type = 'search';
+  input.id = 'search-input';
+  input.className = 'header-search-input';
+  input.placeholder = '제목, 사람, 장르';
+  input.autocomplete = 'off';
+
+  const clearBtn = document.createElement('button');
+  clearBtn.type = 'button';
+  clearBtn.className = 'header-search-clear';
+  clearBtn.id = 'search-clear-btn';
+  clearBtn.setAttribute('aria-label', '검색어 지우기');
+
+  const cIcon = document.createElement('img');
+  cIcon.src = clearIcon;
+  cIcon.className = 'icon-clear';
+  cIcon.setAttribute('aria-hidden', 'true');
+  clearBtn.appendChild(cIcon);
+
+  inputGroup.append(label, input, clearBtn);
+  searchWrapper.append(toggleBtn, inputGroup);
+  searchForm.appendChild(searchWrapper);
+
+  const userGroup = document.createElement('div');
+  userGroup.className = 'header-user-group';
+
+  if (props.isLoggedIn) {
+    const myPageLink = document.createElement('a');
+    myPageLink.href = '/mypage';
+    myPageLink.className = 'header-mypage-link';
+    const uIcon = document.createElement('img');
+    uIcon.src = userIcon;
+    uIcon.className = 'icon-user';
+    myPageLink.appendChild(uIcon);
+    userGroup.appendChild(myPageLink);
+  } else {
+    const loginLink = document.createElement('a');
+    loginLink.href = '/login';
+    loginLink.className = 'header-login-link';
+    loginLink.textContent = '로그인';
+    userGroup.appendChild(loginLink);
+  }
+
+  rightGroup.append(searchForm, userGroup);
+  nav.append(leftGroup, rightGroup);
+
+  // 2. 최종 DOM 삽입
+  headerArea.innerHTML = '';
+  headerArea.appendChild(nav);
+
+  // 3. 내부 이벤트 바인딩 (인터랙션)
+  toggleBtn.addEventListener('click', () => {
+    searchWrapper.classList.add('is-active');
+    input.focus();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchWrapper.classList.remove('is-active');
+    input.value = '';
+  });
+
+  // 4. 스크롤 이벤트 (위에서 아래로 색이 차오르는 필 효과 대응)
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.classList.add('is-scrolled');
+    } else {
+      nav.classList.remove('is-scrolled');
+    }
+  });
 };
