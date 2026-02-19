@@ -57,7 +57,9 @@
           </dl>
 
           <div class="movie-detail-buttons">
-            <button type="button">예고편 보기</button>
+            <button type="button" aria-haspopup="dialog" aria-controls="trailer-modal">
+              예고편 보기
+            </button>
             <button type="button">나중에 보기</button>
           </div>
 
@@ -76,11 +78,9 @@
         <h2 id="cast-title">배우</h2>
         <ul class="cast-list">
           <li class="cast-item">
-            <a href="#" class="cast-link">
-              <!-- img -->
-              <h3 class="cast-name">배우 이름</h3>
-              <p class="cast-role">배역 이름</p>
-            </a>
+            <!-- img -->
+            <h3 class="cast-name">배우 이름</h3>
+            <p class="cast-role">배역 이름</p>
           </li>
         </ul>
       </section>
@@ -93,8 +93,7 @@
             <a href="/" class="recommendations-link">
               <div class="recommendations-rating">
                 <span aria-hidden="true">★</span>
-                <span aria-hidden="true">8.4</span>
-                <span class="sr-only">평점 10점 만점에 8.4점</span>
+                <span> <span class="sr-only">10점 만점에 </span>8.4점 </span>
               </div>
 
               <!-- <img /> -->
@@ -109,6 +108,10 @@
           </li>
         </ul>
       </section>
+
+      <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
+        모달창
+      </div>
     </main>
   </body>
 </html>
