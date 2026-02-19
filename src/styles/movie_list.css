@@ -1,0 +1,240 @@
+body {
+  background-color: var(--bg-page);
+}
+
+.movie-list-wrap {
+  .area {
+    margin: 3.125rem 0 0;
+    .tit {
+      margin: 0 0 0.625rem 0;
+    }
+  }
+}
+
+.page-header-area {
+  .header-tit {
+    font-size: var(--fs-display);
+    color: var(--text-title);
+  }
+  .header-descrip {
+    margin: 10px 0 0;
+    font-size: var(--fs-body);
+    color: var(--text-body);
+  }
+}
+
+.genre-area {
+  margin: 3rem 0 0;
+
+  .genre-tit {
+    position: relative;
+    padding: 0 0 0 1.5625rem;
+    font-size: var(--fs-subtitle);
+    font-weight: 700;
+    color: var(--text-title);
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      display: block;
+      width: 1.25rem;
+      height: 1.25rem;
+      background-image: url(/src/assets/images/sub/Icon-filter.svg);
+    }
+  }
+}
+
+.genre-list {
+  fieldset {
+    margin: 0;
+    border: 0.125rem solid var(--border-subtle);
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  .genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.genres {
+  input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  label {
+    padding: 0 1rem;
+    border-radius: 1.875rem;
+    border: 0.0625rem solid var(--border-subtle);
+    background: transparent;
+    font-size: var(--fs-caption);
+    line-height: 2.5;
+    color: var(--text-body);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  input[type='radio']:checked + label {
+    background: var(--accent-primary);
+    color: #fff;
+    border-color: var(--accent-primary);
+  }
+
+  input[type='radio']:checked + label:hover {
+    background: var(--accent-primary-hover);
+  }
+
+  input[type='radio']:focus-visible + label {
+    outline: 0.125rem solid var(--rating-text);
+    outline-offset: 0.125rem;
+  }
+}
+
+.movie-area {
+  margin: 2.5rem 0 0;
+  .result-tit {
+    font-size: var(--fs-title);
+    color: var(--text-title);
+  }
+}
+
+.movie-list {
+  .no-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 18.75rem;
+    font-size: var(--fs-body);
+    color: var(--text-muted);
+  }
+}
+
+.lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+
+  .movie {
+    position: relative;
+    display: block;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &:focus-visible {
+      outline: 0.125rem solid var(--rating-text);
+      outline-offset: 0.125rem;
+    }
+
+    .movie-poster {
+      aspect-ratio: 2 / 3; /* 포스터 비율 */
+      width: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &:hover .movie-info .info-txt,
+    &:focus-visible .movie-info .info-txt {
+      opacity: 1;
+      max-height: 3.2em;
+      margin: 0.3125rem 0 0;
+    }
+
+    &:hover .movie-info .movie-info-detail .genre,
+    &:focus-visible .movie-info-detail .genre {
+      opacity: 1;
+      max-width: 10rem;
+    }
+  }
+}
+
+.movie-info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.625rem;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 1;
+
+  .info-tit {
+    font-size: var(--fs-body);
+    color: var(--text-title);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .info-txt {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: 200ms ease;
+  }
+
+  .movie-info-detail {
+    margin: 0.35rem 0 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+
+    dd {
+      margin: 0;
+    }
+
+    dd.genre {
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: 200ms ease;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.movie {
+  &:hover .rate,
+  &:focus-visible .rate {
+    color: var(--rating-text);
+  }
+
+  .rate {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 30px;
+    font-size: 0.875rem;
+    color: var(--text-body);
+
+    span[aria-hidden='true'] {
+      line-height: 2;
+    }
+  }
+}

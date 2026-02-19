@@ -1,4 +1,4 @@
-@layer base, theme, components, utilities;
+@layer base, theme, components, utilities, subpages;
 
 @import './common/_normalize.css' layer(base);
 @import './common/_base.css' layer(base);
@@ -7,3 +7,5 @@
 
 @import './common/_animation.css' layer(utilities);
 @import './common/_a11y.css' layer(utilities);
+
+@import './movie_list.css' layer(subpages);
