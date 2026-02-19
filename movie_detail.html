@@ -57,7 +57,9 @@
           </dl>
 
           <div class="movie-detail-buttons">
-            <button type="button">예고편 보기</button>
+            <button type="button" aria-haspopup="dialog" aria-controls="trailer-modal">
+              예고편 보기
+            </button>
             <button type="button">나중에 보기</button>
           </div>
 
@@ -109,6 +111,10 @@
           </li>
         </ul>
       </section>
+
+      <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
+        모달창
+      </div>
     </main>
   </body>
 </html>
