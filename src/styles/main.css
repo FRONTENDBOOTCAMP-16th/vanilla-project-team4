@@ -5,6 +5,8 @@
 
 @import './common/_theme.css' layer(theme);
 
+@import './component/idea.css' layer(component);
+
 @import './common/_animation.css' layer(utilities);
 @import './common/_a11y.css' layer(utilities);
 
