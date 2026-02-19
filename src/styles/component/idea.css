@@ -1,6 +1,6 @@
 body {
-  --poseter-w: 324px;
-  --poseter-h: 456px;
+  --poster-w: 324px;
+  --poster-h: 456px;
   --poster-gap: 2rem;
   --poster-radius: 1rem;
 }
@@ -21,7 +21,7 @@ body {
   gap: var(--poster-gap);
 
   .upcoming-date-button {
-    width: var(--poseter-w);
+    width: var(--poster-w);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -46,8 +46,8 @@ body {
   }
 
   .upcoming-movie-wrap {
-    width: var(--poseter-w);
-    height: var(--poseter-h);
+    width: var(--poster-w);
+    height: var(--poster-h);
     overflow: hidden;
 
     .upcoming-movie-container {
@@ -55,8 +55,8 @@ body {
     }
 
     img {
-      width: var(--poseter-w);
-      height: var(--poseter-h);
+      width: var(--poster-w);
+      height: var(--poster-h);
       display: block;
     }
   }
