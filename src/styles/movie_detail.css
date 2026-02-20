@@ -41,7 +41,6 @@ body {
 
 .movie-detail-title {
   font-size: 60px;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -52,17 +51,37 @@ body {
   display: flex;
   flex-flow: nowrap column;
   gap: 30px;
-  margin: 0;
-
-  dt,
-  dd {
-    margin: 0;
-  }
 
   .movie-detail-meta-area {
     display: flex;
     flex-flow: wrap row;
     gap: 50px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meta-item::before {
+    content: '';
+    display: inline-block;
+
+    width: 16px;
+    height: 16px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .year::before {
+    background-image: url('../assets/calendar-icon.svg');
+  }
+
+  .runtime::before {
+    background-image: url('../assets/runtime-icon.svg');
   }
 
   .movie-detail-meta-area:last-child dd {
@@ -93,7 +112,16 @@ body {
   color: white;
 
   box-shadow: 0 25px 50px -12px rgba(229, 9, 20, 0.3);
+
+  .button-icon {
+    position: relative;
+    top: 1px;
+    width: 18px;
+    height: 18px;
+  }
 }
+
+/* .js-trailer  */
 /*  */
 
 .movie-detail-overview {
@@ -102,9 +130,7 @@ body {
   }
 
   p {
-    margin: 0;
     line-height: 1.6;
-
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
