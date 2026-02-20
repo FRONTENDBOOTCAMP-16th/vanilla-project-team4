@@ -66,8 +66,7 @@ section.recomand-movies-area {
 
   .movie-item-list {
     display: flex;
-    gap: 1.5rem;
-    transition: all 0.3s ease-in;
+    gap: 24px;
 
     .movie-item {
       inline-size: 258px;
