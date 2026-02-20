@@ -18,47 +18,58 @@
     <title>스크립트 디렉터스</title>
   </head>
   <body>
-    <main>
+    <main class="container">
       <article class="movie-detail" aria-labelledby="movie-title">
         <figure class="movie-detail-poster">
-          <!-- img -->
+          <img src="/src/styles/assets/image/test.jpg" alt="테스트 포스터" />
         </figure>
+
         <div class="movie-detail-content">
           <h1 id="movie-title" class="movie-detail-title">Echoes of Tomorrow</h1>
 
           <dl class="movie-detail-meta" aria-label="영화 기본 정보">
             <div class="movie-detail-meta-area">
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">평점</dt>
-                <dd>
-                  <span aria-hidden="true">★</span>
-                  <span aria-hidden="true">8.4</span>
-                  <span class="sr-only">10점 만점에 8.4점</span>
-                </dd>
-              </div>
+              <dt class="sr-only">평점</dt>
+              <dd>
+                <span aria-hidden="true">★</span>
+                <span aria-hidden="true">8.4</span>
+                <span sr-only="10점 만점에 8.4점"></span>
+              </dd>
 
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">개봉연도</dt>
-                <dd>2026</dd>
-              </div>
+              <dt class="sr-only">개봉연도</dt>
+              <dd class="meta-item year">
+                <span class="meta-text">2026</span>
+              </dd>
 
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">상영 시간</dt>
-                <dd>142분</dd>
-              </div>
+              <dt class="sr-only">상영 시간</dt>
+              <dd class="meta-item runtime">
+                <span class="meta-text">142분</span>
+              </dd>
             </div>
 
             <div class="movie-detail-meta-area">
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">장르</dt>
-                <dd>SF</dd>
-              </div>
+              <dt class="sr-only">장르</dt>
+              <dd>SF</dd>
+              <dd>스릴러</dd>
             </div>
           </dl>
 
-          <div class="movie-detail-buttons">
-            <button type="button">예고편 보기</button>
-            <button type="button">나중에 보기</button>
+          <div class="movie-detail-button-area">
+            <!-- 버튼 컴포넌트화 예정 -->
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="trailer-modal"
+              class="button-trailer js-trailer"
+            >
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M4.16666 4.16667C4.16657 3.87342 4.24386 3.58533 4.39073 3.3315C4.53759 3.07767 4.74883 2.86708 5.00312 2.721C5.2574 2.57492 5.54573 2.49853 5.83898 2.49952C6.13224 2.50052 6.42004 2.57887 6.67332 2.72667L16.6708 8.55834C16.9231 8.70474 17.1326 8.91479 17.2783 9.16751C17.424 9.42023 17.5008 9.70675 17.501 9.99845C17.5013 10.2902 17.425 10.5768 17.2797 10.8298C17.1345 11.0828 16.9254 11.2932 16.6733 11.44L6.67332 17.2733C6.42004 17.4211 6.13224 17.4995 5.83898 17.5005C5.54573 17.5015 5.2574 17.4251 5.00312 17.279C4.74883 17.1329 4.53759 16.9223 4.39073 16.6685C4.24386 16.4147 4.16657 16.1266 4.16666 15.8333V4.16667Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span> 예고편 보기 </span>
+            </button>
           </div>
 
           <section class="movie-detail-overview" aria-labelledby="overview-title">
@@ -76,11 +87,9 @@
         <h2 id="cast-title">배우</h2>
         <ul class="cast-list">
           <li class="cast-item">
-            <a href="#" class="cast-link">
-              <!-- img -->
-              <h3 class="cast-name">배우 이름</h3>
-              <p class="cast-role">배역 이름</p>
-            </a>
+            <!-- img -->
+            <h3 class="cast-name">배우 이름</h3>
+            <p class="cast-role">배역 이름</p>
           </li>
         </ul>
       </section>
@@ -93,8 +102,7 @@
             <a href="/" class="recommendations-link">
               <div class="recommendations-rating">
                 <span aria-hidden="true">★</span>
-                <span aria-hidden="true">8.4</span>
-                <span class="sr-only">평점 10점 만점에 8.4점</span>
+                <span> <span class="sr-only">10점 만점에 </span>8.4점 </span>
               </div>
 
               <!-- <img /> -->
@@ -109,6 +117,10 @@
           </li>
         </ul>
       </section>
+
+      <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
+        모달창
+      </div>
     </main>
   </body>
 </html>
