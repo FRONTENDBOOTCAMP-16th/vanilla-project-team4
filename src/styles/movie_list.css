@@ -129,6 +129,7 @@ body {
     display: block;
     border-radius: 1rem;
     overflow: hidden;
+    cursor: pointer;
 
     &:focus-visible {
       outline: 0.125rem solid var(--rating-text);
@@ -183,6 +184,9 @@ body {
     max-height: 0;
     overflow: hidden;
     transition: 200ms ease;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .movie-info-detail {
