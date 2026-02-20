@@ -5,12 +5,12 @@ body {
 .movie-detail {
   /* 나중 삭제 */
   margin-top: 20px;
-  background-color: darkcyan;
+  background-color: darkblue;
   color: #fff;
   /*  */
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   gap: 42px;
   padding: 48px;
@@ -83,18 +83,6 @@ body {
   .runtime::before {
     background-image: url('../assets/runtime-icon.svg');
   }
-
-  .movie-detail-meta-area:last-child dd {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
 }
 
 .movie-detail-button-area {
@@ -102,7 +90,7 @@ body {
   flex-flow: nowrap row;
 }
 
-/* 예고편 컴포넌트화 버튼 */
+/* 예고편 컴포넌트화 예정 버튼 */
 .button-trailer {
   display: inline-flex;
   align-items: center;
