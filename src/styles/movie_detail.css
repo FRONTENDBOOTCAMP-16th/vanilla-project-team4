@@ -1,7 +1,11 @@
+body {
+  background-color: var(--bg-page);
+}
+
 .movie-detail {
   /* 나중 삭제 */
   margin-top: 20px;
-  background-color: black;
+  background-color: darkcyan;
   color: #fff;
   /*  */
 
