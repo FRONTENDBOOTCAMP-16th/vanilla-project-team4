@@ -17,28 +17,267 @@
     <title>스크립트 디렉터스</title>
     <script type="module" src="/src/main.js"></script>
   </head>
-  <body>
-    <main>
+  <body class="wrap">
+    <header></header>
+    <main class="container">
       <h1 class="sr-only">스크립트 디벨로퍼스</h1>
-      <section aria-describedby="intro-banner">
+      <section class="intro-banner-area" aria-labelledby="intro-banner">
         <h2 id="intro-banner">상단배너</h2>
       </section>
-      <section aria-labelledby="recomand-movies">
-        <h2 id="recomand-movies">추천 영화 목록</h2>
+      <!-- 공통 구간 코드 분리 필요 -->
+      <section class="recomand-movies-area" aria-labelledby="recomandMovies">
+        <h2 class="area-title recomand-movies-title" id="recomandMovies">추천 영화 목록</h2>
         <p>큐레이터 추천 작품 입니다</p>
         <div class="card-wrap">
           <div class="button-container">
-            <button type="button" aria-pressed="false" data-action="prev" aria-label="이전">
-              &lAarr;
-            </button>
-            <button type="button" aria-pressed="false" data-action="next" aria-label="다음">
+            <button
+              type="button"
+              aria-pressed="false"
+              data-action="prev"
+              aria-label="이전 영화 목록 보기 버튼"
+              class="prev-btn"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M12.5 15L7.5 10L12.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-pressed="false"
+              data-action="next"
+              aria-label="다음 영화 목록 보기 버튼"
+              class="next-btn"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.5 15L12.5 10L7.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </button>
           </div>
-          <ul class="movie-items-container">
-            <li class="movie-item-card">
+          <div class="card-carousel">
+            <ul class="movie-item-list">
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd class="movie-title">4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd class="movie-open-date">2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd>4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd>2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd>4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd>2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd>4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd>2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd>4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd>2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+              <li class="movie-item">
+                <a href="#">
+                  <img
+                    width="256"
+                    height="384"
+                    src="./src/styles/assets/image/test.jpg"
+                    alt="영화이미지"
+                  />
+                  <dl>
+                    <dt class="sr-only">영화 제목</dt>
+                    <dd class="movie-title">4조의 모험</dd>
+
+                    <dt class="sr-only">영화 개봉일</dt>
+                    <dd class="movie-open-date">2026<span class="sr-only">년</span></dd>
+                  </dl>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <hr />
+      <!-- 여기 까지 -->
+      <section class="quick-move-area" aria-labelledby="quickMove">
+        <h2 class="area-title quick-move-title" id="quickMove">빠른 이동</h2>
+        <div class="quick-move-wrap">
+          <article>
+            <a href="#">
+              <h3>영화 페이지 바로가기</h3>
+            </a>
+          </article>
+          <article>
+            <a href="#">
+              <h3>TV 페이지 바로가기</h3>
+            </a>
+          </article>
+        </div>
+      </section>
+      <hr />
+      <section class="advertisement-banner-area" aria-labelledby="advertisementBanner">
+        <div class="advertisement-wrap">
+          <h2 class="area-title advertisement-banner-title`" id="advertisementBanner">TMDB</h2>
+          <p aria-describedby="advertisementBanner">
+            이 사이트는 TMDB API를 사용한 웹 사이트입니다.<br />
+            나만의 영화 웹 사이트를 만들어보세요
+          </p>
+          <a href="#">바로가기</a>
+        </div>
+      </section>
+      <hr />
+      <!-- <section aria-labelledby="upcomingMovies">
+        <h2 class="area-title upcoming-movies-title" id="upcomingMovies">개봉 예정 영화</h2>
+      </section> -->
+      <section class="recomand-movies-area" aria-labelledby="recomandMovies">
+        <h2 class="area-title recomand-movies-title" id="recomandMovies">추천 영화 목록</h2>
+        <p>큐레이터 추천 작품 입니다</p>
+        <div class="card-wrap">
+          <div class="button-container">
+            <button
+              type="button"
+              aria-pressed="false"
+              data-action="prev"
+              aria-label="이전 영화 목록 보기 버튼"
+              class="prev-btn"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.5 15L7.5 10L12.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-pressed="false"
+              data-action="next"
+              aria-label="다음 영화 목록 보기 버튼"
+              class="next-btn"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.5 15L12.5 10L7.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <ul class="movie-item-list">
+            <li class="movie-item">
               <a href="#">
-                <img width="256" height="384" src="./test.jpg" alt="영화이미지" />
+                <img
+                  width="256"
+                  height="384"
+                  src="./src/styles/assets/image/test.jpg"
+                  alt="영화이미지"
+                />
                 <dl>
                   <dt class="sr-only">영화 제목</dt>
                   <dd>4조의 모험</dd>
@@ -51,28 +290,76 @@
           </ul>
         </div>
       </section>
-      <section aria-labelledby="quick-move">
-        <h2 id="quick-move">빠른 이동</h2>
-        <article>
-          <a href="#">
-            <h3>영화 페이지 바로가기</h3>
-          </a>
-        </article>
-        <article>
-          <a href="#">
-            <h3>TV 페이지 바로가기</h3>
-          </a>
-        </article>
-      </section>
-      <section aria-labelledby="advertisement-banner">
-        <h2 id="advertisement-banner">광고 영역</h2>
-        <div class="advertisement-wrap">
-          <a href="#">바로가기</a>
+      <!-- 인터렉티브 웹 아이디어 -->
+      <section class="upcoming-area">
+        <h2>개봉 예정 영화</h2>
+        <div class="upcoming-wrap">
+          <div class="upcoming-date-button">
+            <button type="button" aria-pressed="true">8월 21일 개봉</button>
+            <button type="button" aria-pressed="false">10월 3일 개봉</button>
+            <button type="button" aria-pressed="false">11월 4일 개봉</button>
+          </div>
+          <div class="upcoming-poster-wrap">
+            <div>COMING SOON</div>
+            <div class="upcoming-movie-wrap">
+              <div class="upcoming-movie-container">
+                <img
+                  class="movie-poster"
+                  height="456"
+                  src="./src/styles/assets/image/test.jpg"
+                  alt=""
+                />
+                <img
+                  class="movie-poster"
+                  height="456"
+                  src="./src/styles/assets/image/test.jpg"
+                  alt=""
+                />
+                <img
+                  class="movie-poster"
+                  height="456"
+                  src="./src/styles/assets/image/test.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div aria-live="polite" class="sr-only">
+              <dl>
+                <dt>개봉 예정 영화 제목</dt>
+                <dd>영화 제목 영역</dd>
+                <dt>개봉 날짜</dt>
+                <dd>2026.10.5</dd>
+              </dl>
+            </div>
+          </div>
         </div>
       </section>
-      <section aria-labelledby="upcoming-movies">
-        <h2 id="upcoming-movies">개봉 예정 영화</h2>
-      </section>
+      <!-- 인터렉티브 웹 아이디어 -->
+
+      <script>
+        const movieContainer = document.querySelector('.upcoming-movie-container');
+        const upcomingButtons = document.querySelectorAll('.upcoming-date-button button');
+        const moviePoster = document.querySelectorAll('.movie-poster').item(0);
+        const movieImgHeight = moviePoster.getBoundingClientRect().height;
+
+        upcomingButtons.forEach((button, index) => {
+          const isButton = button.closest('button');
+
+          if (!isButton) return;
+          button.addEventListener('click', () => {
+            button.setAttribute('aria-pressed', 'true');
+            resetButton(upcomingButtons);
+            const moveValue = -movieImgHeight * index;
+            movieContainer.style.transform = `translateY(${moveValue}px)`;
+          });
+        });
+
+        function resetButton(element) {
+          element.forEach((btn) => btn.setAttribute('aria-pressed', 'false'));
+        }
+      </script>
     </main>
+    <footer></footer>
   </body>
 </html>
