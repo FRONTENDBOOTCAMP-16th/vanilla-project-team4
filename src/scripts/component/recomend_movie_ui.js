@@ -7,6 +7,13 @@ const recomandList = recomandCarousel.querySelector('.movie-item-list');
 const frag = document.createDocumentFragment();
 
 export function draw(data) {
+  if (data === null || data === undefined) {
+    const nullMessae = '현재 찾으시는 영화 정보가 없습니다 고객센터에 문의해주세요';
+    const nullData = createElement('p', null, null, nullMessae);
+    recomandList.append(nullData);
+    return;
+  }
+
   data.forEach(({ movieTitle, movieImage, movieStart }) => {
     const li = createElement('li', ['movie-item']);
     const a = createElement('a', ['movie-item-link'], { href: '#' });
@@ -32,20 +39,3 @@ export function draw(data) {
   });
   recomandList.append(frag);
 }
-
-// function _rederCarousel(type, data) {
-//   if (data === null || data === undefined) {
-//     const nullMessae = '현재 찾으시는 영화 정보가 없습니다 고객센터에 문의해주세요';
-//     const nullData = createElement('p', null, null, nullMessae);
-//     return recomandList.append(nullData);
-//   }
-//   if (type === 'infinity') {
-//     draw(data);
-//     draw(data);
-//     draw(data);
-//   }
-//   draw(data);
-// }
-
-// _rederCarousel('infinity', dummyMovies);
-// _rederCarousel('infinity');

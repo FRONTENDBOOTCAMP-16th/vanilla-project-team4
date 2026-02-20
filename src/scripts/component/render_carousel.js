@@ -5,9 +5,9 @@ function _rederCarousel(type, data) {
     draw(data);
     draw(data);
     draw(data);
+    return;
   }
   draw(data);
 }
 
 _rederCarousel('infinity', dummyMovies);
-// _rederCarousel('infinity');
