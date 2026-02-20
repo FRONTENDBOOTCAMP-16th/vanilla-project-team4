@@ -58,36 +58,6 @@ section.recomand-movies-area {
     justify-content: end;
     margin-bottom: 36px;
   }
-
-  /* .movie-item-list {
-    display: flex;
-    gap: 1rem;
-    inline-size: 2000px;
-    li.movie-item {
-      width: 258px;
-      a {
-        position: absolute;
-        width: 100%;
-        img {
-          width: 258px;
-          height: 384px;
-          border-radius: 1rem;
-        }
-
-        .movie-title {
-          font-size: 18px;
-          font-weight: 600;
-          margin-top: 1rem;
-          margin-left: 2px;
-        }
-
-        .movie-open-date {
-          color: #6a7282;
-          margin-top: 0.5625rem;
-        }
-      }
-    }
-  } */
 }
 
 .card-carousel {
@@ -97,6 +67,7 @@ section.recomand-movies-area {
   .movie-item-list {
     display: flex;
     gap: 1.5rem;
+    transition: all 0.3s ease-in;
 
     .movie-item {
       inline-size: 258px;
