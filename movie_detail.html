@@ -14,53 +14,52 @@
     <!-- <meta property="og:url" content="" /> -->
     <meta property="og:site_name" content="스크립트 디렉터스" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/styles/movie_detail.css" />
     <script type="module" src="/src/main.js"></script>
     <title>스크립트 디렉터스</title>
   </head>
   <body>
-    <main>
+    <main class="container">
       <article class="movie-detail" aria-labelledby="movie-title">
         <figure class="movie-detail-poster">
-          <!-- img -->
+          <img src="/test.jpg" alt="테스트 포스터" />
         </figure>
+
         <div class="movie-detail-content">
           <h1 id="movie-title" class="movie-detail-title">Echoes of Tomorrow</h1>
 
           <dl class="movie-detail-meta" aria-label="영화 기본 정보">
             <div class="movie-detail-meta-area">
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">평점</dt>
-                <dd>
-                  <span aria-hidden="true">★</span>
-                  <span aria-hidden="true">8.4</span>
-                  <span class="sr-only">10점 만점에 8.4점</span>
-                </dd>
-              </div>
+              <dt class="sr-only">평점</dt>
+              <dd>
+                <span aria-hidden="true">★</span>
+                <span aria-hidden="true">8.4</span>
+                <span class="sr-only">10점 만점에 8.4점</span>
+              </dd>
 
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">개봉연도</dt>
-                <dd>2026</dd>
-              </div>
+              <dt class="sr-only">개봉연도</dt>
+              <dd>2026</dd>
 
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">상영 시간</dt>
-                <dd>142분</dd>
-              </div>
+              <dt class="sr-only">상영 시간</dt>
+              <dd>142분</dd>
             </div>
 
             <div class="movie-detail-meta-area">
-              <div class="movie-detail-meta-item">
-                <dt class="sr-only">장르</dt>
-                <dd>SF</dd>
-              </div>
+              <dt class="sr-only">장르</dt>
+              <dd>SF</dd>
             </div>
           </dl>
 
-          <div class="movie-detail-buttons">
-            <button type="button" aria-haspopup="dialog" aria-controls="trailer-modal">
-              예고편 보기
+          <div class="movie-detail-button-area">
+            <!-- 버튼 컴포넌트화 예정 -->
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="trailer-modal"
+              class="button-trailer js-trailer"
+            >
+              <span> 예고편 보기 </span>
             </button>
-            <button type="button">나중에 보기</button>
           </div>
 
           <section class="movie-detail-overview" aria-labelledby="overview-title">
