@@ -218,7 +218,9 @@ body {
 
 .movie {
   &:hover .rate,
-  &:focus-visible .rate {
+  &:hover .rate-high,
+  &:focus-visible .rate,
+  &:focus-visible .rate-high {
     color: var(--rating-text);
   }
 
@@ -237,6 +239,10 @@ body {
     font-size: 0.875rem;
     color: var(--text-body);
     line-height: 2;
+  }
+
+  .rate-high {
+    color: var(--accent-primary);
   }
 }
 

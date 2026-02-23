@@ -102,12 +102,16 @@ function renderMovies(movies) {
     // 평점
     const movieRate = createElement('div', ['rate']);
     const movieRateTitle = createElement('span', ['sr-only'], null, '평점');
+    const rating = movie.vote_average.toFixed(2);
     const movieRating = createElement(
       'span',
       [],
-      { 'aria-label': `10점 만점에 ${Number(movie.vote_average.toFixed(2))}점` },
-      `★ ${Number(movie.vote_average.toFixed(2))}`,
+      { 'aria-label': `10점 만점에 ${rating}점` },
+      `★ ${rating}`,
     );
+    if (rating >= 7.5) {
+      movieRating.classList.add('rate-high');
+    }
 
     console.log(movieLink);
     movieItem.appendChild(movieLink);
