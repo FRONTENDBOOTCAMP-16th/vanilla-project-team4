@@ -21,40 +21,38 @@
     <main class="container">
       <article class="movie-detail" aria-labelledby="movie-title">
         <figure class="movie-detail-poster">
-          <img src="/src/styles/assets/image/test.jpg" alt="테스트 포스터" />
+          <img src="/src/assets/image/test.jpg" alt="테스트 포스터" />
         </figure>
 
         <div class="movie-detail-content">
           <h1 id="movie-title" class="movie-detail-title">Echoes of Tomorrow</h1>
 
           <dl class="movie-detail-meta" aria-label="영화 기본 정보">
-            <div class="movie-detail-meta-area">
-              <dt class="sr-only">평점</dt>
-              <dd>
-                <span aria-hidden="true">★</span>
-                <span aria-hidden="true">8.4</span>
-                <span sr-only="10점 만점에 8.4점"></span>
-              </dd>
+            <dt class="sr-only">평점</dt>
+            <dd class="meta-item rating">
+              <span aria-hidden="true">★</span>
+              <span aria-hidden="true">8.4</span>
+              <span class="sr-only">10점 만점에 8.4점</span>
+            </dd>
 
-              <dt class="sr-only">개봉연도</dt>
-              <dd class="meta-item year">
-                <span class="meta-text">2026</span>
-              </dd>
+            <dt class="sr-only">개봉연도</dt>
+            <dd class="meta-item year">
+              <span class="meta-text">2026</span>
+            </dd>
 
-              <dt class="sr-only">상영 시간</dt>
-              <dd class="meta-item runtime">
-                <span class="meta-text">142분</span>
-              </dd>
-            </div>
+            <dt class="sr-only">상영 시간</dt>
+            <dd class="meta-item runtime">
+              <span class="meta-text">142분</span>
+            </dd>
 
-            <div class="movie-detail-meta-area">
-              <dt class="sr-only">장르</dt>
-              <dd>SF</dd>
-              <dd>스릴러</dd>
-            </div>
+            <dt class="sr-only">장르</dt>
+            <dd class="meta-item genre">
+              <span class="genre-item">SF</span>
+              <span class="genre-item">스릴러</span>
+            </dd>
           </dl>
 
-          <div class="movie-detail-button-area">
+          <div class="movie-detail-button">
             <!-- 버튼 컴포넌트화 예정 -->
             <button
               type="button"

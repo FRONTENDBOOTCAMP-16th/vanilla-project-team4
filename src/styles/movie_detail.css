@@ -15,28 +15,28 @@ body {
   gap: 42px;
   padding: 48px;
   min-height: 710px;
+}
 
-  .movie-detail-poster {
-    width: 400px;
-    aspect-ratio: 2 / 3;
-    border-radius: 18px;
-    overflow: hidden;
-  }
+.movie-detail-poster {
+  width: 400px;
+  aspect-ratio: 2 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+}
 
-  .movie-detail-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+.movie-detail-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-  .movie-detail-content {
-    display: flex;
-    flex-flow: nowrap column;
-    gap: 30px;
-    flex: 1;
-    min-width: 0;
-  }
+.movie-detail-content {
+  display: flex;
+  flex-flow: nowrap column;
+  gap: 30px;
+  flex: 1;
+  min-width: 0;
 }
 
 .movie-detail-title {
@@ -48,44 +48,52 @@ body {
 }
 
 .movie-detail-meta {
-  display: flex;
-  flex-flow: nowrap column;
-  gap: 30px;
-
-  .movie-detail-meta-area {
-    display: flex;
-    flex-flow: wrap row;
-    gap: 50px;
-  }
-
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .meta-item::before {
-    content: '';
-    display: inline-block;
-
-    width: 16px;
-    height: 16px;
-
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .year::before {
-    background-image: url('../assets/calendar-icon.svg');
-  }
-
-  .runtime::before {
-    background-image: url('../assets/runtime-icon.svg');
-  }
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  row-gap: 24px;
+  column-gap: 48px;
+  justify-content: start;
+  align-items: center;
 }
 
-.movie-detail-button-area {
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.genre {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+
+.meta-item::before {
+  content: none;
+}
+
+.year::before,
+.runtime::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.year::before {
+  background-image: url('../assets/calendar-icon.svg');
+}
+
+.runtime::before {
+  background-image: url('../assets/runtime-icon.svg');
+}
+
+.movie-detail-button {
   display: flex;
   flex-flow: nowrap row;
 }
