@@ -20,123 +20,125 @@
   <body>
     <main class="container">
       <article class="movie-detail" aria-labelledby="movie-title">
-        <figure class="movie-detail-poster">
-          <img src="/src/assets/image/detail-test.webp" alt="테스트 포스터" />
-        </figure>
+        <section class="movie-summary" aria-label="영화 요약">
+          <figure class="movie-poster">
+            <img src="/src/assets/image/detail-test.webp" alt="테스트 포스터" />
+          </figure>
 
-        <div class="movie-detail-content">
-          <h1 id="movie-title" class="movie-detail-title">세븐킹덤의 기사</h1>
+          <div class="movie-content">
+            <h1 id="movie-title" class="movie-title-text">세븐킹덤의 기사</h1>
 
-          <dl class="movie-detail-meta" aria-label="영화 기본 정보">
-            <dt class="sr-only">평점</dt>
-            <dd class="meta-item rating">
-              <span aria-hidden="true">★</span>
-              <span aria-hidden="true">8.4</span>
-              <span class="sr-only">10점 만점에 8.4점</span>
-            </dd>
+            <dl class="movie-meta" aria-label="영화 기본 정보">
+              <dt class="sr-only">평점</dt>
+              <dd class="meta-item rating">
+                <span aria-label="10점 만점에 8.4점">
+                  <span>★ 8.4</span>
+                </span>
+              </dd>
 
-            <dt class="sr-only">개봉연도</dt>
-            <dd class="meta-item year">
-              <span class="meta-text">2026</span>
-            </dd>
+              <dt class="sr-only">개봉연도</dt>
+              <dd class="meta-item year">
+                <span class="meta-text">2026</span>
+              </dd>
 
-            <dt class="sr-only">상영 시간</dt>
-            <dd class="meta-item runtime">
-              <span class="meta-text">142분</span>
-            </dd>
+              <dt class="sr-only">상영 시간</dt>
+              <dd class="meta-item runtime">
+                <span class="meta-text">142분</span>
+              </dd>
 
-            <dt class="sr-only">장르</dt>
-            <dd class="meta-item genre">
-              <span class="genre-item">SF</span>
-              <span class="genre-item">스릴러</span>
-            </dd>
-          </dl>
+              <dt class="sr-only">장르</dt>
+              <dd class="meta-item genre">
+                <span class="genre-item">SF</span>
+                <span class="genre-item">스릴러</span>
+              </dd>
+            </dl>
 
-          <div class="movie-detail-button">
-            <!-- 버튼 컴포넌트화 예정 -->
-            <button
-              type="button"
-              aria-haspopup="dialog"
-              aria-controls="trailer-modal"
-              class="button-trailer js-trailer"
-            >
-              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M4.16666 4.16667C4.16657 3.87342 4.24386 3.58533 4.39073 3.3315C4.53759 3.07767 4.74883 2.86708 5.00312 2.721C5.2574 2.57492 5.54573 2.49853 5.83898 2.49952C6.13224 2.50052 6.42004 2.57887 6.67332 2.72667L16.6708 8.55834C16.9231 8.70474 17.1326 8.91479 17.2783 9.16751C17.424 9.42023 17.5008 9.70675 17.501 9.99845C17.5013 10.2902 17.425 10.5768 17.2797 10.8298C17.1345 11.0828 16.9254 11.2932 16.6733 11.44L6.67332 17.2733C6.42004 17.4211 6.13224 17.4995 5.83898 17.5005C5.54573 17.5015 5.2574 17.4251 5.00312 17.279C4.74883 17.1329 4.53759 16.9223 4.39073 16.6685C4.24386 16.4147 4.16657 16.1266 4.16666 15.8333V4.16667Z"
-                  fill="currentColor"
-                />
-              </svg>
-              <span> 예고편 보기 </span>
-            </button>
+            <div class="movie-button">
+              <!-- 버튼 컴포넌트화 예정 -->
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="trailer-modal"
+                class="button-trailer js-trailer"
+              >
+                <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4.16666 4.16667C4.16657 3.87342 4.24386 3.58533 4.39073 3.3315C4.53759 3.07767 4.74883 2.86708 5.00312 2.721C5.2574 2.57492 5.54573 2.49853 5.83898 2.49952C6.13224 2.50052 6.42004 2.57887 6.67332 2.72667L16.6708 8.55834C16.9231 8.70474 17.1326 8.91479 17.2783 9.16751C17.424 9.42023 17.5008 9.70675 17.501 9.99845C17.5013 10.2902 17.425 10.5768 17.2797 10.8298C17.1345 11.0828 16.9254 11.2932 16.6733 11.44L6.67332 17.2733C6.42004 17.4211 6.13224 17.4995 5.83898 17.5005C5.54573 17.5015 5.2574 17.4251 5.00312 17.279C4.74883 17.1329 4.53759 16.9223 4.39073 16.6685C4.24386 16.4147 4.16657 16.1266 4.16666 15.8333V4.16667Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <span> 예고편 보기 </span>
+              </button>
+            </div>
+
+            <div class="movie-overview">
+              <h2 class="overview-title">개요</h2>
+              <p class="overview-text">
+                왕좌의 게임이 일어나기 백여 년 전, 타르가르옌 가문이 철왕좌를 지키고, 최후의
+                드래곤에 대한 기억이 살아 있던 시절. 웨스테로스를 떠돌던 영웅이 있었다. 젊고
+                순진하지만 용맹한 기사 던칸 경과 그의 작은 종자 에그. 이 둘의 앞엔 운명과 강적,
+                그리고 모험이 기다리고 있는데.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <section class="movie-detail-overview" aria-labelledby="overview-title">
-            <h2 id="overview-title">개요</h2>
-            <p>
-              왕좌의 게임이 일어나기 백여 년 전, 타르가르옌 가문이 철왕좌를 지키고, 최후의 드래곤에
-              대한 기억이 살아 있던 시절. 웨스테로스를 떠돌던 영웅이 있었다. 젊고 순진하지만 용맹한
-              기사 던칸 경과 그의 작은 종자 에그. 이 둘의 앞엔 운명과 강적, 그리고 모험이 기다리고
-              있는데.
-            </p>
-          </section>
-        </div>
-      </article>
+        <section class="cast" aria-labelledby="cast-title">
+          <h2 id="cast-title" class="cast-header">배우</h2>
 
-      <section class="cast" aria-labelledby="cast-title">
-        <h2 id="cast-title" class="cast-header">배우</h2>
-
-        <ul class="cast-list">
-          <li class="cast-item">
-            <figure class="cast-avatar">
-              <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-            </figure>
-            <h3 class="cast-name">피터 클래피</h3>
-            <p class="cast-role">'Dunk' the Tall</p>
-          </li>
-
-          <li class="cast-item">
-            <figure class="cast-avatar">
-              <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-            </figure>
-            <h3 class="cast-name">피터 클래피</h3>
-            <p class="cast-role">'Dunk' the Tall</p>
-          </li>
-        </ul>
-      </section>
-
-      <section class="stills" aria-labelledby="stills-title">
-        <h2 id="stills-title" class="stills-title">스틸컷</h2>
-
-        <div class="stills-wrapper">
-          <ul class="stills-list">
-            <li class="stills-item">
-              <figure class="stills-card">
-                <img
-                  src="/src/assets/image/detail-test.webp"
-                  alt="스틸컷 이미지"
-                  class="stills-img"
-                />
+          <ul class="cast-list">
+            <li class="cast-item">
+              <figure class="cast-avatar">
+                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
               </figure>
+              <h3 class="cast-name">피터 클래피</h3>
+              <p class="cast-role">'Dunk' the Tall</p>
             </li>
 
-            <li class="stills-item">
-              <figure class="stills-card">
-                <img
-                  src="/src/assets/image/test-actor.webp"
-                  alt="스틸컷 이미지"
-                  class="stills-img"
-                />
+            <li class="cast-item">
+              <figure class="cast-avatar">
+                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
               </figure>
-            </li>
-
-            <li class="stills-item">
-              <figure class="stills-card">
-                <img src="/src/assets/image/test.jpg" alt="스틸컷 이미지" class="stills-img" />
-              </figure>
+              <h3 class="cast-name">피터 클래피</h3>
+              <p class="cast-role">'Dunk' the Tall</p>
             </li>
           </ul>
-        </div>
-      </section>
+        </section>
+
+        <section class="stills" aria-labelledby="stills-title">
+          <h2 id="stills-title" class="stills-title">스틸컷</h2>
+
+          <div class="stills-wrapper">
+            <ul class="stills-list">
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img
+                    src="/src/assets/image/detail-test.webp"
+                    alt="스틸컷 이미지"
+                    class="stills-img"
+                  />
+                </figure>
+              </li>
+
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img
+                    src="/src/assets/image/test-actor.webp"
+                    alt="스틸컷 이미지"
+                    class="stills-img"
+                  />
+                </figure>
+              </li>
+
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img src="/src/assets/image/test.jpg" alt="스틸컷 이미지" class="stills-img" />
+                </figure>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </article>
 
       <section aria-labelledby="reco-title" class="reco">
         <h2 id="reco-title">추천 목록</h2>
@@ -163,7 +165,7 @@
       </section>
 
       <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
-        모달창
+        <h2 id="trailer-title" class="sr-only">예고편</h2>
       </div>
     </main>
   </body>
