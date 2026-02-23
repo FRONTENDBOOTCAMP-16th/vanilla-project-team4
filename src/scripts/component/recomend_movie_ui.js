@@ -1,22 +1,19 @@
 // 추후에 고려해 볼 사항 이미지가 한번에 나오게 작동
 
 import { createElement } from '../utils/create_element_utils';
-const recomandCarousel = document.querySelector('.card-carousel');
-const recomandList = recomandCarousel.querySelector('.movie-item-list');
 
-const frag = document.createDocumentFragment();
-
-export function draw(data) {
+export function draw(data, el) {
+  const frag = document.createDocumentFragment();
   if (data === null || data === undefined) {
     const nullMessae = '현재 찾으시는 영화 정보가 없습니다 고객센터에 문의해주세요';
     const nullData = createElement('p', null, null, nullMessae);
-    recomandList.append(nullData);
+    el.append(nullData);
     return;
   }
 
-  data.forEach(({ movieTitle, movieImage, movieStart }) => {
+  data.forEach(({ movieId, movieTitle, movieImage, movieStart }) => {
     const li = createElement('li', ['movie-item']);
-    const a = createElement('a', ['movie-item-link'], { href: '#' });
+    const a = createElement('a', ['movie-item-link'], { href: `/movie_detail.html?id=${movieId}` });
     const img = createElement('img', ['movie-item-image'], {
       src: movieImage,
       alt: movieTitle,
@@ -27,7 +24,7 @@ export function draw(data) {
     const ddTitle = createElement('dd', ['movie-title'], null, movieTitle);
     const dtDate = createElement('dt', ['sr-only'], null, '영화 출시일');
     const ddDate = createElement('dd', ['movie-open-date']);
-    const time = createElement('time', [], { datetime: movieStart }, movieStart.slice(0, 4));
+    const time = createElement('time', [], { datetime: movieStart }, movieStart);
 
     ddDate.append(time);
 
@@ -37,5 +34,5 @@ export function draw(data) {
 
     frag.append(li);
   });
-  recomandList.append(frag);
+  el.append(frag);
 }
