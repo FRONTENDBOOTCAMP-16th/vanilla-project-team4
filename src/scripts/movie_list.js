@@ -102,14 +102,17 @@ function renderMovies(movies) {
     // 평점
     const movieRate = createElement('div', ['rate']);
     const movieRateTitle = createElement('span', ['sr-only'], null, '평점');
-    const rating = movie.vote_average.toFixed(2);
+
+    const ratingText = movie.vote_average.toFixed(1);
+
     const movieRating = createElement(
       'span',
       [],
-      { 'aria-label': `10점 만점에 ${rating}점` },
-      `★ ${rating}`,
+      { 'aria-label': `10점 만점에 ${ratingText}점` },
+      `★ ${ratingText}`,
     );
-    if (rating >= 7.5) {
+
+    if (movie.vote_average >= 7.5) {
       movieRating.classList.add('rate-high');
     }
 
