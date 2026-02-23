@@ -236,9 +236,11 @@ body {
     border-radius: 30px;
     font-size: 0.875rem;
     color: var(--text-body);
-
-    span[aria-hidden='true'] {
-      line-height: 2;
-    }
+    line-height: 2;
   }
+}
+
+/* 임시, css충돌 */
+.movie-list-wrap section {
+  background-color: initial !important;
 }
