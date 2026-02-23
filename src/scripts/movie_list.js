@@ -68,7 +68,7 @@ function renderMovies(movies) {
       'time',
       [],
       { datetime: movie.release_date },
-      movie.release_date,
+      movie.release_date.slice(0, 4),
     );
 
     // 장르
