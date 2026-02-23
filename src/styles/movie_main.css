@@ -70,9 +70,9 @@ section.recomand-movies-area {
 
     .movie-item {
       inline-size: 258px;
+      aspect-ratio: 3/2;
 
       img {
-        block-size: 456px;
         border-radius: 1rem;
       }
 
@@ -130,4 +130,37 @@ section.recomand-movies-area {
 
 .area-title {
   font-size: 3rem;
+}
+
+.upcoming-area {
+  .card-carousel {
+    display: flex;
+    overflow: hidden;
+
+    .movie-item-list {
+      display: flex;
+      gap: 24px;
+
+      .movie-item {
+        inline-size: 129px;
+        aspect-ratio: 3/2;
+
+        img {
+          border-radius: 1rem;
+        }
+
+        .movie-title {
+          font-size: 18px;
+          font-weight: 600;
+          margin-top: 1rem;
+          margin-left: 2px;
+        }
+
+        .movie-open-date {
+          color: #6a7282;
+          margin-top: 0.5625rem;
+        }
+      }
+    }
+  }
 }
