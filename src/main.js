@@ -1,2 +1,2 @@
 import './styles/main.css';
-import './scripts/movie_list.js';
+// import './scripts/movie_list.js';
