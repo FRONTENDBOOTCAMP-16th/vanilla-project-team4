@@ -1,14 +1,12 @@
-body {
-  background-color: var(--bg-page);
-}
-
+/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
 .movie-detail {
   margin-top: 20px;
 }
+/*  */
 
 .movie-summary {
   /* 나중 삭제 */
-  border: 1px solid #e50914;
+  /* border: 1px solid #e50914; */
   color: #fff;
   /*  */
 
@@ -28,7 +26,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/7mkUu1F2hVUNgz24xO8HPx0D6mK.jpg');
+  background-image: var(--backdrop-url);
   background-size: cover;
   background-position: calc(50% + 260px) 50%;
   background-repeat: no-repeat;
@@ -190,6 +188,7 @@ body {
   flex-direction: column;
   gap: 20px;
   padding: 48px;
+  color: #fff;
 }
 
 .cast-header {
