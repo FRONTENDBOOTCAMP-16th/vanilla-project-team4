@@ -1,13 +1,133 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko-KR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vanilla-project-team4</title>
-  </head>
-  <body>
-    <div id="app"></div>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="스크립트 디렉터스" />
+    <meta
+      property="og:description"
+      content="영화 정보를 직관적인 UI와 인터랙션으로 제공하는 바닐라 자바스크립트 기반 콘텐츠 탐색 웹 서비스"
+    />
+    <meta property="og:image" content="src/images/scriptDirector.jpg" />
+    <!-- <meta property="og:image" content="https://너의도메인주소.com/scriptDirector.jpg" /> -->
+    <!-- <meta property="og:url" content="" /> -->
+    <meta property="og:site_name" content="스크립트 디렉터스" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>스크립트 디렉터스</title>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/scripts/api/set_trend_movies.js"></script>
+  </head>
+  <body class="wrap main-wrap">
+    <header></header>
+    <main class="container">
+      <h1 class="sr-only">스크립트 디벨로퍼스</h1>
+      <section class="intro-banner-area" aria-labelledby="intro-banner">
+        <h2 id="intro-banner"><span>SCRIPT</span> <span>DEVELOPERS</span></h2>
+        <div class="main-banner-background">
+          <video src="./src/assets/video/mainbanner.mp4" muted autoplay loop></video>
+        </div>
+      </section>
+      <section class="trending-movies-area" aria-labelledby="trending-title">
+        <h2 id="trending-title" class="area-title">트렌딩 TOP 10</h2>
+
+        <div class="carousel-controls" role="group" aria-label="캐러셀 이동">
+          <button type="button" class="carousel-btn prev" aria-label="이전 목록">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.5 15L7.5 10L12.5 5"
+                stroke="white"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button type="button" class="carousel-btn next" aria-label="다음 목록">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 15L12.5 10L7.5 5"
+                stroke="white"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div
+          class="card-carousel"
+          role="region"
+          aria-roledescription="carousel"
+          aria-labelledby="trending-title"
+        >
+          <ul class="movie-item-list"></ul>
+        </div>
+      </section>
+
+      <section class="quick-move-area" aria-labelledby="quickMove">
+        <h2 class="area-title quick-move-title" id="quickMove">빠른 이동</h2>
+        <div class="quick-move-wrap">
+          <article>
+            <a href="#">
+              <h3>영화 페이지 바로가기</h3>
+            </a>
+          </article>
+          <article>
+            <a href="#">
+              <h3>TV 페이지 바로가기</h3>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="advertisement-banner-area" aria-labelledby="advertisementBanner">
+        <div class="advertisement-wrap">
+          <h2 class="area-title advertisement-banner-title`" id="advertisementBanner">TMDB</h2>
+          <p aria-describedby="advertisementBanner">
+            이 사이트는 TMDB API를 사용한 웹 사이트입니다.<br />
+            나만의 영화 웹 사이트를 만들어보세요
+          </p>
+          <a href="#">바로가기</a>
+        </div>
+      </section>
+
+      <!-- <section class="upcoming-area" aria-labelledby="upcomingMovies">
+        <h2 class="area-title upcoming-movies-title" id="upcomingMovies">개봉 예정 영화</h2>
+        <div class="card-carousel">
+          <ul class="movie-item-list"></ul>
+        </div>
+      </section> -->
+
+      <!-- 인터렉티브 웹 아이디어 -->
+      <section class="upcoming-area">
+        <h2>개봉 예정 영화</h2>
+        <div class="upcoming-wrap">
+          <div class="upcoming-date-button"></div>
+          <div class="upcoming-poster-wrap">
+            <div>COMING SOON</div>
+            <div class="upcoming-movie-wrap">
+              <div class="upcoming-movie-container"></div>
+            </div>
+
+            <div aria-live="polite" class="sr-only intro-upcoming"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer></footer>
   </body>
 </html>

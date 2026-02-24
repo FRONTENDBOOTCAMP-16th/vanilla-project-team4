@@ -11,7 +11,7 @@
   caption& {
     position: static;
   }
-  
+
   &.focusable:focus {
     overflow: initial;
     position: static;

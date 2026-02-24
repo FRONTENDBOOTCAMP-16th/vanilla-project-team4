@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="스크립트 디렉터스" />
+    <meta
+      property="og:description"
+      content="영화 정보를 직관적인 UI와 인터랙션으로 제공하는 바닐라 자바스크립트 기반 콘텐츠 탐색 웹 서비스"
+    />
+    <meta property="og:image" content="src/images/scriptDirector.jpg" />
+    <!-- <meta property="og:image" content="https://너의도메인주소.com/scriptDirector.jpg" /> -->
+    <!-- <meta property="og:url" content="" /> -->
+    <meta property="og:site_name" content="스크립트 디렉터스" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/scripts/movie_detail.js"></script>
+    <title>스크립트 디렉터스</title>
+  </head>
+  <body>
+    <main class="container">
+      <article class="movie-detail" aria-labelledby="movie-title">
+        <section class="movie-summary" aria-label="영화 요약">
+          <figure class="movie-poster">
+            <img src="/src/assets/fallback-poster.webp" alt="" />
+          </figure>
+
+          <div class="movie-content">
+            <h1 id="movie-title" class="movie-title-text"></h1>
+
+            <dl class="movie-meta" aria-label="영화 기본 정보">
+              <dt class="sr-only">평점</dt>
+              <dd class="meta-item rating">
+                <span class="rating-a11y" aria-label="">
+                  <span class="rating-text"></span>
+                </span>
+              </dd>
+
+              <dt class="sr-only">개봉연도</dt>
+              <dd class="meta-item year">
+                <span class="meta-text"></span>
+              </dd>
+
+              <dt class="sr-only">상영 시간</dt>
+              <dd class="meta-item runtime">
+                <span class="meta-text"></span>
+              </dd>
+
+              <dt class="sr-only">장르</dt>
+              <dd class="meta-item genre"></dd>
+            </dl>
+
+            <div class="movie-button">
+              <!-- 버튼 컴포넌트화 예정 -->
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="trailer-modal"
+                class="button-trailer js-trailer"
+              >
+                <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4.16666 4.16667C4.16657 3.87342 4.24386 3.58533 4.39073 3.3315C4.53759 3.07767 4.74883 2.86708 5.00312 2.721C5.2574 2.57492 5.54573 2.49853 5.83898 2.49952C6.13224 2.50052 6.42004 2.57887 6.67332 2.72667L16.6708 8.55834C16.9231 8.70474 17.1326 8.91479 17.2783 9.16751C17.424 9.42023 17.5008 9.70675 17.501 9.99845C17.5013 10.2902 17.425 10.5768 17.2797 10.8298C17.1345 11.0828 16.9254 11.2932 16.6733 11.44L6.67332 17.2733C6.42004 17.4211 6.13224 17.4995 5.83898 17.5005C5.54573 17.5015 5.2574 17.4251 5.00312 17.279C4.74883 17.1329 4.53759 16.9223 4.39073 16.6685C4.24386 16.4147 4.16657 16.1266 4.16666 15.8333V4.16667Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <span> 예고편 보기 </span>
+              </button>
+            </div>
+
+            <div class="movie-overview">
+              <h2 class="overview-title">개요</h2>
+              <p class="overview-text"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="cast" aria-labelledby="cast-title">
+          <h2 id="cast-title" class="cast-header">배우</h2>
+
+          <ul class="cast-list" aria-live="polite"></ul>
+        </section>
+
+        <section class="stills" aria-labelledby="stills-title">
+          <h2 id="stills-title" class="stills-title">스틸컷</h2>
+
+          <div class="stills-wrapper">
+            <ul class="stills-list">
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img
+                    src="/src/assets/image/detail-test.webp"
+                    alt="스틸컷 이미지"
+                    class="stills-img"
+                  />
+                </figure>
+              </li>
+
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img
+                    src="/src/assets/image/test-actor.webp"
+                    alt="스틸컷 이미지"
+                    class="stills-img"
+                  />
+                </figure>
+              </li>
+
+              <li class="stills-item">
+                <figure class="stills-card">
+                  <img src="/src/assets/image/test.jpg" alt="스틸컷 이미지" class="stills-img" />
+                </figure>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </article>
+
+      <section aria-labelledby="reco-title" class="reco">
+        <h2 id="reco-title">추천 목록</h2>
+
+        <ul class="recommendations-list">
+          <li class="recommendations-item">
+            <a href="/" class="recommendations-link">
+              <div class="recommendations-rating">
+                <span aria-hidden="true">★</span>
+                <span> <span class="sr-only">10점 만점에 </span>8.4점 </span>
+              </div>
+
+              <!-- <img /> -->
+
+              <div class="recommendations-info">
+                <h3 class="recommendations-title">Neon Requiem</h3>
+                <p class="recommendations-year">
+                  <time datetime="2024">2024</time>
+                </p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <div
+        id="trailer-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trailer-title"
+      >
+        <h2 id="trailer-title" class="sr-only">예고편</h2>
+      </div>
+    </main>
+  </body>
+</html>

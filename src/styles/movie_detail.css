@@ -1,0 +1,310 @@
+/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
+.movie-detail {
+  margin-top: 20px;
+}
+/*  */
+
+.movie-summary {
+  /* 나중 삭제 */
+  /* border: 1px solid #e50914; */
+  color: #fff;
+  /*  */
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 42px;
+  padding: 48px;
+  min-height: 710px;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.movie-summary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--backdrop-url);
+  background-size: cover;
+  background-position: calc(50% + 260px) 50%;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+  z-index: -2;
+}
+
+.movie-summary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.65) 45%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  z-index: -1;
+}
+
+.movie-poster {
+  width: 400px;
+  aspect-ratio: 2 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-content {
+  display: flex;
+  flex-flow: nowrap column;
+  gap: 30px;
+  flex: 1;
+  min-width: 0;
+}
+
+.movie-title-text {
+  font-size: 60px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.movie-meta {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  row-gap: 24px;
+  column-gap: 48px;
+  justify-content: start;
+  align-items: center;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.genre {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.genre-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.genre-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.meta-item::before {
+  content: none;
+}
+
+.year::before,
+.runtime::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.year::before {
+  background-image: url('../assets/calendar-icon.svg');
+}
+
+.runtime::before {
+  background-image: url('../assets/runtime-icon.svg');
+}
+
+.movie-button {
+  display: flex;
+  flex-flow: nowrap row;
+}
+
+/* 예고편 컴포넌트화 예정 버튼 */
+.button-trailer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: #e50914;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 25px 50px -12px rgba(229, 9, 20, 0.3);
+}
+
+/* .js-trailer 추가 예정 */
+
+.button-icon {
+  position: relative;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+}
+
+.overview-title {
+  font-size: 32px;
+}
+
+.overview-text {
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+/* 임시 방편: 공통 section 배경 제거 */
+.movie-detail section {
+  background-color: transparent !important;
+}
+/*  */
+
+.cast {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 48px;
+  color: #fff;
+}
+
+.cast-header {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.cast-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 150px;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  overflow-x: auto;
+}
+
+.cast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.cast-avatar {
+  margin: 0;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.cast-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.cast-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.cast-role {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.stills {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 48px;
+}
+
+.stills-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.stills-wrapper {
+  position: relative;
+  /* 나중 버튼 추가 */
+}
+
+.stills-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 360px;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  overflow-x: auto;
+}
+
+.stills-card {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.stills-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reco {
+  /* 임시 */
+  border: 1px solid #e50914;
+  padding: 48px;
+  /*  */
+}

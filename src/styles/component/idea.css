@@ -1,0 +1,67 @@
+body {
+  --poster-w: 324px;
+  --poster-h: 456px;
+  --poster-gap: 2rem;
+  --poster-radius: 1rem;
+}
+
+.upcoming-area {
+  padding: 3rem;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.upcoming-wrap {
+  display: flex;
+  justify-content: center;
+  gap: var(--poster-gap);
+
+  .upcoming-date-button {
+    width: var(--poster-w);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    button {
+      display: block;
+      background-color: red;
+      border-radius: var(--poster-radius);
+
+      &[aria-pressed='true'] {
+        background-color: rgb(119, 2, 2);
+      }
+    }
+  }
+
+  .upcoming-poster-wrap {
+    border: 10px solid black;
+    text-align: center;
+
+    > div:first-child {
+      font-size: 1.3rem;
+      font-weight: 600;
+      background-color: black;
+      text-shadow: 0 0 2rem white;
+    }
+  }
+
+  .upcoming-movie-wrap {
+    width: var(--poster-w);
+    height: var(--poster-h);
+    overflow: hidden;
+
+    .upcoming-movie-container {
+      transition: transform 0.4s ease-in;
+    }
+
+    img {
+      width: var(--poster-w);
+      height: var(--poster-h);
+      display: block;
+    }
+  }
+}
