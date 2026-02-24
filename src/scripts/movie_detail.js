@@ -66,7 +66,6 @@ fetch(detailUrl, options)
   })
   .then((data) => {
     if (!data) return;
-    console.log(data);
     renderMovieDetail(data);
   })
   .catch((err) => {
@@ -103,7 +102,6 @@ function renderMovieDetail(data) {
 
   const overviewText = movieSummary.querySelector('.overview-text');
 
-  // 뒷배경 img (data.backdrop_path)
   const backdropUrl =
     typeof data.backdrop_path === 'string' && data.backdrop_path.startsWith('/')
       ? `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`
@@ -111,7 +109,6 @@ function renderMovieDetail(data) {
 
   movieSummary.style.setProperty('--backdrop-url', backdropUrl);
 
-  // 포스터 img (data.poster_path)
   const imgUrl =
     typeof data.poster_path === 'string' && data.poster_path.startsWith('/')
       ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
@@ -120,10 +117,8 @@ function renderMovieDetail(data) {
   posterImg.src = imgUrl || '/src/assets/fallback-poster.webp';
   posterImg.alt = data.title ? `${data.title} 포스터` : '영화 포스터';
 
-  // 제목 (data.title)
   titleEl.textContent = data.title ?? '';
 
-  // 평점 (data.vote_average)
   const vote = typeof data.vote_average === 'number' ? data.vote_average : null;
   if (vote !== null) {
     const score = vote.toFixed(1);
@@ -134,19 +129,15 @@ function renderMovieDetail(data) {
     ratingA11y.setAttribute('aria-label', '평점 정보 없음');
   }
 
-  // 개봉연도 (data.release_date)
   const year = typeof data.release_date === 'string' ? data.release_date.slice(0, 4) : '';
   yearText.textContent = year || '정보 없음';
 
-  // 런타임 (data.runtime)
   runtimeText.textContent = Number.isFinite(data.runtime) ? `${data.runtime}분` : '정보 없음';
 
-  // 개요 (data.overview)
   overviewText.textContent =
     data.overview && data.overview.trim() !== '' ? data.overview : '개요 정보가 없습니다.';
 
-  // 장르 (data.genres)
-  genreDd.textContent = ''; // innerHTML 금지
+  genreDd.textContent = '';
 
   if (Array.isArray(data.genres) && data.genres.length) {
     data.genres.forEach((g) => {
@@ -189,7 +180,6 @@ function createCastItem(actor) {
   img.src = profilePath;
   img.alt = actor && actor.name ? `${actor.name} 프로필` : '배우 프로필';
 
-  // 이미지 깨짐/네트워크/404 대비
   img.onerror = () => {
     img.onerror = null;
     img.src = fallbackProfile;
