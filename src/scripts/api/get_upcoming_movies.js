@@ -1,5 +1,5 @@
 import options from './connect.js';
-import { rederUpcoming } from '../component/render_upcoming.js';
+import { rederUpcoming } from '../components/render_upcoming.js';
 import { upcomingBtn } from '../utils/vertical_carousel_button.js';
 
 const upcomingContainer = document.querySelector('.upcoming-area');
@@ -15,7 +15,6 @@ const FALLBACK_IMG = '/images/fallback.png';
 
 let upcomingMovies = [];
 let page = 1;
-let totalPages = Infinity;
 
 function fetchNextPage() {
   const upcomingUrl = `https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=${page}`;
@@ -23,8 +22,6 @@ function fetchNextPage() {
   return fetch(upcomingUrl, options)
     .then((res) => res.json())
     .then((json) => {
-      totalPages = json.total_pages ?? 1;
-
       const pageMovies = (json.results ?? [])
         .filter((item) => (item.release_date ?? '') >= today)
         .map((item) => {
@@ -42,7 +39,6 @@ function fetchNextPage() {
       upcomingMovies = [...upcomingMovies, ...pageMovies];
 
       if (upcomingMovies.length >= maxMovies) return;
-      if (page >= totalPages) return;
       page += 1;
       return fetchNextPage();
     });
