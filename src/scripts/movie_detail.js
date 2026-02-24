@@ -1,4 +1,5 @@
 import options from './api/connect.js';
+import { createElement } from './utils/create_element_utils.js';
 
 // =====================
 // constants
@@ -64,8 +65,80 @@ fetch(detailUrl, options)
   })
   .then((data) => {
     if (!data) return;
-    console.log('영화 데이터:', data);
+    console.log(data);
+    renderMovieDetail(data);
   })
-  .catch(() => {
+  .catch((err) => {
+    console.error(err);
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
+
+function renderMovieDetail(data) {
+  const movieSummary = document.querySelector('.movie-summary');
+
+  const posterImg = movieSummary.querySelector('.movie-poster img');
+  const titleEl = movieSummary.querySelector('#movie-title');
+
+  const ratingA11y = movieSummary.querySelector('.meta-item.rating > span');
+  const ratingText = movieSummary.querySelector('.meta-item.rating > span > span');
+
+  const yearText = movieSummary.querySelector('.meta-item.year .meta-text');
+  const runtimeText = movieSummary.querySelector('.meta-item.runtime .meta-text');
+  const genreDd = movieSummary.querySelector('.meta-item.genre');
+
+  const overviewText = movieSummary.querySelector('.overview-text');
+
+  // 뒷배경 img (data.backdrop_path)
+  const backdropUrl =
+    typeof data.backdrop_path === 'string' && data.backdrop_path.startsWith('/')
+      ? `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`
+      : "url('/src/assets/fallback-backdrop.webp')";
+
+  movieSummary.style.setProperty('--backdrop-url', backdropUrl);
+
+  // 포스터 img (data.poster_path)
+  const imgUrl =
+    typeof data.poster_path === 'string' && data.poster_path.startsWith('/')
+      ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+      : '';
+
+  posterImg.src = imgUrl || '/src/assets/fallback-poster.webp';
+  posterImg.alt = data.title ? `${data.title} 포스터` : '영화 포스터';
+
+  // 제목 (data.title)
+  titleEl.textContent = data.title ?? '';
+
+  // 평점 (data.vote_average)
+  const vote = typeof data.vote_average === 'number' ? data.vote_average : null;
+  if (vote !== null) {
+    const score = vote.toFixed(1);
+    ratingText.textContent = `★ ${score}`;
+    ratingA11y.setAttribute('aria-label', `10점 만점에 ${score}점`);
+  } else {
+    ratingText.textContent = '★ N/A';
+    ratingA11y.setAttribute('aria-label', '평점 정보 없음');
+  }
+
+  // 개봉연도 (data.release_date)
+  const year = typeof data.release_date === 'string' ? data.release_date.slice(0, 4) : '';
+  yearText.textContent = year || '정보 없음';
+
+  // 런타임 (data.runtime)
+  runtimeText.textContent = Number.isFinite(data.runtime) ? `${data.runtime}분` : '정보 없음';
+
+  // 개요 (data.overview)
+  overviewText.textContent =
+    data.overview && data.overview.trim() !== '' ? data.overview : '개요 정보가 없습니다.';
+
+  // 장르 (data.genres)
+  genreDd.textContent = ''; // innerHTML 금지
+
+  if (Array.isArray(data.genres) && data.genres.length) {
+    data.genres.forEach((g) => {
+      const span = createElement('span', ['genre-item'], null, g.name ?? '');
+      genreDd.appendChild(span);
+    });
+  } else {
+    genreDd.appendChild(createElement('span', ['genre-item'], null, '정보 없음'));
+  }
+}

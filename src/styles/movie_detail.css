@@ -28,7 +28,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/7mkUu1F2hVUNgz24xO8HPx0D6mK.jpg');
+  background-image: var(--backdrop-url);
   background-size: cover;
   background-position: calc(50% + 260px) 50%;
   background-repeat: no-repeat;
