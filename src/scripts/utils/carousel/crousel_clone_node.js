@@ -7,7 +7,6 @@ export function addClones(list) {
   const total = items.length;
   if (total === 0) return;
 
-  // 앞쪽 복제
   items.forEach((item) => {
     const clone = item.cloneNode(true);
     clone.dataset.cloned = 'true';
