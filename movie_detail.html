@@ -23,7 +23,7 @@
       <article class="movie-detail" aria-labelledby="movie-title">
         <section class="movie-summary" aria-label="영화 요약">
           <figure class="movie-poster">
-            <img src="/src/assets/image/detail-test.webp" alt="테스트 포스터" />
+            <img src="/src/assets/fallback-poster.webp" alt="" />
           </figure>
 
           <div class="movie-content">
@@ -32,8 +32,8 @@
             <dl class="movie-meta" aria-label="영화 기본 정보">
               <dt class="sr-only">평점</dt>
               <dd class="meta-item rating">
-                <span aria-label="">
-                  <span></span>
+                <span class="rating-a11y" aria-label="">
+                  <span class="rating-text"></span>
                 </span>
               </dd>
 
@@ -79,23 +79,7 @@
         <section class="cast" aria-labelledby="cast-title">
           <h2 id="cast-title" class="cast-header">배우</h2>
 
-          <ul class="cast-list">
-            <li class="cast-item">
-              <figure class="cast-avatar">
-                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-              </figure>
-              <h3 class="cast-name">피터 클래피</h3>
-              <p class="cast-role">'Dunk' the Tall</p>
-            </li>
-
-            <li class="cast-item">
-              <figure class="cast-avatar">
-                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-              </figure>
-              <h3 class="cast-name">피터 클래피</h3>
-              <p class="cast-role">'Dunk' the Tall</p>
-            </li>
-          </ul>
+          <ul class="cast-list" aria-live="polite"></ul>
         </section>
 
         <section class="stills" aria-labelledby="stills-title">
@@ -157,7 +141,13 @@
         </ul>
       </section>
 
-      <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
+      <div
+        id="trailer-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trailer-title"
+      >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
       </div>
     </main>

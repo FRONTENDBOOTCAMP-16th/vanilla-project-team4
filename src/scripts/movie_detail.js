@@ -54,6 +54,7 @@ if (movieNum === null) {
 }
 
 const detailUrl = `https://api.themoviedb.org/3/movie/${movieNum}?language=ko-KR`;
+const creditsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/credits?language=ko-KR`;
 
 fetch(detailUrl, options)
   .then((res) => {
@@ -73,14 +74,28 @@ fetch(detailUrl, options)
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
 
+fetch(creditsUrl, options)
+  .then((res) => {
+    if (!res.ok) return null;
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return renderCast({ cast: [] });
+    renderCast(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    renderCast({ cast: [] });
+  });
+
 function renderMovieDetail(data) {
   const movieSummary = document.querySelector('.movie-summary');
 
   const posterImg = movieSummary.querySelector('.movie-poster img');
   const titleEl = movieSummary.querySelector('#movie-title');
 
-  const ratingA11y = movieSummary.querySelector('.meta-item.rating > span');
-  const ratingText = movieSummary.querySelector('.meta-item.rating > span > span');
+  const ratingA11y = movieSummary.querySelector('.rating-a11y');
+  const ratingText = movieSummary.querySelector('.rating-text');
 
   const yearText = movieSummary.querySelector('.meta-item.year .meta-text');
   const runtimeText = movieSummary.querySelector('.meta-item.runtime .meta-text');
@@ -141,4 +156,56 @@ function renderMovieDetail(data) {
   } else {
     genreDd.appendChild(createElement('span', ['genre-item'], null, '정보 없음'));
   }
+}
+
+function renderCast(credits) {
+  const castList = document.querySelector('.cast-list');
+  const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
+
+  castList.textContent = '';
+
+  if (castArr.length === 0) {
+    const li = createElement('li', ['cast-empty'], null, '배우 정보가 없습니다.');
+    castList.appendChild(li);
+    return;
+  }
+
+  castArr.slice(0, 10).forEach((actor) => {
+    castList.appendChild(createCastItem(actor));
+  });
+}
+
+function createCastItem(actor) {
+  const li = createElement('li', ['cast-item']);
+  const figure = createElement('figure', ['cast-avatar']);
+  const img = createElement('img');
+
+  const fallbackProfile = '/src/assets/fallback-profile.webp';
+  const profilePath =
+    actor && typeof actor.profile_path === 'string' && actor.profile_path.startsWith('/')
+      ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+      : fallbackProfile;
+
+  img.src = profilePath;
+  img.alt = actor && actor.name ? `${actor.name} 프로필` : '배우 프로필';
+
+  // 이미지 깨짐/네트워크/404 대비
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = fallbackProfile;
+  };
+
+  figure.appendChild(img);
+
+  const nameText = actor && actor.name ? actor.name : '이름 정보 없음';
+  const roleText =
+    actor && typeof actor.character === 'string' && actor.character.trim()
+      ? actor.character
+      : '배역 정보 없음';
+
+  li.appendChild(figure);
+  li.appendChild(createElement('h3', ['cast-name'], null, nameText));
+  li.appendChild(createElement('p', ['cast-role'], null, roleText));
+
+  return li;
 }
