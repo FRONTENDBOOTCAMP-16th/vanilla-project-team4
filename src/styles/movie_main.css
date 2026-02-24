@@ -1,38 +1,12 @@
-/* common css 추후 논의 후 코드 정리 필요 */
-body {
-  background-color: var(--bg-page);
-  box-sizing: border-box;
+.main-wrap {
+  color: var(--text-title);
+  a {
+    color: var(--text-title);
+  }
+  section {
+    background-color: var(--bg-section);
+  }
 }
-a {
-  color: white;
-  text-decoration: none;
-}
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.container {
-  inline-size: 1280px;
-  margin: 0 auto;
-  color: white;
-}
-dl,
-dt,
-dd {
-  margin: 0;
-  padding: 0;
-}
-
-.prev-btn,
-.next-btn {
-  display: block;
-  border: 1px solid white;
-  border-radius: 6px;
-  padding: 0.5rem;
-}
-
 /* main-page */
 /* main-banner */
 .intro-banner-area {
@@ -101,7 +75,6 @@ dd {
     }
   }
 } */
-/* ===== Trending Section ===== */
 .trending-movies-area {
   padding: 2rem;
 
