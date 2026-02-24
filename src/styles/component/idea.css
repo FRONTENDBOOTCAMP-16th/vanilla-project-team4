@@ -30,6 +30,10 @@ body {
       display: block;
       background-color: red;
       border-radius: var(--poster-radius);
+
+      &[aria-pressed='true'] {
+        background-color: rgb(119, 2, 2);
+      }
     }
   }
 
