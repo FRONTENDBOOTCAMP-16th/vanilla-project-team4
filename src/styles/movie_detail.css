@@ -1,14 +1,12 @@
-body {
-  background-color: var(--bg-page);
-}
-
+/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
 .movie-detail {
   margin-top: 20px;
 }
+/*  */
 
 .movie-summary {
   /* 나중 삭제 */
-  border: 1px solid #e50914;
+  /* border: 1px solid #e50914; */
   color: #fff;
   /*  */
 
@@ -190,6 +188,7 @@ body {
   flex-direction: column;
   gap: 20px;
   padding: 48px;
+  color: #fff;
 }
 
 .cast-header {
