@@ -15,6 +15,7 @@
     <meta property="og:site_name" content="스크립트 디렉터스" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/scripts/movie_detail.js"></script>
     <title>스크립트 디렉터스</title>
   </head>
   <body>
@@ -22,35 +23,32 @@
       <article class="movie-detail" aria-labelledby="movie-title">
         <section class="movie-summary" aria-label="영화 요약">
           <figure class="movie-poster">
-            <img src="/src/assets/image/detail-test.webp" alt="테스트 포스터" />
+            <img src="/src/assets/fallback-poster.webp" alt="" />
           </figure>
 
           <div class="movie-content">
-            <h1 id="movie-title" class="movie-title-text">세븐킹덤의 기사</h1>
+            <h1 id="movie-title" class="movie-title-text"></h1>
 
             <dl class="movie-meta" aria-label="영화 기본 정보">
               <dt class="sr-only">평점</dt>
               <dd class="meta-item rating">
-                <span aria-label="10점 만점에 8.4점">
-                  <span>★ 8.4</span>
+                <span class="rating-a11y" aria-label="">
+                  <span class="rating-text"></span>
                 </span>
               </dd>
 
               <dt class="sr-only">개봉연도</dt>
               <dd class="meta-item year">
-                <span class="meta-text">2026</span>
+                <span class="meta-text"></span>
               </dd>
 
               <dt class="sr-only">상영 시간</dt>
               <dd class="meta-item runtime">
-                <span class="meta-text">142분</span>
+                <span class="meta-text"></span>
               </dd>
 
               <dt class="sr-only">장르</dt>
-              <dd class="meta-item genre">
-                <span class="genre-item">SF</span>
-                <span class="genre-item">스릴러</span>
-              </dd>
+              <dd class="meta-item genre"></dd>
             </dl>
 
             <div class="movie-button">
@@ -73,12 +71,7 @@
 
             <div class="movie-overview">
               <h2 class="overview-title">개요</h2>
-              <p class="overview-text">
-                왕좌의 게임이 일어나기 백여 년 전, 타르가르옌 가문이 철왕좌를 지키고, 최후의
-                드래곤에 대한 기억이 살아 있던 시절. 웨스테로스를 떠돌던 영웅이 있었다. 젊고
-                순진하지만 용맹한 기사 던칸 경과 그의 작은 종자 에그. 이 둘의 앞엔 운명과 강적,
-                그리고 모험이 기다리고 있는데.
-              </p>
+              <p class="overview-text"></p>
             </div>
           </div>
         </section>
@@ -86,23 +79,7 @@
         <section class="cast" aria-labelledby="cast-title">
           <h2 id="cast-title" class="cast-header">배우</h2>
 
-          <ul class="cast-list">
-            <li class="cast-item">
-              <figure class="cast-avatar">
-                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-              </figure>
-              <h3 class="cast-name">피터 클래피</h3>
-              <p class="cast-role">'Dunk' the Tall</p>
-            </li>
-
-            <li class="cast-item">
-              <figure class="cast-avatar">
-                <img src="/src/assets/image/test-actor.webp" alt="test-actor" />
-              </figure>
-              <h3 class="cast-name">피터 클래피</h3>
-              <p class="cast-role">'Dunk' the Tall</p>
-            </li>
-          </ul>
+          <ul class="cast-list" aria-live="polite"></ul>
         </section>
 
         <section class="stills" aria-labelledby="stills-title">
@@ -164,7 +141,13 @@
         </ul>
       </section>
 
-      <div id="trailer-modal" role="dialog" aria-modal="true" aria-labelledby="trailer-title">
+      <div
+        id="trailer-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trailer-title"
+      >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
       </div>
     </main>
