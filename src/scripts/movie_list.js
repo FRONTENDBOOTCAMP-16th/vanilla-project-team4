@@ -35,8 +35,8 @@ init(); // 1
 function init() {
   paginationEl = document.querySelector('.pagination');
   paginationListEl = paginationEl?.querySelector('.pagination-list');
-  prevBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="이전 페이지"]');
-  nextBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="다음 페이지"]');
+  prevBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="이전 10페이지"]');
+  nextBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="다음 10페이지"]');
 
   // pagination 이벤트 연결(있을 때만)
   paginationListEl?.addEventListener('click', onClickPageNumber);
