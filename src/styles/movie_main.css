@@ -6,6 +6,11 @@
   section {
     background-color: var(--bg-section);
   }
+
+  .area-title {
+    font-size: 2rem;
+    margin-top: 5rem;
+  }
 }
 
 .intro-banner-area {
@@ -64,7 +69,6 @@
     font-size: var(--fs-title);
     color: var(--text-title);
     font-weight: 600;
-    margin: 0 0 8px;
   }
 
   .carousel-controls {
@@ -164,7 +168,7 @@
 }
 
 .quick-move-area {
-  padding: 138px 48px 50px 48px;
+  padding: 58px 48px 50px 48px;
 
   .quick-move-wrap {
     display: flex;
@@ -206,6 +210,9 @@
 
 .advertisement-banner-area {
   padding: 16px 48px;
+  h2 {
+    margin-bottom: 0.5em;
+  }
 
   .advertisement-wrap {
     box-shadow: 0 0 5pt rgba(255, 255, 255, 0.42);
@@ -213,7 +220,7 @@
     align-items: center;
     justify-content: space-evenly;
     inline-size: 100%;
-    block-size: 200px;
+    block-size: 250px;
     border-radius: 20px;
     padding: 1rem;
     background: linear-gradient(to left, #235861 0%, #121a22 60%, #0b0f14 100%);
@@ -239,7 +246,8 @@
     }
   }
 }
-.area-title {
+
+.advertisement-banner-title {
   font-size: 2rem;
 }
 
