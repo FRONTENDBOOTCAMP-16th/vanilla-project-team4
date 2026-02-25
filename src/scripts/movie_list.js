@@ -90,7 +90,7 @@ async function fetchAndRenderMovies(page = 1) {
     const data = await fetchMovies(page);
 
     console.log('data::', data);
-    totalPages = Math.min(data.total_pages ?? 1, 999);
+    totalPages = Math.min(data.total_pages ?? 1);
 
     renderMovies(data.results); // 영화 목록 렌더링 함수 실행 - 7
     renderPagination(currentPage, totalPages); // 페이지 렌더링 함수 실행 - 8
@@ -109,9 +109,15 @@ function renderPagination(page, total) {
   const groupStart = Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
   const groupEnd = Math.min(groupStart + PAGE_GROUP_SIZE - 1, total);
 
-  // 이전/다음 비활성 처리
-  prevBtnEl.disabled = page <= 1;
-  nextBtnEl.disabled = page >= total;
+  // 이전/다음: 숨김 처리 + 숨길 때만 비활성
+  const isFirst = page <= 10;
+  const isLast = page >= 491;
+
+  prevBtnEl.hidden = isFirst;
+  prevBtnEl.disabled = isFirst;
+
+  nextBtnEl.hidden = isLast;
+  nextBtnEl.disabled = isLast;
 
   // 페이지 번호 초기화
   paginationListEl.innerHTML = '';
@@ -144,13 +150,25 @@ function onClickPageNumber(e) {
 }
 
 function onClickPrev() {
-  if (currentPage <= 1) return;
-  fetchAndRenderMovies(currentPage - 1);
+  // 현재 그룹의 시작 페이지 (1, 11, 21, ...)
+  const groupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+
+  // 이전 그룹의 마지막 페이지로 이동 (10, 20, 30, ...)
+  const prevGroupLast = groupStart - 1;
+
+  if (prevGroupLast < 1) return;
+  fetchAndRenderMovies(prevGroupLast);
 }
 
 function onClickNext() {
-  if (currentPage >= totalPages) return;
-  fetchAndRenderMovies(currentPage + 1);
+  // 현재 그룹의 시작 페이지 (1, 11, 21, ...)
+  const groupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+
+  // 다음 그룹의 첫 페이지로 이동 (11, 21, 31, ...)
+  const nextGroupFirst = groupStart + PAGE_GROUP_SIZE;
+
+  if (nextGroupFirst > totalPages) return;
+  fetchAndRenderMovies(nextGroupFirst);
 }
 
 // 영화 목록 렌더링
