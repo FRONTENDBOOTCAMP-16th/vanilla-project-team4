@@ -15,7 +15,7 @@
 
 .intro-banner-area {
   position: relative;
-  block-size: 674px;
+  aspect-ratio: 1280/674;
 
   h2 {
     position: absolute;
