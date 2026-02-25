@@ -90,7 +90,8 @@ async function fetchAndRenderMovies(page = 1) {
     const data = await fetchMovies(page);
 
     console.log('data::', data);
-    totalPages = Math.min(data.total_pages ?? 1);
+    const MAX_PAGES = 500;
+    totalPages = Math.min(data.total_pages ?? 1, MAX_PAGES);
 
     renderMovies(data.results); // 영화 목록 렌더링 함수 실행 - 7
     renderPagination(currentPage, totalPages); // 페이지 렌더링 함수 실행 - 8
@@ -102,7 +103,7 @@ async function fetchAndRenderMovies(page = 1) {
 }
 /* //영화 목록 API */
 
-// 페이지네이션 렌더링
+// 페이지네이션 렌더링 - 8
 function renderPagination(page, total) {
   if (!paginationListEl || !prevBtnEl || !nextBtnEl) return;
 
@@ -110,8 +111,8 @@ function renderPagination(page, total) {
   const groupEnd = Math.min(groupStart + PAGE_GROUP_SIZE - 1, total);
 
   // 이전/다음: 숨김 처리 + 숨길 때만 비활성
-  const isFirst = page <= 10;
-  const isLast = page >= 491;
+  const isFirst = page <= PAGE_GROUP_SIZE;
+  const isLast = groupEnd >= total;
 
   prevBtnEl.hidden = isFirst;
   prevBtnEl.disabled = isFirst;
