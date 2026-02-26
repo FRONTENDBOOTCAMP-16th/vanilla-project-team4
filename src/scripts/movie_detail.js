@@ -1,14 +1,8 @@
 import options from './api/connect.js';
 import { createElement } from './utils/create_element_utils.js';
 
-// =====================
-// constants
-// =====================
 const HOME_URL = '/index.html';
 
-// =====================
-// utils
-// =====================
 function redirectHome(message) {
   if (message) alert(message);
   window.location.replace(HOME_URL);
@@ -55,6 +49,7 @@ if (movieNum === null) {
 
 const detailUrl = `https://api.themoviedb.org/3/movie/${movieNum}?language=ko-KR`;
 const creditsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/credits?language=ko-KR`;
+const stillsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/images?include_image_language=null`;
 
 fetch(detailUrl, options)
   .then((res) => {
@@ -85,6 +80,24 @@ fetch(creditsUrl, options)
   .catch((err) => {
     console.error(err);
     renderCast({ cast: [] });
+  });
+
+fetch(stillsUrl, options)
+  .then((res) => {
+    if (!res.ok) {
+      handleHttpError(res.status);
+      return;
+    }
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return;
+    console.log(data);
+    renderStills(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
 
 function renderMovieDetail(data) {
@@ -198,4 +211,41 @@ function createCastItem(actor) {
   li.appendChild(createElement('p', ['cast-role'], null, roleText));
 
   return li;
+}
+
+function renderStills(data) {
+  const list = document.querySelector('.stills-list');
+  const backdrops = Array.isArray(data?.backdrops) ? data.backdrops : [];
+  const stills = backdrops.filter((b) => b?.file_path && (b?.iso_639_1 ?? null) === null);
+
+  if (stills.length === 0) {
+    const li = document.createElement('li');
+    li.className = 'stills-empty';
+
+    li.textContent = '스틸컷 이미지가 없습니다.';
+    list.appendChild(li);
+    return;
+  }
+
+  const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
+  const SIZE = 'w780'; 
+  const max = 30;
+
+  stills.slice(0, max).forEach((item, idx) => {
+    const li = document.createElement('li');
+    li.className = 'stills-item';
+
+    const figure = document.createElement('figure');
+    figure.className = 'stills-card';
+
+    const img = document.createElement('img');
+    img.className = 'stills-img';
+    img.loading = 'lazy';
+    img.src = `${IMAGE_BASE}${SIZE}${item.file_path}`;
+    img.alt = `스틸컷 이미지 ${idx + 1}`;
+
+    figure.appendChild(img);
+    li.appendChild(figure);
+    list.appendChild(li);
+  });
 }
