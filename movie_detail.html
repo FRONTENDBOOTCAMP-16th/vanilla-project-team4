@@ -19,7 +19,7 @@
     <title>스크립트 디렉터스</title>
   </head>
   <body>
-    <main class="container">
+    <main class="container detail-container">
       <article class="movie-detail" aria-labelledby="movie-title">
         <section class="movie-summary" aria-label="영화 요약">
           <figure class="movie-poster">
@@ -76,45 +76,70 @@
           </div>
         </section>
 
-        <section class="cast" aria-labelledby="cast-title">
-          <h2 id="cast-title" class="cast-header">배우</h2>
+        <section class="cast detail-section" aria-labelledby="cast-title">
+          <h2 id="cast-title" class="detail-section-title">배우</h2>
 
           <ul class="cast-list" aria-live="polite"></ul>
         </section>
 
-        <section class="stills" aria-labelledby="stills-title">
-          <h2 id="stills-title" class="stills-title">스틸컷</h2>
+        <section class="stills detail-section" aria-labelledby="stills-title">
+          <h2 id="stills-title" class="detail-section-title">스틸컷</h2>
 
           <div class="stills-wrapper">
             <ul class="stills-list" aria-live="polite"></ul>
           </div>
         </section>
+
+        <section class="reco detail-section trending-movies-area" aria-labelledby="reco-title">
+          <h2 id="reco-title" class="detail-section-title">비슷한 영화</h2>
+
+          <div class="carousel-controls" role="group" aria-label="캐러셀 이동">
+            <button type="button" class="carousel-btn prev" aria-label="이전 목록">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.5 15L7.5 10L12.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button type="button" class="carousel-btn next" aria-label="다음 목록">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.5 15L12.5 10L7.5 5"
+                  stroke="white"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div
+            class="card-carousel"
+            role="region"
+            aria-roledescription="carousel"
+            aria-labelledby="reco-title"
+          >
+            <ul class="movie-item-list"></ul>
+          </div>
+        </section>
       </article>
-
-      <!-- 추천 목록 -->
-      <section aria-labelledby="reco-title" class="reco">
-        <h2 id="reco-title">추천 목록</h2>
-
-        <ul class="recommendations-list">
-          <li class="recommendations-item">
-            <a href="/" class="recommendations-link">
-              <div class="recommendations-rating">
-                <span aria-hidden="true">★</span>
-                <span> <span class="sr-only">10점 만점에 </span>8.4점 </span>
-              </div>
-
-              <!-- <img /> -->
-
-              <div class="recommendations-info">
-                <h3 class="recommendations-title">Neon Requiem</h3>
-                <p class="recommendations-year">
-                  <time datetime="2024">2024</time>
-                </p>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </section>
 
       <!-- modal -->
       <div

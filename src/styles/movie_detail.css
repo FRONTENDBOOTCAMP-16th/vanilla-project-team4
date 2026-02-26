@@ -1,22 +1,50 @@
-/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
-.movie-detail {
+.detail-container {
+  color: #fff;
+
+  /* 나중 삭제 - 헤더 없어서 넣어둔 것  */
   margin-top: 20px;
 }
-/*  */
 
+/* detail page - 공통 사용 class */
+.detail-section {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: transparent;
+}
+
+.detail-section-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.empty-state {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.detail-section .empty-state {
+  margin: 0 auto;
+}
+
+/* summary */
 .movie-summary {
-  /* 나중 삭제 */
-  /* border: 1px solid #e50914; */
-  color: #fff;
-  /*  */
-
   display: flex;
   align-items: center;
   width: 100%;
   gap: 42px;
   padding: 48px;
   min-height: 710px;
-
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -73,7 +101,7 @@
   font-size: 60px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -151,11 +179,9 @@
   gap: 8px;
   border-radius: 8px;
   background: #e50914;
-  color: white;
   font-weight: 600;
   box-shadow: 0 25px 50px -12px rgba(229, 9, 20, 0.3);
 }
-
 /* .js-trailer 추가 예정 */
 
 .button-icon {
@@ -173,28 +199,8 @@
   line-height: 1.6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 8;
   overflow: hidden;
-}
-
-/* 임시 방편: 공통 section 배경 제거 */
-.movie-detail section {
-  background-color: transparent !important;
-}
-/*  */
-
-.cast {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 48px;
-  color: #fff;
-}
-
-.cast-header {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
 }
 
 .cast-list {
@@ -206,6 +212,12 @@
   margin: 0;
   padding: 10px 0;
   overflow-x: auto;
+}
+
+.cast-list:has(.empty-state) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cast-item {
@@ -257,20 +269,6 @@
   max-width: 150px;
 }
 
-.stills {
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  gap: 24px;
-  padding: 48px;
-}
-
-.stills-title {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
 .stills-wrapper {
   position: relative;
   /* 나중 버튼 추가 대비 */
@@ -286,7 +284,7 @@
 }
 
 .stills-item {
-  flex: 0 0 auto;
+  flex: 0 0 calc((100% - 20px) / 2.5);
   width: 360px;
 }
 
@@ -306,7 +304,26 @@
   display: block;
 }
 
-.stills-empty {
-  padding: 16px;
-  color: rgba(255, 255, 255, 0.7);
+.reco {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'title controls'
+    'carousel carousel';
+  align-items: center;
+}
+
+.reco .detail-section-title {
+  grid-area: title;
+}
+
+.reco .carousel-controls {
+  grid-area: controls;
+  display: inline-flex;
+  gap: 10px;
+}
+
+.reco .card-carousel {
+  grid-area: carousel;
 }

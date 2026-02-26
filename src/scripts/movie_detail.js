@@ -1,5 +1,9 @@
 import options from './api/connect.js';
 import { createElement } from './utils/create_element_utils.js';
+import { getMovieData } from '../scripts/data/get_movie_data.js';
+import { createMovieList } from '../scripts/components/ui/createMovieList.js';
+import { buttonUtil } from '../scripts/utils/carousel/carousel_btn_utils.js';
+import { addClones } from '../scripts/utils/carousel/crousel_clone_node.js';
 
 const HOME_URL = '/index.html';
 
@@ -96,6 +100,18 @@ fetch(stillsUrl, options)
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
 
+function renderEmptyState(listEl, message) {
+  if (!listEl) return;
+
+  listEl.textContent = '';
+
+  const li = document.createElement('li');
+  li.className = 'empty-state';
+  li.textContent = message;
+
+  listEl.appendChild(li);
+}
+
 function renderMovieDetail(data) {
   const movieSummary = document.querySelector('.movie-summary');
 
@@ -144,7 +160,9 @@ function renderMovieDetail(data) {
   runtimeText.textContent = Number.isFinite(data.runtime) ? `${data.runtime}분` : '정보 없음';
 
   overviewText.textContent =
-    data.overview && data.overview.trim() !== '' ? data.overview : '개요 정보가 없습니다.';
+    data.overview && data.overview.trim() !== ''
+      ? data.overview
+      : '해당 언어의 줄거리가 존재하지 않습니다.';
 
   genreDd.textContent = '';
 
@@ -162,13 +180,12 @@ function renderCast(credits) {
   const castList = document.querySelector('.cast-list');
   const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
 
-  castList.textContent = '';
-
   if (castArr.length === 0) {
-    const li = createElement('li', ['cast-empty'], null, '배우 정보가 없습니다.');
-    castList.appendChild(li);
+    renderEmptyState(castList, '배우 정보가 없습니다.');
     return;
   }
+
+  castList.textContent = '';
 
   castArr.slice(0, 10).forEach((actor) => {
     castList.appendChild(createCastItem(actor));
@@ -215,16 +232,12 @@ function renderStills(data) {
   const stills = backdrops.filter((b) => b?.file_path && (b?.iso_639_1 ?? null) === null);
 
   if (stills.length === 0) {
-    const li = document.createElement('li');
-    li.className = 'stills-empty';
-
-    li.textContent = '스틸컷 이미지가 없습니다.';
-    list.appendChild(li);
+    renderEmptyState(list, '스틸컷 이미지가 없습니다.');
     return;
   }
 
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
-  const SIZE = 'w780'; 
+  const SIZE = 'w780';
   const MAX_STILLS = 30;
 
   stills.slice(0, MAX_STILLS).forEach((item, idx) => {
@@ -245,3 +258,20 @@ function renderStills(data) {
     list.appendChild(li);
   });
 }
+
+function renderSimilarMovies(movieId) {
+  const listEl = document.querySelector('.reco .movie-item-list');
+  const similarUrl = `https://api.themoviedb.org/3/movie/${movieId}/similar?language=ko-KR&page=1`;
+
+  getMovieData(similarUrl, 10).then((data) => {
+    if (!data || data.length === 0) {
+      renderEmptyState(listEl, '비슷한 영화가 없습니다.');
+      return;
+    }
+    createMovieList(data, listEl);
+    addClones(listEl);
+    buttonUtil();
+  });
+}
+
+renderSimilarMovies(movieNum);
