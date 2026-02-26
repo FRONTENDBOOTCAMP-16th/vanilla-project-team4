@@ -1,12 +1,24 @@
 .detail-container {
   color: #fff;
-}
 
-/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
-.movie-detail {
+  /* 나중 삭제 - 헤더 없어서 넣어둔 것  */
   margin-top: 20px;
 }
-/*  */
+
+/* detail page - 공통 사용 class */
+.detail-section {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: transparent;
+}
+
+.detail-section-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
 
 .movie-summary {
   display: flex;
@@ -173,25 +185,6 @@
   overflow: hidden;
 }
 
-/* 임시 방편: 공통 section 배경 제거 */
-.movie-detail section {
-  background-color: transparent !important;
-}
-/*  */
-
-.cast {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 48px;
-}
-
-.cast-header {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
 .cast-list {
   display: grid;
   grid-auto-flow: column;
@@ -252,19 +245,6 @@
   max-width: 150px;
 }
 
-.stills {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 48px;
-}
-
-.stills-title {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
 .stills-wrapper {
   position: relative;
   /* 나중 버튼 추가 대비 */
@@ -306,22 +286,17 @@
 }
 
 .reco {
-  padding: 48px;
   display: grid;
+  gap: 24px;
   grid-template-columns: 1fr auto;
   grid-template-areas:
     'title controls'
     'carousel carousel';
   align-items: center;
-  row-gap: 24px;
 }
 
-/* 컴포넌트 오버라이드 */
-.reco .area-title {
+.reco .detail-section-title {
   grid-area: title;
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
 }
 
 .reco .carousel-controls {
