@@ -1,5 +1,8 @@
 import options from './api/connect.js';
 import { createElement } from './utils/create_element_utils.js';
+import { createLoadingOverlay } from './utils/loading.js';
+
+const loading = createLoadingOverlay('영화 목록을 불러오는 중...');
 
 const BODY = document.querySelector('body');
 const movieArea = BODY.querySelector('.movie-area');
@@ -86,6 +89,7 @@ async function fetchMovies(page = 1) {
 async function fetchAndRenderMovies(page = 1) {
   currentPage = page;
 
+  loading.show();
   try {
     const data = await fetchMovies(page);
 
@@ -99,6 +103,8 @@ async function fetchAndRenderMovies(page = 1) {
     //console.log('totalPages', totalPages);
   } catch (err) {
     console.error(err);
+  } finally {
+    loading.hide();
   }
 }
 /* //영화 목록 API */
