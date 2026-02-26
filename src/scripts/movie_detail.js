@@ -1,5 +1,9 @@
 import options from './api/connect.js';
 import { createElement } from './utils/create_element_utils.js';
+import { getMovieData } from '../scripts/data/get_movie_data.js';
+import { createMovieList } from '../scripts/components/ui/createMovieList.js';
+import { buttonUtil } from '../scripts/utils/carousel/carousel_btn_utils.js';
+import { addClones } from '../scripts/utils/carousel/crousel_clone_node.js';
 
 const HOME_URL = '/index.html';
 
@@ -224,7 +228,7 @@ function renderStills(data) {
   }
 
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
-  const SIZE = 'w780'; 
+  const SIZE = 'w780';
   const MAX_STILLS = 30;
 
   stills.slice(0, MAX_STILLS).forEach((item, idx) => {
@@ -245,3 +249,22 @@ function renderStills(data) {
     list.appendChild(li);
   });
 }
+
+function renderSimilarMovies(movieId) {
+  const listEl = document.querySelector('.reco .movie-item-list');
+  const similarUrl = `https://api.themoviedb.org/3/movie/${movieId}/similar?language=ko-KR&page=1`;
+
+  getMovieData(similarUrl, 10).then((data) => {
+    if (!data || data.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = '비슷한 영화가 없습니다.';
+      listEl.appendChild(li);
+      return;
+    }
+    createMovieList(data, listEl);
+    addClones(listEl);
+    buttonUtil();
+  });
+}
+
+renderSimilarMovies(movieNum);
