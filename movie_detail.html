@@ -52,7 +52,6 @@
             </dl>
 
             <div class="movie-button">
-              <!-- 버튼 컴포넌트화 예정 -->
               <button
                 type="button"
                 aria-haspopup="dialog"
@@ -141,15 +140,30 @@
         </section>
       </article>
 
-      <!-- modal -->
       <div
         id="trailer-modal"
+        class="trailer-modal"
         hidden
         role="dialog"
         aria-modal="true"
         aria-labelledby="trailer-title"
       >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
+
+        <div class="trailer-panel" role="document">
+          <button type="button" class="trailer-close" aria-label="예고편 닫기">×</button>
+
+          <div class="trailer-frame">
+            <p class="trailer-empty" hidden>예고편 영상이 없습니다.</p>
+
+            <iframe
+              class="trailer-iframe"
+              title="예고편 영상"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
       </div>
     </main>
   </body>

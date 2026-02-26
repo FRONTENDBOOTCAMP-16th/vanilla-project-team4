@@ -51,6 +51,7 @@ if (movieNum === null) {
 const detailUrl = `https://api.themoviedb.org/3/movie/${movieNum}?language=ko-KR`;
 const creditsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/credits?language=ko-KR`;
 const stillsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/images?include_image_language=null`;
+const videosUrl = `https://api.themoviedb.org/3/movie/${movieNum}/videos?language=ko-KR&include_video_language=ko,en,null`;
 
 fetch(detailUrl, options)
   .then((res) => {
@@ -98,6 +99,34 @@ fetch(stillsUrl, options)
   .catch((err) => {
     console.error(err);
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+  });
+
+fetch(videosUrl, options)
+  .then((res) => {
+    if (!res.ok) return null;
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return;
+    console.log('트레일러', data);
+    // 여기서 Trailer/Teaser 중 하나 고르기
+    const results = Array.isArray(data?.results) ? data.results : [];
+
+    // 1순위: YouTube Trailer
+    const trailer =
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
+      // 2순위: YouTube Teaser
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
+      // 3순위: 그 외 YouTube 아무거나
+      results.find((v) => v?.site === 'YouTube' && v?.key) ||
+      null;
+
+    // 다음 단계에서 모달 열 때 쓰려고 전역/상태로 저장할 예정
+    window.__TRAILER_KEY__ = trailer?.key ?? null;
+  })
+  .catch((err) => {
+    console.error(err);
+    window.__TRAILER_KEY__ = null;
   });
 
 function renderEmptyState(listEl, message) {
@@ -275,3 +304,56 @@ function renderSimilarMovies(movieId) {
 }
 
 renderSimilarMovies(movieNum);
+
+const trailerBtn = document.querySelector('.js-trailer');
+const trailerModal = document.getElementById('trailer-modal');
+const closeBtn = trailerModal?.querySelector('.trailer-close');
+const iframe = trailerModal?.querySelector('.trailer-iframe');
+
+const emptyMessage = trailerModal?.querySelector('.trailer-empty');
+
+function openTrailerModal() {
+  if (!trailerModal) return;
+
+  const key = window.__TRAILER_KEY__;
+
+  trailerModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  if (!key) {
+    if (iframe) iframe.hidden = true;
+    if (emptyMessage) emptyMessage.hidden = false;
+  } else {
+    if (emptyMessage) emptyMessage.hidden = true;
+    if (iframe) {
+      iframe.hidden = false;
+      iframe.src = `https://www.youtube.com/embed/${key}?autoplay=1&rel=0`;
+    }
+  }
+
+  closeBtn?.focus();
+}
+
+function closeTrailerModal() {
+  if (!trailerModal) return;
+
+  trailerModal.hidden = true;
+  document.body.style.overflow = '';
+
+  if (iframe) iframe.src = '';
+
+  trailerBtn?.focus();
+}
+
+if (trailerBtn && trailerModal) {
+  trailerBtn.addEventListener('click', openTrailerModal);
+  closeBtn?.addEventListener('click', closeTrailerModal);
+
+  trailerModal.addEventListener('click', (e) => {
+    if (e.target === trailerModal) closeTrailerModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!trailerModal.hidden && e.key === 'Escape') closeTrailerModal();
+  });
+}
