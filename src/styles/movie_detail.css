@@ -20,6 +20,24 @@
   font-weight: 800;
 }
 
+.empty-state {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.detail-section .empty-state {
+  margin: 0 auto;
+}
+
+/* summary */
 .movie-summary {
   display: flex;
   align-items: center;
@@ -196,6 +214,12 @@
   overflow-x: auto;
 }
 
+.cast-list:has(.empty-state) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .cast-item {
   display: flex;
   flex-direction: column;
@@ -278,11 +302,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.stills-empty {
-  padding: 16px;
-  color: rgba(255, 255, 255, 0.7);
 }
 
 .reco {
