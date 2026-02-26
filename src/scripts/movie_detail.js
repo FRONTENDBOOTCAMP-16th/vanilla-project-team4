@@ -35,9 +35,6 @@ function handleHttpError(status) {
   }
 }
 
-// =====================
-// main
-// =====================
 const params = new URLSearchParams(window.location.search);
 const rawId = params.get('id');
 const movieNum = getValidMovieId(rawId);
@@ -92,7 +89,6 @@ fetch(stillsUrl, options)
   })
   .then((data) => {
     if (!data) return;
-    console.log(data);
     renderStills(data);
   })
   .catch((err) => {
