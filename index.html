@@ -16,6 +16,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <title>스크립트 디렉터스</title>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/render_main_movies.js"></script>
   </head>
   <body class="wrap main-wrap">
     <section class="intro-banner-area" aria-labelledby="intro-banner">
@@ -35,42 +36,7 @@
       <section class="trending-movies-area" aria-labelledby="trending-title">
         <h2 id="trending-title" class="area-title">트렌딩 TOP 10</h2>
 
-        <div class="carousel-controls" role="group" aria-label="캐러셀 이동">
-          <button type="button" class="carousel-btn prev" aria-label="이전 목록">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.5 15L7.5 10L12.5 5"
-                stroke="white"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-          <button type="button" class="carousel-btn next" aria-label="다음 목록">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.5 15L12.5 10L7.5 5"
-                stroke="white"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
+        <div class="carousel-controls" role="group" aria-label="캐러셀 이동"></div>
 
         <div
           class="card-carousel"
