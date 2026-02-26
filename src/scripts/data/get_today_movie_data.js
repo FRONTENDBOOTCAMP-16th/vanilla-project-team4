@@ -5,14 +5,14 @@ const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' })
 const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 const FALLBACK_IMG = '/images/fallback.png';
 
-let upcomingMovies = [];
+let todayMovies = [];
 let page = 1;
 
 export function getTodayMovieData(url, pageNum, maxIndex) {
-  let upcomingUrl = `${url}&page=${pageNum}`;
-  const max = maxIndex;
+  let todayUrl = `${url}&page=${pageNum}`;
+  const MAX = maxIndex;
 
-  return fetch(upcomingUrl, options)
+  return fetch(todayUrl, options)
     .then((res) => res.json())
     .then((json) => {
       const pageMovies = (json.results ?? [])
@@ -29,9 +29,9 @@ export function getTodayMovieData(url, pageNum, maxIndex) {
           };
         });
 
-      upcomingMovies = [...upcomingMovies, ...pageMovies];
+      todayMovies = [...todayMovies, ...pageMovies];
 
-      if (upcomingMovies.length >= max) return upcomingMovies.slice(0, max);
+      if (todayMovies.length >= MAX) return todayMovies.slice(0, MAX);
 
       page += 1;
       return getTodayMovieData(url, page, maxIndex);
