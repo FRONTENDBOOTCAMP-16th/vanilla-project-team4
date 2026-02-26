@@ -2,6 +2,18 @@ import options from './api/connect.js';
 import { createElement } from './utils/create_element_utils.js';
 import { createLoadingOverlay } from './utils/loading.js';
 
+/**
+ * 영화 목록 페이지
+ * - 장르 목록을 먼저 불러와 라디오 버튼을 생성한다.
+ * - 선택된 장르/페이지에 따라 TMDB discover API를 호출한다. (getDiscoverUrl)
+ * - 영화 리스트와 페이지네이션을 렌더링한다.
+ */
+
+/* =========================
+ * 1. 변수
+ * - Elements
+ * - State
+ * ========================= */
 const loading = createLoadingOverlay('영화 목록을 불러오는 중...');
 
 const BODY = document.querySelector('body');
@@ -9,54 +21,106 @@ const movieArea = BODY.querySelector('.movie-area');
 const movieLists = movieArea.querySelector('.lists');
 
 let currentPage = 1; // 현재 페이지
-let totalPages = 1; // 전체 페이지(서버 응답 기준)
-const PAGE_GROUP_SIZE = 10; // 한페이지에 보이는 번호 개수
+let totalPages = 1; // 전체 페이지(서버 응답 기준, 최대 500 제한)
+const PAGE_GROUP_SIZE = 10; // 페이지 번호 묶음(1~10, 11~20 ...)
 
-// init에서 세팅
+// pagination elements (init에서 세팅)
 let paginationEl;
 let paginationListEl;
 let prevBtnEl;
 let nextBtnEl;
 
-// 장르 (id -> name)
-let genreMap = {};
+let genreMap = {}; // 장르 (id -> name)
+let selectedGenreId = null; // 선택된 장르 id값 (null이면 전체)
 
-// 선택된 장르 id (null이면 전체)
-let selectedGenreId = null;
+/* =========================
+ * 2. Init
+ * ========================= */
+init();
 
-/*
-1. init함수 실행
-2. 실행된 init함수 내부, 클릭이벤트 연결 및 장르 api 실행
-3. 장르 API 실행 - fetchGenres()
-4. 페이지 렌더링 실행() - fetchAndRenderMovies()
-5. 영화 데이터 가져오기 - fetchMovies()
-6. 영화 목록 api 가져오기 - getDiscoverUrl()
-7. 영화 목록 렌더링 함수 실행 - renderMovies(data.results)
-8. 페이지 렌더링 함수 실행 - renderPagination(currentPage, totalPages)
-*/
-
-init(); // 1
-
-// 2
+/**
+ * 최초 1회 실행
+ * - 필요한 DOM을 잡고 이벤트를 연결한다.
+ * - 장르를 먼저 불러온 뒤, 1페이지 영화 목록을 호출한다.
+ */
 function init() {
+  // 페이지네이션 DOM
   paginationEl = document.querySelector('.pagination');
   paginationListEl = paginationEl?.querySelector('.pagination-list');
   prevBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="이전 10페이지"]');
   nextBtnEl = paginationEl?.querySelector('.pagination-btn[aria-label="다음 10페이지"]');
 
-  // pagination 이벤트 연결(있을 때만)
+  // 페이지네이션 events
   paginationListEl?.addEventListener('click', onClickPageNumber);
   prevBtnEl?.addEventListener('click', onClickPrev);
   nextBtnEl?.addEventListener('click', onClickNext);
 
-  // 장르 라디오 change 이벤트 연결
+  // 장르 change event
   const genreForm = document.querySelector('.genre-list');
   genreForm?.addEventListener('change', onChangeGenre);
 
-  fetchGenres(); // 장르 - 1
+  // 장르 세팅 -> 완료 후 1페이지 호출
+  fetchGenres();
 }
 
-// 장르 API - 3
+/* =========================
+ * 3. Event Handlers
+ * ========================= */
+/**
+ * 페이지 번호 클릭 시 해당 페이지로 이동
+ */
+function onClickPageNumber(e) {
+  const numBtn = e.target.closest('.pagination-num');
+  if (!numBtn) return;
+
+  const page = Number(numBtn.textContent);
+  if (!Number.isFinite(page)) return;
+
+  fetchAndRenderMovies(page);
+}
+
+/**
+ * '이전 10페이지' 클릭 시 이전 그룹의 마지막 페이지로 이동
+ */
+function onClickPrev() {
+  const groupStart = getGroupStart(currentPage);
+  const prevGroupLast = groupStart - 1;
+
+  if (prevGroupLast < 1) return;
+  fetchAndRenderMovies(prevGroupLast);
+}
+
+/**
+ * '다음 10페이지' 클릭 시 다음 그룹의 첫 페이지로 이동
+ */
+function onClickNext() {
+  const groupStart = getGroupStart(currentPage);
+  const nextGroupFirst = groupStart + PAGE_GROUP_SIZE;
+
+  if (nextGroupFirst > totalPages) return;
+  fetchAndRenderMovies(nextGroupFirst);
+}
+
+/**
+ * 장르 라디오 변경 시 선택 장르를 갱신하고 1페이지부터 다시 호출
+ */
+function onChangeGenre(e) {
+  const input = e.target.closest('input[type="radio"][name="genre"]');
+  if (!input) return;
+
+  const id = input.dataset.genreId;
+  selectedGenreId = id ? Number(id) : null;
+
+  fetchAndRenderMovies(1);
+}
+
+/* =========================
+ * 4. API
+ * ========================= */
+/**
+ * 장르 목록을 TMDB에서 가져와 genreMap을 만들고, 라디오를 렌더링한다.
+ * 완료 후 1페이지 영화 목록을 호출한다.
+ */
 async function fetchGenres() {
   try {
     const res = await fetch(
@@ -65,29 +129,77 @@ async function fetchGenres() {
     );
     const data = await res.json();
 
-    console.log('확인', data);
     genreMap = {};
     data.genres.forEach((genre) => {
       genreMap[genre.id] = genre.name;
     });
 
-    // 장르 라디오를 API 기반으로 자동 생성
     renderGenreRadios(data.genres);
-    console.log('확인2', data.genres);
 
-    // 장르 세팅 끝 -> 1페이지 영화 호출
+    // 장르 준비 완료 -> 1페이지 영화 호출
     fetchAndRenderMovies(1);
   } catch (err) {
     console.error(err);
   }
 }
 
-// 장르 라디오 자동 생성
+/**
+ * discover API URL을 생성한다.
+ * - page: 요청할 페이지
+ * - selectedGenreId가 있으면 with_genres 파라미터를 추가한다.
+ */
+function getDiscoverUrl(page = 1) {
+  const base =
+    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR' +
+    `&page=${page}&sort_by=popularity.desc`;
+
+  const genreParam = selectedGenreId ? `&with_genres=${selectedGenreId}` : '';
+  return base + genreParam;
+}
+
+/**
+ * 영화 목록 데이터를 서버(TMDB)에서 가져온다.
+ */
+async function fetchMovies(page = 1) {
+  const res = await fetch(getDiscoverUrl(page), options);
+  return res.json();
+}
+
+/**
+ * 영화 목록 + 페이지네이션을 함께 갱신한다.
+ * - 로딩 표시/숨김을 포함한다.
+ * - total_pages는 TMDB 제한에 맞춰 최대 500으로 캡한다.
+ */
+async function fetchAndRenderMovies(page = 1) {
+  currentPage = page;
+
+  loading.show();
+  try {
+    const data = await fetchMovies(page);
+
+    const MAX_PAGES = 500;
+    totalPages = Math.min(data.total_pages ?? 1, MAX_PAGES);
+
+    renderMovies(data.results);
+    renderPagination(currentPage, totalPages);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    loading.hide();
+  }
+}
+
+/* =========================
+ * 5. Render
+ * ========================= */
+/**
+ * 장르 라디오를 API 결과 기반으로 자동 생성한다.
+ * - "전체"를 맨 앞에 만든다.
+ */
 function renderGenreRadios(genres) {
   const wrap = document.querySelector('.genres');
   if (!wrap) return;
 
-  // 기존 하드코딩 라디오 제거 후 다시 생성
   wrap.innerHTML = '';
 
   // 1) 전체
@@ -123,68 +235,28 @@ function renderGenreRadios(genres) {
   });
 }
 
-/* 영화 목록 API */
-// 영화 API (URL만듬) - 6
-function getDiscoverUrl(page = 1) {
-  const base =
-    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR' +
-    `&page=${page}&sort_by=popularity.desc`;
-
-  // 장르 선택되어 있으면 필터링 파라미터 추가
-  const genreParam = selectedGenreId ? `&with_genres=${selectedGenreId}` : '';
-
-  return base + genreParam;
-}
-
-// 영화 데이터 가져오기 (서버에서 데이터 가져오기) - 5
-async function fetchMovies(page = 1) {
-  const res = await fetch(getDiscoverUrl(page), options);
-  return res.json();
-}
-
-// 영화, 페이지네이션 렌더링 - 4
-async function fetchAndRenderMovies(page = 1) {
-  currentPage = page;
-
-  loading.show();
-  try {
-    const data = await fetchMovies(page);
-
-    console.log('data::', data);
-    const MAX_PAGES = 500;
-    totalPages = Math.min(data.total_pages ?? 1, MAX_PAGES);
-
-    renderMovies(data.results); // 영화 목록 렌더링 함수 실행 - 7
-    renderPagination(currentPage, totalPages); // 페이지 렌더링 함수 실행 - 8
-  } catch (err) {
-    console.error(err);
-  } finally {
-    loading.hide();
-  }
-}
-/* //영화 목록 API */
-
-// 페이지네이션 렌더링 - 8
+/**
+ * 페이지네이션을 렌더링한다.
+ * - 현재 페이지 기준으로 10개 묶음 윈도우(1~10, 11~20...)를 만든다.
+ * - 그룹의 처음/끝이면 이전/다음 버튼을 숨긴다.
+ */
 function renderPagination(page, total) {
   if (!paginationListEl || !prevBtnEl || !nextBtnEl) return;
 
-  const groupStart = Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+  const groupStart = getGroupStart(page);
   const groupEnd = Math.min(groupStart + PAGE_GROUP_SIZE - 1, total);
 
-  // 이전/다음: 숨김 처리 + 숨길 때만 비활성
-  const isFirst = page <= PAGE_GROUP_SIZE;
-  const isLast = groupEnd >= total;
+  const isFirstGroup = page <= PAGE_GROUP_SIZE;
+  const isLastGroup = groupEnd >= total;
 
-  prevBtnEl.hidden = isFirst;
-  prevBtnEl.disabled = isFirst;
+  prevBtnEl.hidden = isFirstGroup;
+  prevBtnEl.disabled = isFirstGroup;
 
-  nextBtnEl.hidden = isLast;
-  nextBtnEl.disabled = isLast;
+  nextBtnEl.hidden = isLastGroup;
+  nextBtnEl.disabled = isLastGroup;
 
-  // 페이지 번호 초기화
   paginationListEl.innerHTML = '';
 
-  // 페이지 번호 생성
   for (let i = groupStart; i <= groupEnd; i++) {
     const li = document.createElement('li');
     const numBtn = createElement('button', ['pagination-num'], { type: 'button' }, String(i));
@@ -201,56 +273,16 @@ function renderPagination(page, total) {
   }
 }
 
-function onClickPageNumber(e) {
-  const numBtn = e.target.closest('.pagination-num');
-  if (!numBtn) return;
-
-  const page = Number(numBtn.textContent);
-  if (!Number.isFinite(page)) return;
-
-  fetchAndRenderMovies(page);
-}
-
-function onClickPrev() {
-  // 현재 그룹의 시작 페이지 (1, 11, 21, ...)
-  const groupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
-
-  // 이전 그룹의 마지막 페이지로 이동 (10, 20, 30, ...)
-  const prevGroupLast = groupStart - 1;
-
-  if (prevGroupLast < 1) return;
-  fetchAndRenderMovies(prevGroupLast);
-}
-
-function onClickNext() {
-  // 현재 그룹의 시작 페이지 (1, 11, 21, ...)
-  const groupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
-
-  // 다음 그룹의 첫 페이지로 이동 (11, 21, 31, ...)
-  const nextGroupFirst = groupStart + PAGE_GROUP_SIZE;
-
-  if (nextGroupFirst > totalPages) return;
-  fetchAndRenderMovies(nextGroupFirst);
-}
-
-// 장르 선택 변경 시 실행
-function onChangeGenre(e) {
-  const input = e.target.closest('input[type="radio"][name="genre"]');
-  if (!input) return;
-
-  const id = input.dataset.genreId; // "" 또는 "28"
-  selectedGenreId = id ? Number(id) : null;
-
-  // 장르 바뀌면 1페이지부터 다시 호출
-  fetchAndRenderMovies(1);
-}
-
-// 영화 목록 렌더링
+/**
+ * 영화 목록을 렌더링한다.
+ * - 장르는 genreMap(id->name)을 이용해 텍스트로 만든다.
+ * - 줄거리가 없으면 기본 문구를 표시한다.
+ */
 function renderMovies(movies) {
-  movieLists.innerHTML = ''; // 기존 내용 초기화
+  movieLists.innerHTML = '';
 
   movies.forEach((movie) => {
-    const genreText = movie.genre_ids
+    const genreText = (movie.genre_ids ?? [])
       .map((id) => genreMap[id])
       .filter(Boolean)
       .join(', ');
@@ -269,26 +301,20 @@ function renderMovies(movies) {
         : '/src/assets/fallback-backdrop.webp',
     });
 
-    // 영화 info
+    // info
     const movieInfo = createElement('div', ['movie-info']);
-
-    // 영화 제목
     const movieTitle = createElement('h3', ['info-tit'], null, movie.title);
 
-    // 영화 설명
     const descriptionOverview =
       !movie.overview || movie.overview.trim() === ''
         ? '해당 언어의 줄거리가 존재하지 않습니다.'
         : movie.overview.slice(0, 17) + '...';
     const movieDescription = createElement('p', ['info-txt'], null, descriptionOverview);
 
-    // 설명
+    // detail (year/genre)
     const movieDetail = createElement('dl', ['movie-info-detail']);
 
-    // 개봉연도
     const movieYearDt = createElement('dt', ['sr-only'], null, '개봉연도');
-
-    // 개봉연도 - 날짜
     const movieYearDd = createElement('dd');
     const movieYearDdTime = createElement(
       'time',
@@ -297,17 +323,14 @@ function renderMovies(movies) {
       movie.release_date?.slice(0, 4) ?? '',
     );
 
-    // 장르
     const movieGenreDt = createElement('dt', ['sr-only'], null, '장르');
-
-    // 장르 - 리스트
     const movieGenreDd = createElement('dd', ['genre'], null, genreText);
 
-    // 평점
+    // rating
     const movieRate = createElement('div', ['rate']);
     const movieRateTitle = createElement('span', ['sr-only'], null, '평점');
 
-    const ratingText = movie.vote_average.toFixed(1);
+    const ratingText = Number.isFinite(movie.vote_average) ? movie.vote_average.toFixed(1) : '0.0';
 
     const movieRating = createElement(
       'span',
@@ -316,10 +339,12 @@ function renderMovies(movies) {
       `★ ${ratingText}`,
     );
 
-    if (movie.vote_average >= 7.5) {
+    if ((movie.vote_average ?? 0) >= 7.5) {
       movieRating.classList.add('rate-high');
     }
 
+    // assemble
+    movieLists.appendChild(movieItem);
     movieItem.appendChild(movieLink);
 
     movieLink.appendChild(moviePoster);
@@ -331,15 +356,23 @@ function renderMovies(movies) {
 
     movieDetail.appendChild(movieYearDt);
     movieDetail.appendChild(movieYearDd);
+    movieYearDd.appendChild(movieYearDdTime);
+
     movieDetail.appendChild(movieGenreDt);
     movieDetail.appendChild(movieGenreDd);
-
-    movieYearDd.appendChild(movieYearDdTime);
 
     movieLink.appendChild(movieRate);
     movieRate.appendChild(movieRateTitle);
     movieRate.appendChild(movieRating);
-
-    movieLists.appendChild(movieItem);
   });
+}
+
+/* =========================
+ * Helpers
+ * ========================= */
+/**
+ * 현재 page가 속한 그룹의 시작 페이지를 구한다. (1, 11, 21, ...)
+ */
+function getGroupStart(page) {
+  return Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
 }
