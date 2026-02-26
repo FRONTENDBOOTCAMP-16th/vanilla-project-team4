@@ -9,8 +9,7 @@
 @import './common/_a11y.css' layer(utilities);
 @import './common/_loading.css' layer(utilities);
 
-@import './header.css' layer(component);
-
+@import './header.css' layer(components);
 @import './movie_list.css' layer(subpages);
 @import './movie_detail.css' layer(subpages);
 @import './movie_main.css' layer(subpages);

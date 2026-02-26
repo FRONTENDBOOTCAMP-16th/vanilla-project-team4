@@ -1,7 +1,7 @@
 import { createElement } from '../../utils/create_element_utils';
 
 export function createHeader() {
-  const header = createElement('header');
+  const header = createElement('header', ['header']);
 
   const h1 = createElement('h1', ['sr-only'], null, '영화 정보 안내 서비스');
   const nav = createElement('nav', ['navigation'], { 'aria-label': '주요 메뉴' });
@@ -38,4 +38,3 @@ export function createHeader() {
 
   document.body.prepend(header);
 }
-createHeader();
