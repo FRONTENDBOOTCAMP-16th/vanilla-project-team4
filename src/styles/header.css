@@ -1,0 +1,44 @@
+:root {
+  --header-height: 72px;
+}
+body {
+  padding-top: var(--header-height);
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--bg-page);
+  border-bottom: 1px solid #f1f1f182;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+}
+
+.navigation {
+  display: flex;
+  width: 1280px;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  flex: 9;
+  border-radius: 1rem;
+}
+
+.logo .logo-img {
+  width: 10rem;
+}
+
+.sub-nav {
+  flex: 1;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: var(--text-title);
+  text-align: center;
+  border-radius: 1rem;
+}
