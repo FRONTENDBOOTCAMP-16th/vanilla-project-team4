@@ -43,7 +43,6 @@ export function createMovieItem({
 
   movieInfoDiv.append(movieTitleH3, movieDescriptionP, movieInfoDetailDl);
 
-  // 평점은 카드 강조 요소로 분리
   if (movieRate != null) {
     const movieRateDiv = createElement('div', ['rate']);
     const movieRateSpan = createElement(
