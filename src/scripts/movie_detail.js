@@ -148,7 +148,9 @@ function renderMovieDetail(data) {
   runtimeText.textContent = Number.isFinite(data.runtime) ? `${data.runtime}분` : '정보 없음';
 
   overviewText.textContent =
-    data.overview && data.overview.trim() !== '' ? data.overview : '개요 정보가 없습니다.';
+    data.overview && data.overview.trim() !== ''
+      ? data.overview
+      : '해당 언어의 줄거리가 존재하지 않습니다.';
 
   genreDd.textContent = '';
 
