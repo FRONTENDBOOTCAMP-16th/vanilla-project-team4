@@ -17,15 +17,15 @@
     <title>스크립트 디렉터스</title>
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/scripts/api/set_trend_movies.js"></script>
+    <script type="module" src="/src/scripts/api/set_upcoming_movies.js"></script>
   </head>
   <body class="wrap main-wrap">
-    <header></header>
-    <main class="container">
-      <h1 class="sr-only">스크립트 디벨로퍼스</h1>
+    <header>
+      <h1 class="sr-only">스크립트 디벨로퍼스 영화 정보 안내 서비스</h1>
       <section class="intro-banner-area" aria-labelledby="intro-banner">
-        <h2 id="intro-banner"><span>SCRIPT</span> <span>DEVELOPERS</span></h2>
+        <h2 id="intro-banner">SCRIPT<br />DEVELOPERS</h2>
         <div class="main-banner-background">
-          <video src="./src/assets/video/mainbanner.mp4" muted autoplay loop></video>
+          <video src="./src/assets/video/mainbanner.webm" muted autoplay loop></video>
         </div>
         <div class="team">
           <span>팀원:</span>
@@ -35,6 +35,8 @@
           <span>정인우</span>
         </div>
       </section>
+    </header>
+    <main class="container">
       <section class="trending-movies-area" aria-labelledby="trending-title">
         <h2 id="trending-title" class="area-title">트렌딩 TOP 10</h2>
 
@@ -89,7 +91,7 @@
         <h2 class="area-title quick-move-title" id="quickMove">빠른 이동</h2>
         <div class="quick-move-wrap">
           <article>
-            <a class="active" href="#">
+            <a class="active" href="./movie_list.html">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="32"
@@ -134,7 +136,7 @@
               이 사이트는 TMDB API를 사용한 웹 사이트입니다.<br />
               나만의 영화 웹 사이트를 만들어보세요
             </p>
-            <a href="#">바로가기</a>
+            <a href="https://www.themoviedb.org/?language=ko">바로가기</a>
           </div>
           <div class="advertisement-image">
             <img src="./src/assets/icon/tmdb-logo.svg" alt="the movie db" />
@@ -142,27 +144,9 @@
         </div>
       </section>
 
-      <!-- <section class="upcoming-area" aria-labelledby="upcomingMovies">
-        <h2 class="area-title upcoming-movies-title" id="upcomingMovies">개봉 예정 영화</h2>
-        <div class="card-carousel">
-          <ul class="movie-item-list"></ul>
-        </div>
-      </section> -->
-
-      <!-- 인터렉티브 웹 아이디어 -->
-      <section class="upcoming-area">
-        <h2>개봉 예정 영화</h2>
-        <div class="upcoming-wrap">
-          <div class="upcoming-date-button"></div>
-          <div class="upcoming-poster-wrap">
-            <div>COMING SOON</div>
-            <div class="upcoming-movie-wrap">
-              <div class="upcoming-movie-container"></div>
-            </div>
-
-            <div aria-live="polite" class="sr-only intro-upcoming"></div>
-          </div>
-        </div>
+      <section class="upcoming-area" aria-labelledby="upcoming">
+        <h2 id="upcoming">개봉 예정 영화</h2>
+        <ul class="movie-item-list"></ul>
       </section>
     </main>
     <footer></footer>
