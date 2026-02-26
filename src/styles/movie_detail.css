@@ -260,6 +260,7 @@
 .stills {
   display: flex;
   flex-direction: column;
+  color: #fff;
   gap: 24px;
   padding: 48px;
 }
@@ -272,18 +273,21 @@
 
 .stills-wrapper {
   position: relative;
-  /* 나중 버튼 추가 */
+  /* 나중 버튼 추가 대비 */
 }
 
 .stills-list {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 360px;
+  display: flex;
   gap: 20px;
   list-style: none;
   margin: 0;
   padding: 8px 0;
   overflow-x: auto;
+}
+
+.stills-item {
+  flex: 0 0 auto;
+  width: 360px;
 }
 
 .stills-card {
@@ -302,9 +306,7 @@
   display: block;
 }
 
-.reco {
-  /* 임시 */
-  border: 1px solid #e50914;
-  padding: 48px;
-  /*  */
+.stills-empty {
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.7);
 }
