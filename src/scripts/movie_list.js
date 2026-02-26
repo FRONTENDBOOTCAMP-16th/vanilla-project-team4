@@ -192,7 +192,7 @@ function renderMovies(movies) {
     const movieItem = createElement('li');
 
     // a
-    const movieLink = createElement('a', ['movie'], { href: '#none' });
+    const movieLink = createElement('a', ['movie'], { href: `movie_detail.html?id=${movie.id}` });
 
     // img
     const moviePoster = createElement('img', ['movie-poster'], {
