@@ -1,3 +1,7 @@
+.detail-container {
+  color: #fff;
+}
+
 /* 나중 삭제 - 헤더 없어서 넣어둔 것  */
 .movie-detail {
   margin-top: 20px;
@@ -5,18 +9,12 @@
 /*  */
 
 .movie-summary {
-  /* 나중 삭제 */
-  /* border: 1px solid #e50914; */
-  color: #fff;
-  /*  */
-
   display: flex;
   align-items: center;
   width: 100%;
   gap: 42px;
   padding: 48px;
   min-height: 710px;
-
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -151,11 +149,9 @@
   gap: 8px;
   border-radius: 8px;
   background: #e50914;
-  color: white;
   font-weight: 600;
   box-shadow: 0 25px 50px -12px rgba(229, 9, 20, 0.3);
 }
-
 /* .js-trailer 추가 예정 */
 
 .button-icon {
@@ -188,7 +184,6 @@
   flex-direction: column;
   gap: 20px;
   padding: 48px;
-  color: #fff;
 }
 
 .cast-header {
@@ -260,7 +255,6 @@
 .stills {
   display: flex;
   flex-direction: column;
-  color: #fff;
   gap: 24px;
   padding: 48px;
 }
@@ -309,4 +303,33 @@
 .stills-empty {
   padding: 16px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.reco {
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'title controls'
+    'carousel carousel';
+  align-items: center;
+  row-gap: 24px;
+}
+
+/* 컴포넌트 오버라이드 */
+.reco .area-title {
+  grid-area: title;
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.reco .carousel-controls {
+  grid-area: controls;
+  display: inline-flex;
+  gap: 10px;
+}
+
+.reco .card-carousel {
+  grid-area: carousel;
 }
