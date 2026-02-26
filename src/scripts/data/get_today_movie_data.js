@@ -18,6 +18,7 @@ export function getTodayMovieData(url, pageNum, maxIndex) {
       const pageMovies = (json.results ?? [])
         .filter((item) => (item.release_date ?? '') >= today)
         .map((item) => {
+          const movieid = item.id ?? item.id;
           const title = item.title ?? item.name ?? '제목 없음';
           const date = item.release_date ?? item.first_air_date ?? '0000-00-00';
           const imgPath = item.poster_path ?? item.backdrop_path ?? null;
@@ -25,6 +26,7 @@ export function getTodayMovieData(url, pageNum, maxIndex) {
           return {
             movieTitle: title,
             movieOpen: date,
+            movieId: movieid,
             movieImage: imgPath ? `${IMG_BASE}${imgPath}` : FALLBACK_IMG,
           };
         });
