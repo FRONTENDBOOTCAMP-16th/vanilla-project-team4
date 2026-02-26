@@ -100,6 +100,18 @@ fetch(stillsUrl, options)
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
 
+function renderEmptyState(listEl, message) {
+  if (!listEl) return;
+
+  listEl.textContent = '';
+
+  const li = document.createElement('li');
+  li.className = 'empty-state';
+  li.textContent = message;
+
+  listEl.appendChild(li);
+}
+
 function renderMovieDetail(data) {
   const movieSummary = document.querySelector('.movie-summary');
 
@@ -168,13 +180,12 @@ function renderCast(credits) {
   const castList = document.querySelector('.cast-list');
   const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
 
-  castList.textContent = '';
-
   if (castArr.length === 0) {
-    const li = createElement('li', ['cast-empty'], null, '배우 정보가 없습니다.');
-    castList.appendChild(li);
+    renderEmptyState(castList, '배우 정보가 없습니다.');
     return;
   }
+
+  castList.textContent = '';
 
   castArr.slice(0, 10).forEach((actor) => {
     castList.appendChild(createCastItem(actor));
@@ -221,11 +232,7 @@ function renderStills(data) {
   const stills = backdrops.filter((b) => b?.file_path && (b?.iso_639_1 ?? null) === null);
 
   if (stills.length === 0) {
-    const li = document.createElement('li');
-    li.className = 'stills-empty';
-
-    li.textContent = '스틸컷 이미지가 없습니다.';
-    list.appendChild(li);
+    renderEmptyState(list, '스틸컷 이미지가 없습니다.');
     return;
   }
 
@@ -258,9 +265,7 @@ function renderSimilarMovies(movieId) {
 
   getMovieData(similarUrl, 10).then((data) => {
     if (!data || data.length === 0) {
-      const li = document.createElement('li');
-      li.textContent = '비슷한 영화가 없습니다.';
-      listEl.appendChild(li);
+      renderEmptyState(listEl, '비슷한 영화가 없습니다.');
       return;
     }
     createMovieList(data, listEl);
