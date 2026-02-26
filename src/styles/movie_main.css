@@ -3,9 +3,6 @@
   a {
     color: var(--text-title);
   }
-  section {
-    background-color: var(--bg-section);
-  }
 
   .area-title {
     font-size: 2rem;
@@ -15,18 +12,42 @@
 
 .intro-banner-area {
   position: relative;
-  aspect-ratio: 1280/674;
+  aspect-ratio: 4 / 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 
-  h2 {
+  .main-banner-background {
+    position: absolute;
+    inset: 0;
+  }
+  .main-banner-background::after {
+    background-color: rgba(0, 0, 0, 0.466);
+    content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    font-size: 5rem;
+    top: 0;
+    left: 0;
+  }
+  video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+  }
+
+  h2 {
+    position: absolute;
+    width: 1280px;
+    height: 100%;
+    font-size: 8rem;
     z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 30%;
 
     span {
       display: block;
@@ -43,22 +64,11 @@
     justify-content: end;
     align-items: flex-end;
     padding: 3rem;
-  }
-  .main-banner-background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-  .main-banner-background::after {
-    background-color: rgba(0, 0, 0, 0.466);
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+
+    span {
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
   }
 }
 
@@ -156,14 +166,8 @@
   }
 
   .movie-info-detail dd {
-    margin: 0;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
-  }
-
-  .rate {
-    margin-top: 0.75rem;
-    font-weight: 700;
   }
 }
 
@@ -253,48 +257,51 @@
 
 .upcoming-area {
   --poster-w: 324px;
-  --poster-h: 456px;
   --poster-gap: 2rem;
   --poster-radius: 1rem;
   padding: 3rem;
 
   h2 {
-    text-align: center;
     font-size: 2rem;
     margin-bottom: 2rem;
   }
+  .movie-item-list {
+    display: flex;
+    justify-content: center;
+    gap: var(--poster-gap);
+  }
 }
 
-.upcoming-wrap {
-  display: flex;
-  justify-content: center;
-  gap: var(--poster-gap);
-}
-
-.upcoming-poster-wrap {
-  border: 10px solid black;
-  text-align: center;
-
+.upcoming-area .movie-item {
   > div:first-child {
     font-size: 1.3rem;
     font-weight: 600;
     background-color: black;
     text-shadow: 0 0 2rem white;
   }
-}
 
-.upcoming-movie-wrap {
-  width: var(--poster-w);
-  height: var(--poster-h);
-  overflow: hidden;
-
-  .upcoming-movie-container {
-    transition: transform 0.4s ease-in;
+  li {
+    width: var(--poster-w);
+    aspect-ratio: 2/3;
+    overflow: hidden;
   }
 
   img {
+    border: 1.3rem solid black;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.628);
     width: var(--poster-w);
-    height: var(--poster-h);
+    aspect-ratio: 2/3;
     display: block;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-top: 1em;
+  }
+
+  time {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
   }
 }
