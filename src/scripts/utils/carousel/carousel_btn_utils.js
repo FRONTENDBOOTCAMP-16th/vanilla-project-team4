@@ -33,7 +33,10 @@ export function buttonUtil() {
     setTransition(true, movieItemList);
   }, 100);
 
-  nextBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', (e) => {
+    const button = e.target.closest('button');
+    if (!button) return;
+
     if (currentIndex >= maxIndex) return;
 
     currentIndex += 1;
@@ -50,7 +53,11 @@ export function buttonUtil() {
     }
   });
 
-  prevBtn.addEventListener('click', () => {
+  // 이전버튼
+  prevBtn.addEventListener('click', (e) => {
+    const button = e.target.closest('button');
+    if (!button) return;
+
     currentIndex -= 1;
     moveToIndex();
 
