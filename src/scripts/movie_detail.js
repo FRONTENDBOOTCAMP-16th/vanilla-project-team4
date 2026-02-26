@@ -225,9 +225,9 @@ function renderStills(data) {
 
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
   const SIZE = 'w780'; 
-  const max = 30;
+  const MAX_STILLS = 30;
 
-  stills.slice(0, max).forEach((item, idx) => {
+  stills.slice(0, MAX_STILLS).forEach((item, idx) => {
     const li = document.createElement('li');
     li.className = 'stills-item';
 
