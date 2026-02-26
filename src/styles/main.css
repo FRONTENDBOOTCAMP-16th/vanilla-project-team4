@@ -7,6 +7,7 @@
 
 @import './common/_animation.css' layer(utilities);
 @import './common/_a11y.css' layer(utilities);
+@import './common/_loading.css' layer(utilities);
 
 @import './movie_list.css' layer(subpages);
 @import './movie_detail.css' layer(subpages);
