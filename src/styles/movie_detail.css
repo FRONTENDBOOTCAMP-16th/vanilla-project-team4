@@ -83,7 +83,7 @@
   font-size: 60px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -181,7 +181,7 @@
   line-height: 1.6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 8;
   overflow: hidden;
 }
 
@@ -260,7 +260,7 @@
 }
 
 .stills-item {
-  flex: 0 0 auto;
+  flex: 0 0 calc((100% - 20px) / 2.5);
   width: 360px;
 }
 
