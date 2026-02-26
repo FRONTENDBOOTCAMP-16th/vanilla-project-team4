@@ -21,6 +21,9 @@ let nextBtnEl;
 // 장르 (id -> name)
 let genreMap = {};
 
+// 선택된 장르 id (null이면 전체)
+let selectedGenreId = null;
+
 /*
 1. init함수 실행
 2. 실행된 init함수 내부, 클릭이벤트 연결 및 장르 api 실행
@@ -46,7 +49,11 @@ function init() {
   prevBtnEl?.addEventListener('click', onClickPrev);
   nextBtnEl?.addEventListener('click', onClickNext);
 
-  fetchGenres();
+  // 장르 라디오 change 이벤트 연결
+  const genreForm = document.querySelector('.genre-list');
+  genreForm?.addEventListener('change', onChangeGenre);
+
+  fetchGenres(); // 장르 - 1
 }
 
 // 장르 API - 3
@@ -58,10 +65,15 @@ async function fetchGenres() {
     );
     const data = await res.json();
 
+    console.log('확인', data);
     genreMap = {};
     data.genres.forEach((genre) => {
       genreMap[genre.id] = genre.name;
     });
+
+    // 장르 라디오를 API 기반으로 자동 생성
+    renderGenreRadios(data.genres);
+    console.log('확인2', data.genres);
 
     // 장르 세팅 끝 -> 1페이지 영화 호출
     fetchAndRenderMovies(1);
@@ -70,13 +82,58 @@ async function fetchGenres() {
   }
 }
 
+// 장르 라디오 자동 생성
+function renderGenreRadios(genres) {
+  const wrap = document.querySelector('.genres');
+  if (!wrap) return;
+
+  // 기존 하드코딩 라디오 제거 후 다시 생성
+  wrap.innerHTML = '';
+
+  // 1) 전체
+  const allId = 'genre-all';
+  const allInput = createElement('input', [], {
+    type: 'radio',
+    name: 'genre',
+    id: allId,
+    checked: true,
+  });
+  allInput.dataset.genreId = ''; // 전체는 빈값
+
+  const allLabel = createElement('label', [], { for: allId }, '전체');
+
+  wrap.appendChild(allInput);
+  wrap.appendChild(allLabel);
+
+  // 2) API 장르들
+  genres.forEach((genre) => {
+    const inputId = `genre-${genre.id}`;
+
+    const input = createElement('input', [], {
+      type: 'radio',
+      name: 'genre',
+      id: inputId,
+    });
+    input.dataset.genreId = String(genre.id);
+
+    const label = createElement('label', [], { for: inputId }, genre.name);
+
+    wrap.appendChild(input);
+    wrap.appendChild(label);
+  });
+}
+
 /* 영화 목록 API */
 // 영화 API (URL만듬) - 6
 function getDiscoverUrl(page = 1) {
-  return (
+  const base =
     'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR' +
-    `&page=${page}&sort_by=popularity.desc`
-  );
+    `&page=${page}&sort_by=popularity.desc`;
+
+  // 장르 선택되어 있으면 필터링 파라미터 추가
+  const genreParam = selectedGenreId ? `&with_genres=${selectedGenreId}` : '';
+
+  return base + genreParam;
 }
 
 // 영화 데이터 가져오기 (서버에서 데이터 가져오기) - 5
@@ -99,8 +156,6 @@ async function fetchAndRenderMovies(page = 1) {
 
     renderMovies(data.results); // 영화 목록 렌더링 함수 실행 - 7
     renderPagination(currentPage, totalPages); // 페이지 렌더링 함수 실행 - 8
-    //console.log('currentPage', currentPage);
-    //console.log('totalPages', totalPages);
   } catch (err) {
     console.error(err);
   } finally {
@@ -178,6 +233,18 @@ function onClickNext() {
   fetchAndRenderMovies(nextGroupFirst);
 }
 
+// 장르 선택 변경 시 실행
+function onChangeGenre(e) {
+  const input = e.target.closest('input[type="radio"][name="genre"]');
+  if (!input) return;
+
+  const id = input.dataset.genreId; // "" 또는 "28"
+  selectedGenreId = id ? Number(id) : null;
+
+  // 장르 바뀌면 1페이지부터 다시 호출
+  fetchAndRenderMovies(1);
+}
+
 // 영화 목록 렌더링
 function renderMovies(movies) {
   movieLists.innerHTML = ''; // 기존 내용 초기화
@@ -227,7 +294,7 @@ function renderMovies(movies) {
       'time',
       [],
       { datetime: movie.release_date },
-      movie.release_date.slice(0, 4),
+      movie.release_date?.slice(0, 4) ?? '',
     );
 
     // 장르
@@ -253,18 +320,20 @@ function renderMovies(movies) {
       movieRating.classList.add('rate-high');
     }
 
-    // console.log(movieLink);
     movieItem.appendChild(movieLink);
 
     movieLink.appendChild(moviePoster);
     movieLink.appendChild(movieInfo);
+
     movieInfo.appendChild(movieTitle);
     movieInfo.appendChild(movieDescription);
     movieInfo.appendChild(movieDetail);
+
     movieDetail.appendChild(movieYearDt);
     movieDetail.appendChild(movieYearDd);
     movieDetail.appendChild(movieGenreDt);
     movieDetail.appendChild(movieGenreDd);
+
     movieYearDd.appendChild(movieYearDdTime);
 
     movieLink.appendChild(movieRate);
