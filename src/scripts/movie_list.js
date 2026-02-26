@@ -199,7 +199,7 @@ function renderMovies(movies) {
       alt: movie.title ?? '',
       src: movie.poster_path
         ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
-        : './basic.jpg',
+        : '/src/assets/fallback-backdrop.webp',
     });
 
     // 영화 info
