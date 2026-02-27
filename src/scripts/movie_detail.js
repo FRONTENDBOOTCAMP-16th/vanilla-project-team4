@@ -51,7 +51,6 @@ if (movieNum === null) {
 const detailUrl = `https://api.themoviedb.org/3/movie/${movieNum}?language=ko-KR`;
 const creditsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/credits?language=ko-KR`;
 const stillsUrl = `https://api.themoviedb.org/3/movie/${movieNum}/images?include_image_language=null`;
-const videosUrl = `https://api.themoviedb.org/3/movie/${movieNum}/videos?language=ko-KR&include_video_language=ko,en,null`;
 
 fetch(detailUrl, options)
   .then((res) => {
@@ -100,46 +99,6 @@ fetch(stillsUrl, options)
     console.error(err);
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
-
-fetch(videosUrl, options)
-  .then((res) => {
-    if (!res.ok) return null;
-    return res.json();
-  })
-  .then((data) => {
-    if (!data) return;
-    console.log('트레일러', data);
-    // 여기서 Trailer/Teaser 중 하나 고르기
-    const results = Array.isArray(data?.results) ? data.results : [];
-
-    // 1순위: YouTube Trailer
-    const trailer =
-      results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
-      // 2순위: YouTube Teaser
-      results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
-      // 3순위: 그 외 YouTube 아무거나
-      results.find((v) => v?.site === 'YouTube' && v?.key) ||
-      null;
-
-    // 다음 단계에서 모달 열 때 쓰려고 전역/상태로 저장할 예정
-    window.__TRAILER_KEY__ = trailer?.key ?? null;
-  })
-  .catch((err) => {
-    console.error(err);
-    window.__TRAILER_KEY__ = null;
-  });
-
-function renderEmptyState(listEl, message) {
-  if (!listEl) return;
-
-  listEl.textContent = '';
-
-  const li = document.createElement('li');
-  li.className = 'empty-state';
-  li.textContent = message;
-
-  listEl.appendChild(li);
-}
 
 function renderMovieDetail(data) {
   const movieSummary = document.querySelector('.movie-summary');
@@ -305,6 +264,48 @@ function renderSimilarMovies(movieId) {
 
 renderSimilarMovies(movieNum);
 
+const videosUrl = `https://api.themoviedb.org/3/movie/${movieNum}/videos?language=ko-KR&include_video_language=ko,en,null`;
+
+fetch(videosUrl, options)
+  .then((res) => {
+    if (!res.ok) return null;
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return;
+    console.log('트레일러', data);
+    // 여기서 Trailer/Teaser 중 하나 고르기
+    const results = Array.isArray(data?.results) ? data.results : [];
+
+    // 1순위: YouTube Trailer
+    const trailer =
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
+      // 2순위: YouTube Teaser
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
+      // 3순위: 그 외 YouTube 아무거나
+      results.find((v) => v?.site === 'YouTube' && v?.key) ||
+      null;
+
+    // 다음 단계에서 모달 열 때 쓰려고 전역/상태로 저장할 예정
+    window.__TRAILER_KEY__ = trailer?.key ?? null;
+  })
+  .catch((err) => {
+    console.error(err);
+    window.__TRAILER_KEY__ = null;
+  });
+
+function renderEmptyState(listEl, message) {
+  if (!listEl) return;
+
+  listEl.textContent = '';
+
+  const li = document.createElement('li');
+  li.className = 'empty-state';
+  li.textContent = message;
+
+  listEl.appendChild(li);
+}
+
 const trailerBtn = document.querySelector('.js-trailer');
 const trailerModal = document.getElementById('trailer-modal');
 const closeBtn = trailerModal?.querySelector('.trailer-close');
@@ -318,31 +319,58 @@ function openTrailerModal() {
   const key = window.__TRAILER_KEY__;
 
   trailerModal.hidden = false;
-  document.body.style.overflow = 'hidden';
+  trailerModal.classList.remove('is-closing', 'is-open');
+
+  if (iframe) {
+    iframe.src = '';
+    iframe.hidden = false;
+  }
 
   if (!key) {
     if (iframe) iframe.hidden = true;
     if (emptyMessage) emptyMessage.hidden = false;
   } else {
     if (emptyMessage) emptyMessage.hidden = true;
-    if (iframe) {
-      iframe.hidden = false;
-      iframe.src = `https://www.youtube.com/embed/${key}?autoplay=1&rel=0`;
-    }
   }
 
-  closeBtn?.focus();
+  document.body.style.overflow = 'hidden';
+  trailerBtn?.setAttribute('aria-expanded', 'true');
+
+  requestAnimationFrame(() => {
+    trailerModal.classList.add('is-open');
+    closeBtn?.focus();
+  });
+
+  if (key) {
+    window.setTimeout(() => {
+      if (trailerModal.hidden) return;
+      if (!trailerModal.classList.contains('is-open')) return;
+
+      if (iframe) {
+        iframe.src = `https://www.youtube.com/embed/${key}?rel=0`;
+      }
+    }, 300);
+  }
 }
 
 function closeTrailerModal() {
   if (!trailerModal) return;
 
-  trailerModal.hidden = true;
+  trailerModal.classList.remove('is-open');
+  trailerModal.classList.add('is-closing');
   document.body.style.overflow = '';
 
   if (iframe) iframe.src = '';
+  if (emptyMessage) emptyMessage.hidden = true;
+  if (iframe) iframe.hidden = false;
 
+  trailerBtn?.setAttribute('aria-expanded', 'false');
   trailerBtn?.focus();
+
+  window.setTimeout(() => {
+    trailerModal.hidden = true;
+    trailerModal.classList.remove('is-closing');
+  }, 300);
 }
 
 if (trailerBtn && trailerModal) {

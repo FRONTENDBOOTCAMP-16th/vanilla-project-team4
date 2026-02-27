@@ -56,6 +56,7 @@
                 type="button"
                 aria-haspopup="dialog"
                 aria-controls="trailer-modal"
+                aria-expanded="false"
                 class="button-trailer js-trailer"
               >
                 <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -116,7 +117,11 @@
         <h2 id="trailer-title" class="sr-only">예고편</h2>
 
         <div class="trailer-panel" role="document">
-          <button type="button" class="trailer-close" aria-label="예고편 닫기">×</button>
+          <div class="trailer-head">
+            <p class="trailer-head-title" aria-hidden="true">트레일러 재생</p>
+
+            <button type="button" class="trailer-close" aria-label="예고편 닫기">×</button>
+          </div>
 
           <div class="trailer-frame">
             <p class="trailer-empty" hidden>예고편 영상이 없습니다.</p>
