@@ -22,7 +22,7 @@ export function createMovieItem({
   });
 
   const movieInfoDiv = createElement('div', ['movie-info']);
-  const movieTitleH3 = createElement('h3', ['info-title'], null, movieTitle);
+  const movieTitleH3 = createElement('h3', ['info-title', 'aria-hidden'], null, movieTitle);
   const movieDescriptionP = createElement('p', ['info-description'], null, movieDescription);
 
   const movieInfoDetailDl = createElement('dl', ['movie-info-detail']);
