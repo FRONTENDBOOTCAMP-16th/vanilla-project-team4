@@ -100,18 +100,6 @@ fetch(stillsUrl, options)
     redirectHome('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
   });
 
-function renderEmptyState(listEl, message) {
-  if (!listEl) return;
-
-  listEl.textContent = '';
-
-  const li = document.createElement('li');
-  li.className = 'empty-state';
-  li.textContent = message;
-
-  listEl.appendChild(li);
-}
-
 function renderMovieDetail(data) {
   const movieSummary = document.querySelector('.movie-summary');
 
@@ -275,3 +263,148 @@ function renderSimilarMovies(movieId) {
 }
 
 renderSimilarMovies(movieNum);
+
+const videosUrl = `https://api.themoviedb.org/3/movie/${movieNum}/videos?language=ko-KR&include_video_language=ko,en,null`;
+
+fetch(videosUrl, options)
+  .then((res) => {
+    if (!res.ok) return null;
+    return res.json();
+  })
+  .then((data) => {
+    if (!data) return;
+    console.log('트레일러', data);
+    // 여기서 Trailer/Teaser 중 하나 고르기
+    const results = Array.isArray(data?.results) ? data.results : [];
+
+    // 1순위: YouTube Trailer
+    const trailer =
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
+      // 2순위: YouTube Teaser
+      results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
+      // 3순위: 그 외 YouTube 아무거나
+      results.find((v) => v?.site === 'YouTube' && v?.key) ||
+      null;
+
+    // 다음 단계에서 모달 열 때 쓰려고 전역/상태로 저장할 예정
+    window.__TRAILER_KEY__ = trailer?.key ?? null;
+  })
+  .catch((err) => {
+    console.error(err);
+    window.__TRAILER_KEY__ = null;
+  });
+
+function renderEmptyState(listEl, message) {
+  if (!listEl) return;
+
+  listEl.textContent = '';
+
+  const li = document.createElement('li');
+  li.className = 'empty-state';
+  li.textContent = message;
+
+  listEl.appendChild(li);
+}
+
+const trailerBtn = document.querySelector('.js-trailer');
+const trailerModal = document.getElementById('trailer-modal');
+const closeBtn = trailerModal?.querySelector('.trailer-close');
+const iframe = trailerModal?.querySelector('.trailer-iframe');
+
+const emptyMessage = trailerModal?.querySelector('.trailer-empty');
+
+function openTrailerModal() {
+  if (!trailerModal) return;
+
+  const key = window.__TRAILER_KEY__;
+
+  trailerModal.hidden = false;
+  trailerModal.classList.remove('is-closing', 'is-open');
+
+  if (iframe) {
+    iframe.src = '';
+    iframe.hidden = false;
+  }
+
+  if (!key) {
+    if (iframe) iframe.hidden = true;
+    if (emptyMessage) emptyMessage.hidden = false;
+  } else {
+    if (emptyMessage) emptyMessage.hidden = true;
+  }
+
+  lockScroll();
+  trailerBtn?.setAttribute('aria-expanded', 'true');
+
+  requestAnimationFrame(() => {
+    trailerModal.classList.add('is-open');
+    closeBtn?.focus();
+  });
+
+  if (key) {
+    window.setTimeout(() => {
+      if (trailerModal.hidden) return;
+      if (!trailerModal.classList.contains('is-open')) return;
+
+      if (iframe) {
+        iframe.src = `https://www.youtube.com/embed/${key}?rel=0`;
+      }
+    }, 300);
+  }
+}
+
+function closeTrailerModal() {
+  if (!trailerModal) return;
+
+  trailerModal.classList.remove('is-open');
+  trailerModal.classList.add('is-closing');
+
+  if (iframe) iframe.src = '';
+  if (emptyMessage) emptyMessage.hidden = true;
+  if (iframe) iframe.hidden = false;
+
+  trailerBtn?.setAttribute('aria-expanded', 'false');
+  trailerBtn?.focus();
+
+  window.setTimeout(() => {
+    trailerModal.hidden = true;
+    trailerModal.classList.remove('is-closing');
+
+    unlockScroll();
+  }, 300);
+}
+
+if (trailerBtn && trailerModal) {
+  trailerBtn.addEventListener('click', openTrailerModal);
+  closeBtn?.addEventListener('click', closeTrailerModal);
+
+  trailerModal.addEventListener('click', (e) => {
+    if (e.target === trailerModal) closeTrailerModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!trailerModal.hidden && e.key === 'Escape') closeTrailerModal();
+  });
+}
+
+let savedScrollY = 0;
+
+function lockScroll() {
+  savedScrollY = window.scrollY || 0;
+  const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+  document.documentElement.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`);
+
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.classList.add('modal-open');
+}
+
+function unlockScroll() {
+  document.body.classList.remove('modal-open');
+
+  document.body.style.top = '';
+  document.documentElement.style.removeProperty('--scrollbar-width');
+
+  window.scrollTo(0, savedScrollY);
+  savedScrollY = 0;
+}
