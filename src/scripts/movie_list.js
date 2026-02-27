@@ -186,13 +186,13 @@ async function fetchAndRenderMovies(page = 1) {
 
     const MAX_PAGES = 500;
     totalPages = Math.min(data.total_pages ?? 1, MAX_PAGES);
-
+    //console.log(data);
     const movies = data.results ?? [];
 
     renderMovies(movies);
     renderPagination(currentPage, totalPages);
 
-    // ✅ 전체 개수로 바꾸기
+    // 전체 개수로 바꾸기
     updateResultHeader(data.total_results ?? movies.length);
   } catch (err) {
     console.error(err);
@@ -296,7 +296,7 @@ function renderMovies(movies) {
   movies.forEach((movie) => {
     const ids = movie.genre_ids ?? [];
 
-    // ✅ 선택된 장르가 영화에 있으면 맨 앞으로 보내기
+    // 선택된 장르가 영화에 있으면 맨 앞으로 보내기
     const orderedIds =
       selectedGenreId && ids.includes(selectedGenreId)
         ? [selectedGenreId, ...ids.filter((id) => id !== selectedGenreId)]
