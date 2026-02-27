@@ -1,4 +1,4 @@
-import { createElement } from '../utils/create_element_utils';
+import { createElement } from '../../utils/create_element_utils';
 const itemList = document.querySelector('.movie-item-list');
 export function countItem(index) {
   const p = createElement(
