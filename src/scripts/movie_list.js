@@ -6,19 +6,23 @@ import { createLoadingOverlay } from './utils/loading.js';
  * 영화 목록 페이지
  * - 장르 목록을 먼저 불러와 라디오 버튼을 생성한다.
  * - 선택된 장르/페이지에 따라 TMDB discover API를 호출한다. (getDiscoverUrl)
- * - 영화 리스트와 페이지네이션을 렌더링한다.
+ * - 영화 리스트 + 결과 헤더(장르명/개수) + 페이지네이션을 렌더링한다.
  */
 
 /* =========================
- * 1. 변수
- * - Elements
- * - State
+ * 1. 변수 (Elements & State)
  * ========================= */
 const loading = createLoadingOverlay('영화 목록을 불러오는 중...');
 
 const BODY = document.querySelector('body');
 const movieArea = BODY.querySelector('.movie-area');
 const movieLists = movieArea.querySelector('.lists');
+
+// 결과 헤더/카운트/없음 문구 DOM
+const resultTitleEl = BODY.querySelector('#genre-result');
+const resultCountEl = resultTitleEl?.querySelector('.result-total .num');
+const noResultsEl = BODY.querySelector('.no-results');
+const filterStatusEl = BODY.querySelector('#filter-status');
 
 let currentPage = 1; // 현재 페이지
 let totalPages = 1; // 전체 페이지(서버 응답 기준, 최대 500 제한)
@@ -58,6 +62,9 @@ function init() {
   // 장르 change event
   const genreForm = document.querySelector('.genre-list');
   genreForm?.addEventListener('change', onChangeGenre);
+
+  // no-results 기본 숨김(HTML에 hidden 안 넣었을 때 대비)
+  if (noResultsEl) noResultsEl.hidden = true;
 
   // 장르 세팅 -> 완료 후 1페이지 호출
   fetchGenres();
@@ -166,7 +173,7 @@ async function fetchMovies(page = 1) {
 }
 
 /**
- * 영화 목록 + 페이지네이션을 함께 갱신한다.
+ * 영화 목록 + 결과 헤더 + 페이지네이션을 함께 갱신한다.
  * - 로딩 표시/숨김을 포함한다.
  * - total_pages는 TMDB 제한에 맞춰 최대 500으로 캡한다.
  */
@@ -180,8 +187,13 @@ async function fetchAndRenderMovies(page = 1) {
     const MAX_PAGES = 500;
     totalPages = Math.min(data.total_pages ?? 1, MAX_PAGES);
 
-    renderMovies(data.results);
+    const movies = data.results ?? [];
+
+    renderMovies(movies);
     renderPagination(currentPage, totalPages);
+
+    // ✅ 전체 개수로 바꾸기
+    updateResultHeader(data.total_results ?? movies.length);
   } catch (err) {
     console.error(err);
   } finally {
@@ -282,10 +294,17 @@ function renderMovies(movies) {
   movieLists.innerHTML = '';
 
   movies.forEach((movie) => {
-    const genreText = (movie.genre_ids ?? [])
-      .map((id) => genreMap[id])
-      .filter(Boolean)
-      .join(', ');
+    const ids = movie.genre_ids ?? [];
+
+    // ✅ 선택된 장르가 영화에 있으면 맨 앞으로 보내기
+    const orderedIds =
+      selectedGenreId && ids.includes(selectedGenreId)
+        ? [selectedGenreId, ...ids.filter((id) => id !== selectedGenreId)]
+        : ids;
+
+    const names = orderedIds.map((id) => genreMap[id]).filter(Boolean);
+
+    const genreText = names.slice(0, 3).join(', ') + (names.length > 3 ? '...' : '');
 
     // li
     const movieItem = createElement('li');
@@ -339,7 +358,7 @@ function renderMovies(movies) {
       `★ ${ratingText}`,
     );
 
-    if ((movie.vote_average ?? 0) >= 7.5) {
+    if ((movie.vote_average ?? 0) >= 8) {
       movieRating.classList.add('rate-high');
     }
 
@@ -368,11 +387,41 @@ function renderMovies(movies) {
 }
 
 /* =========================
- * Helpers
+ * 6. Helpers
  * ========================= */
 /**
  * 현재 page가 속한 그룹의 시작 페이지를 구한다. (1, 11, 21, ...)
  */
 function getGroupStart(page) {
   return Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+}
+
+/**
+ * 선택된 장르 이름을 반환한다. (없으면 "전체")
+ */
+function getSelectedGenreName() {
+  if (!selectedGenreId) return '전체';
+  return genreMap[selectedGenreId] ?? '전체';
+}
+
+/**
+ * 결과 헤더(장르명/개수)와 "결과 없음" 문구를 갱신한다.
+ * - count === 0 이면 no-results를 보여준다.
+ */
+function updateResultHeader(count) {
+  if (!resultTitleEl) return;
+
+  const name = getSelectedGenreName();
+
+  // h2의 첫 번째 텍스트 노드를 찾아 장르명 부분만 교체
+  const firstTextNode = [...resultTitleEl.childNodes].find((n) => n.nodeType === Node.TEXT_NODE);
+  if (firstTextNode) firstTextNode.nodeValue = `${name} `;
+
+  if (resultCountEl) resultCountEl.textContent = String(count);
+
+  if (noResultsEl) noResultsEl.hidden = count !== 0;
+
+  if (filterStatusEl) {
+    filterStatusEl.textContent = `${name}로 필터링 되었습니다. 결과 ${count}개`;
+  }
 }

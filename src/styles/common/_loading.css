@@ -5,12 +5,12 @@
   place-items: center;
   z-index: 9;
 
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle at 50% 35%,
     rgba(229, 9, 20, 0.12),
     rgba(0, 0, 0, 0.72) 45%,
     rgba(0, 0, 0, 0.86) 100%
-  );
+  ); */
 
   backdrop-filter: blur(6px);
 
