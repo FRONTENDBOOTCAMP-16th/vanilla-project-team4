@@ -331,60 +331,126 @@
 }
 
 .trailer-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   inset: 0;
   z-index: 1000;
   background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
 }
 
 .trailer-modal .trailer-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   width: min(960px, 100%);
   aspect-ratio: 16 / 9;
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
-  position: relative;
+
+  transform: translateY(8px) scale(0.98);
+  transition: transform 300ms ease;
+}
+
+.trailer-modal .trailer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trailer-modal .trailer-head-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .trailer-modal .trailer-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: static;
   width: 40px;
   height: 40px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-size: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 22px;
+  line-height: 1;
   cursor: pointer;
 }
 
-.trailer-modal .trailer-frame,
-.trailer-modal .trailer-iframe {
+.trailer-modal .trailer-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.trailer-modal .trailer-close:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+.trailer-modal .trailer-frame {
+  position: relative;
+  flex: 1;
   width: 100%;
   height: 100%;
 }
 
 .trailer-modal .trailer-iframe {
-  border: 0;
   display: block;
-  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0 0 12px 12px;
 }
 
 .trailer-modal .trailer-empty {
-  position: absolute;
-  inset: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
+  position: absolute;
+  inset: 0;
   font-size: 18px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
+}
+
+.trailer-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.trailer-modal.is-open .trailer-panel {
+  transform: translateY(0) scale(1);
+}
+
+.trailer-modal.is-closing {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.trailer-modal.is-closing .trailer-panel {
+  transform: translateY(8px) scale(0.98);
+}
+
+/* 접근성: 모션 최소화 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .trailer-modal,
+  .trailer-modal .trailer-panel {
+    transition: none;
+  }
 }
