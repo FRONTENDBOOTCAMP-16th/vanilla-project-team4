@@ -333,7 +333,7 @@ function openTrailerModal() {
     if (emptyMessage) emptyMessage.hidden = true;
   }
 
-  document.body.style.overflow = 'hidden';
+  lockScroll();
   trailerBtn?.setAttribute('aria-expanded', 'true');
 
   requestAnimationFrame(() => {
@@ -358,7 +358,6 @@ function closeTrailerModal() {
 
   trailerModal.classList.remove('is-open');
   trailerModal.classList.add('is-closing');
-  document.body.style.overflow = '';
 
   if (iframe) iframe.src = '';
   if (emptyMessage) emptyMessage.hidden = true;
@@ -370,6 +369,8 @@ function closeTrailerModal() {
   window.setTimeout(() => {
     trailerModal.hidden = true;
     trailerModal.classList.remove('is-closing');
+
+    unlockScroll();
   }, 300);
 }
 
@@ -384,4 +385,26 @@ if (trailerBtn && trailerModal) {
   document.addEventListener('keydown', (e) => {
     if (!trailerModal.hidden && e.key === 'Escape') closeTrailerModal();
   });
+}
+
+let savedScrollY = 0;
+
+function lockScroll() {
+  savedScrollY = window.scrollY || 0;
+  const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+  document.documentElement.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`);
+
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.classList.add('modal-open');
+}
+
+function unlockScroll() {
+  document.body.classList.remove('modal-open');
+
+  document.body.style.top = '';
+  document.documentElement.style.removeProperty('--scrollbar-width');
+
+  window.scrollTo(0, savedScrollY);
+  savedScrollY = 0;
 }
