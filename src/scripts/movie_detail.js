@@ -193,7 +193,7 @@ function renderCast(credits) {
     if (moreBtn) {
       moreBtn.disabled = true;
       moreBtn.setAttribute('aria-expanded', 'false');
-      moreBtn.textContent = '배우 목록 더보기 >';
+      moreBtn.textContent = '배우 목록 더보기';
     }
 
     renderEmptyState(castList, '배우 정보가 없습니다.');
@@ -212,7 +212,7 @@ function renderCast(credits) {
   if (moreBtn) {
     moreBtn.disabled = !needsMore;
     moreBtn.setAttribute('aria-expanded', String(isCastExpanded));
-    moreBtn.textContent = isCastExpanded ? '< 배우 목록 접기' : '배우 목록 더보기 >';
+    moreBtn.textContent = isCastExpanded ? '배우 목록 접기' : '배우 목록 더보기';
   }
 
   castList.textContent = '';
@@ -596,7 +596,7 @@ if (castMoreBtn) {
     }
 
     castMoreBtn.setAttribute('aria-expanded', String(isCastExpanded));
-    castMoreBtn.textContent = isCastExpanded ? '< 배우 목록 접기' : '배우 목록 더보기 >';
+    castMoreBtn.textContent = isCastExpanded ? '배우 목록 접기' : '배우 목록 더보기';
 
     renderCast({ cast });
 
