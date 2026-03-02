@@ -3,18 +3,6 @@ import { createElement } from '../utils/create_element_utils.js';
 export function renderEmptyState(listEl, message) {
   if (!listEl) return;
 
-  listEl.textContent = '';
-
-  const li = document.createElement('li');
-  li.className = 'empty-state';
-  li.textContent = message;
-
-  listEl.appendChild(li);
-}
-
-export function renderEmptyState(listEl, message) {
-  if (!listEl) return;
-
   const li = document.createElement('li');
   li.className = 'empty-state';
   li.textContent = message;
@@ -84,20 +72,22 @@ export function renderMovieDetail(ui, data) {
 
   if (!genreDd) return;
 
-  genreDd.textContent = '';
-
   if (Array.isArray(data.genres) && data.genres.length) {
+    const frag = document.createDocumentFragment();
+
     data.genres.forEach((g) => {
-      const span = createElement('span', ['genre-item'], null, g.name ?? '');
-      genreDd.appendChild(span);
+      frag.appendChild(createElement('span', ['genre-item'], null, g.name ?? ''));
     });
+
+    genreDd.replaceChildren(frag); // 🔥 여기 필수
   } else {
-    genreDd.appendChild(createElement('span', ['genre-item'], null, '정보 없음'));
+    genreDd.replaceChildren(createElement('span', ['genre-item'], null, '정보 없음'));
   }
 }
 
 export function createCastItem(actor) {
   const li = createElement('li', ['cast-item']);
+
   const figure = createElement('figure', ['cast-avatar']);
   const img = createElement('img');
 
@@ -109,7 +99,6 @@ export function createCastItem(actor) {
 
   img.src = profilePath;
   img.alt = actor && actor.name ? `${actor.name} 프로필` : '배우 프로필';
-
   img.onerror = () => {
     img.onerror = null;
     img.src = fallbackProfile;
@@ -123,10 +112,13 @@ export function createCastItem(actor) {
       ? actor.character
       : '배역 정보 없음';
 
-  li.appendChild(figure);
-  li.appendChild(createElement('h3', ['cast-name'], null, nameText));
-  li.appendChild(createElement('p', ['cast-role'], null, roleText));
+  const nameEl = createElement('h3', ['cast-name'], null, nameText);
+  const roleEl = createElement('p', ['cast-role'], null, roleText);
 
+  const frag = document.createDocumentFragment();
+  frag.append(figure, nameEl, roleEl);
+
+  li.appendChild(frag);
   return li;
 }
 
@@ -174,12 +166,14 @@ export function renderCast(ui, state, credits) {
     moreBtn.textContent = state.isCastExpanded ? '배우 목록 접기' : '배우 목록 더보기';
   }
 
-  castList.textContent = '';
   const renderCount = state.isCastExpanded ? actorsOnly.length : Math.min(6, actorsOnly.length);
+  const frag = document.createDocumentFragment();
 
   for (let i = 0; i < renderCount; i += 1) {
-    castList.appendChild(createCastItem(actorsOnly[i]));
+    frag.appendChild(createCastItem(actorsOnly[i]));
   }
+
+  castList.replaceChildren(frag);
 }
 
 export function renderStills(ui, state, data) {
@@ -201,11 +195,10 @@ export function renderStills(ui, state, data) {
   state.stills = filtered.slice(0, 30);
 
   const thumbs = state.stills.slice(0, 3);
-
-  list.textContent = '';
-
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
   const SIZE = 'w780';
+
+  const frag = document.createDocumentFragment();
 
   thumbs.forEach((item, idx) => {
     const li = document.createElement('li');
@@ -228,8 +221,11 @@ export function renderStills(ui, state, data) {
     figure.appendChild(img);
     btn.appendChild(figure);
     li.appendChild(btn);
-    list.appendChild(li);
+
+    frag.appendChild(li);
   });
+
+  list.replaceChildren(frag);
 
   const needsMore = state.stills.length > 3;
   if (moreWrapper) moreWrapper.hidden = !needsMore;
