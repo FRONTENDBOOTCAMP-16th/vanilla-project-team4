@@ -15,18 +15,13 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <title>스크립트 디렉터스</title>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/scripts/components/render/render_error.js"></script>
   </head>
   <body class="error-wrap">
     <main class="error-main">
       <section class="error-content" aria-labelledby="errorCode">
-        <div class="error-container">
-          <div>
-            <h1 class="error-code" id="errorCode">404</h1>
-            <p class="error-title">현재 페이지를 찾을 수 없습니다</p>
-            <a href="/" class="error-home-btn"> 메인 페이지로 돌아가기 </a>
-          </div>
-          <div class="error-visual"></div>
-        </div>
+        <h1 class="sr-only" id="errorCode">잘못된 페이지 입니다</h1>
+        <div class="error-container"></div>
       </section>
     </main>
   </body>
