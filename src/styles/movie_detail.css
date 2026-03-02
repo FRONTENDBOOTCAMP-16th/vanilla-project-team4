@@ -298,29 +298,34 @@
 }
 
 .stills-wrapper {
-  position: relative;
-  /* 나중 버튼 추가 대비 */
+  display: flex;
+  gap: 2px;
 }
 
 .stills-list {
-  display: flex;
-  gap: 20px;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
   list-style: none;
   margin: 0;
   padding: 8px 0;
-  overflow-x: auto;
 }
 
-.stills-item {
-  flex: 0 0 calc((100% - 20px) / 2.5);
-  width: 360px;
+.stills-btn {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
 }
 
 .stills-card {
   margin: 0;
   border-radius: 16px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
 }
@@ -330,6 +335,162 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.stills-more-wrapper {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stills-more-btn {
+  padding: 12px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.75);
+  height: 283px;
+  font-weight: 800;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.stills-more-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.trailer-modal .stills-panel {
+  width: min(980px, 92vw);
+  border-radius: 16px;
+  background: rgba(15, 15, 15, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.trailer-modal .stills-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trailer-modal .stills-head-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.trailer-modal .stills-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.trailer-modal .stills-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.trailer-modal .stills-close:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+.trailer-modal .stills-frame {
+  position: relative;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailer-modal .stills-figure {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.trailer-modal .stills-modal-img {
+  width: 100%;
+  max-height: min(75vh, 820px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.trailer-modal .stills-counter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.trailer-modal .stills-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+
+  height: 46px;
+  width: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.trailer-modal .stills-prev {
+  left: 22px;
+}
+
+.trailer-modal .stills-next {
+  right: 22px;
+}
+
+.trailer-modal .stills-nav:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.trailer-modal .stills-nav:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+.stills-list:has(.empty-state) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .reco {
@@ -356,7 +517,7 @@
   grid-area: carousel;
 }
 
-/* trailer modal */
+/* overlay */
 .trailer-modal[hidden] {
   display: none;
 }
@@ -378,12 +539,23 @@
     visibility 300ms ease;
 }
 
-.trailer-modal .trailer-panel {
+.trailer-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.trailer-modal.is-closing {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* panel trailer+stills */
+.trailer-modal .trailer-panel,
+.trailer-modal .stills-panel {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   width: min(960px, 100%);
-  aspect-ratio: 16 / 9;
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
@@ -392,7 +564,19 @@
   transition: transform 300ms ease;
 }
 
-.trailer-modal .trailer-head {
+.trailer-modal.is-open .trailer-panel,
+.trailer-modal.is-open .stills-panel {
+  transform: translateY(0) scale(1);
+}
+
+.trailer-modal.is-closing .trailer-panel,
+.trailer-modal.is-closing .stills-panel {
+  transform: translateY(8px) scale(0.98);
+}
+
+/* head trailer+stills */
+.trailer-modal .trailer-head,
+.trailer-modal .stills-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -402,17 +586,19 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.trailer-modal .trailer-head-title {
+.trailer-modal .trailer-head-title,
+.trailer-modal .stills-head-title {
+  margin: 0;
   font-size: 18px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.8);
 }
 
-.trailer-modal .trailer-close {
+.trailer-modal .trailer-close,
+.trailer-modal .stills-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: static;
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -424,14 +610,21 @@
   cursor: pointer;
 }
 
-.trailer-modal .trailer-close:hover {
+.trailer-modal .trailer-close:hover,
+.trailer-modal .stills-close:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.28);
 }
 
-.trailer-modal .trailer-close:focus-visible {
+.trailer-modal .trailer-close:focus-visible,
+.trailer-modal .stills-close:focus-visible {
   outline: 2px solid rgba(229, 9, 20, 0.85);
   outline-offset: 3px;
+}
+
+/* trailer */
+.trailer-modal .trailer-panel {
+  aspect-ratio: 16 / 9;
 }
 
 .trailer-modal .trailer-frame {
@@ -442,40 +635,75 @@
 }
 
 .trailer-modal .trailer-iframe {
-  display: block;
   width: 100%;
   height: 100%;
   border: 0;
-  border-radius: 0 0 12px 12px;
+  display: block;
 }
 
-.trailer-modal .trailer-empty {
+/* stills */
+.trailer-modal .stills-panel {
+  aspect-ratio: auto;
+}
+
+.trailer-modal .stills-frame {
+  position: relative;
+  padding: 16px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.trailer-modal .stills-figure {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.trailer-modal .stills-modal-img {
+  width: 100%;
+  max-height: min(75vh, 820px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.trailer-modal .stills-counter {
   position: absolute;
-  inset: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  font-size: 12px;
 }
 
-.trailer-modal.is-open {
-  opacity: 1;
-  visibility: visible;
+.trailer-modal .stills-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  height: 46px;
+  width: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
 }
 
-.trailer-modal.is-open .trailer-panel {
-  transform: translateY(0) scale(1);
+.trailer-modal .stills-prev {
+  left: 22px;
 }
-
-.trailer-modal.is-closing {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.trailer-modal.is-closing .trailer-panel {
-  transform: translateY(8px) scale(0.98);
+.trailer-modal .stills-next {
+  right: 22px;
 }
 
 /* 접근성: 모션 최소화 설정 */

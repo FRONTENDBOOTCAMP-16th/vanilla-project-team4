@@ -6,9 +6,13 @@ import { buttonUtil } from '../scripts/utils/carousel/carousel_btn_utils.js';
 import { addClones } from '../scripts/utils/carousel/crousel_clone_node.js';
 
 const HOME_URL = '/index.html';
+const MODAL_TIME = 300;
+
 let cast = [];
 let isCastExpanded = false;
 let trailerKey = null;
+let stills = [];
+let stillIndex = 0;
 
 function redirectHome(message) {
   if (message) alert(message);
@@ -79,7 +83,6 @@ fetch(creditsUrl, options)
   })
   .then((data) => {
     if (!data) return renderCast({ cast: [] });
-    console.log('cast', data);
     renderCast(data);
   })
   .catch((err) => {
@@ -190,7 +193,7 @@ function renderCast(credits) {
     if (moreBtn) {
       moreBtn.disabled = true;
       moreBtn.setAttribute('aria-expanded', 'false');
-      moreBtn.textContent = '배우 더보기 >';
+      moreBtn.textContent = '배우 목록 더보기 >';
     }
 
     renderEmptyState(castList, '배우 정보가 없습니다.');
@@ -209,7 +212,7 @@ function renderCast(credits) {
   if (moreBtn) {
     moreBtn.disabled = !needsMore;
     moreBtn.setAttribute('aria-expanded', String(isCastExpanded));
-    moreBtn.textContent = isCastExpanded ? '< 배우 접기' : '배우 더보기 >';
+    moreBtn.textContent = isCastExpanded ? '< 배우 목록 접기' : '배우 목록 더보기 >';
   }
 
   castList.textContent = '';
@@ -255,21 +258,37 @@ function createCastItem(actor) {
 
 function renderStills(data) {
   const list = document.querySelector('.stills-list');
-  const backdrops = Array.isArray(data?.backdrops) ? data.backdrops : [];
-  const stills = backdrops.filter((b) => b?.file_path && (b?.iso_639_1 ?? null) === null);
+  const moreWrapper = document.querySelector('.stills-more-wrapper');
 
-  if (stills.length === 0) {
+  if (!list) return;
+
+  const backdrops = Array.isArray(data?.backdrops) ? data.backdrops : [];
+  const filtered = backdrops.filter((b) => b?.file_path && (b?.iso_639_1 ?? null) === null);
+
+  if (filtered.length === 0) {
+    stills = [];
     renderEmptyState(list, '스틸컷 이미지가 없습니다.');
+    if (moreWrapper) moreWrapper.hidden = true;
     return;
   }
 
+  stills = filtered.slice(0, 30);
+
+  const thumbs = stills.slice(0, 3);
+
+  list.textContent = '';
+
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
   const SIZE = 'w780';
-  const MAX_STILLS = 30;
 
-  stills.slice(0, MAX_STILLS).forEach((item, idx) => {
+  thumbs.forEach((item, idx) => {
     const li = document.createElement('li');
     li.className = 'stills-item';
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'stills-btn';
+    btn.dataset.index = String(idx);
 
     const figure = document.createElement('figure');
     figure.className = 'stills-card';
@@ -281,9 +300,14 @@ function renderStills(data) {
     img.alt = `스틸컷 이미지 ${idx + 1}`;
 
     figure.appendChild(img);
-    li.appendChild(figure);
+    btn.appendChild(figure);
+    li.appendChild(btn);
     list.appendChild(li);
   });
+
+  const needsMore = stills.length > 3;
+
+  if (moreWrapper) moreWrapper.hidden = !needsMore;
 }
 
 function renderSimilarMovies(movieId) {
@@ -344,12 +368,37 @@ const trailerBtn = document.querySelector('.js-trailer');
 const trailerModal = document.getElementById('trailer-modal');
 const closeBtn = trailerModal?.querySelector('.trailer-close');
 const iframe = trailerModal?.querySelector('.trailer-iframe');
-
 const emptyMessage = trailerModal?.querySelector('.trailer-empty');
+const trailerTitle = document.getElementById('trailer-title');
+const stillsTitle = document.getElementById('stills-modal-title');
+const trailerPanel = trailerModal?.querySelector('.trailer-panel');
+const stillsPanel = trailerModal?.querySelector('.stills-panel');
+const stillsCloseBtn = trailerModal?.querySelector('.stills-close');
+const stillsImg = trailerModal?.querySelector('.stills-modal-img');
+const stillsCounter = trailerModal?.querySelector('.stills-counter');
+const stillsPrevBtn = trailerModal?.querySelector('.stills-prev');
+const stillsNextBtn = trailerModal?.querySelector('.stills-next');
+
+function showTrailerPanel() {
+  if (trailerTitle) trailerTitle.hidden = false;
+  if (stillsTitle) stillsTitle.hidden = true;
+
+  if (trailerPanel) trailerPanel.hidden = false;
+  if (stillsPanel) stillsPanel.hidden = true;
+}
+
+function showStillsPanel() {
+  if (trailerTitle) trailerTitle.hidden = true;
+  if (stillsTitle) stillsTitle.hidden = false;
+
+  if (trailerPanel) trailerPanel.hidden = true;
+  if (stillsPanel) stillsPanel.hidden = false;
+}
 
 function openTrailerModal() {
   if (!trailerModal) return;
 
+  showTrailerPanel();
   const key = trailerKey;
 
   trailerModal.hidden = false;
@@ -383,11 +432,11 @@ function openTrailerModal() {
       if (iframe) {
         iframe.src = `https://www.youtube.com/embed/${key}?rel=0`;
       }
-    }, 300);
+    }, MODAL_TIME);
   }
 }
 
-function closeTrailerModal() {
+function closeMediaModal() {
   if (!trailerModal) return;
 
   trailerModal.classList.remove('is-open');
@@ -397,6 +446,9 @@ function closeTrailerModal() {
   if (emptyMessage) emptyMessage.hidden = true;
   if (iframe) iframe.hidden = false;
 
+  if (stillsImg) stillsImg.src = '';
+  if (stillsCounter) stillsCounter.textContent = '';
+
   trailerBtn?.setAttribute('aria-expanded', 'false');
   trailerBtn?.focus();
 
@@ -404,20 +456,105 @@ function closeTrailerModal() {
     trailerModal.hidden = true;
     trailerModal.classList.remove('is-closing');
 
+    showTrailerPanel();
     unlockScroll();
-  }, 300);
+  }, MODAL_TIME);
+}
+
+function clampStillsIndex() {
+  if (stills.length === 0) return 0;
+  if (stillIndex < 0) stillIndex = stills.length - 1;
+  if (stillIndex >= stills.length) stillIndex = 0;
+  return stillIndex;
+}
+
+function updateStillsModal() {
+  if (!stillsImg || stills.length === 0) return;
+
+  const idx = clampStillsIndex();
+  const IMAGE_BASE = 'https://image.tmdb.org/t/p/';
+  const SIZE = 'w1280';
+
+  const item = stills[idx];
+  stillsImg.src = `${IMAGE_BASE}${SIZE}${item.file_path}`;
+  stillsImg.alt = `스틸컷 이미지 ${idx + 1}`;
+
+  if (stillsCounter) stillsCounter.textContent = `${idx + 1} / ${stills.length}`;
+
+  const disabled = stills.length <= 1;
+  if (stillsPrevBtn) stillsPrevBtn.disabled = disabled;
+  if (stillsNextBtn) stillsNextBtn.disabled = disabled;
+}
+
+function openStillsModal(startIndex) {
+  if (!trailerModal) return;
+  if (!Array.isArray(stills) || stills.length === 0) return;
+
+  showStillsPanel();
+  stillIndex = Number.isInteger(startIndex) ? startIndex : 0;
+
+  trailerModal.hidden = false;
+  trailerModal.classList.remove('is-closing', 'is-open');
+
+  lockScroll();
+
+  requestAnimationFrame(() => {
+    trailerModal.classList.add('is-open');
+    stillsCloseBtn?.focus();
+  });
+
+  updateStillsModal();
 }
 
 if (trailerBtn && trailerModal) {
   trailerBtn.addEventListener('click', openTrailerModal);
-  closeBtn?.addEventListener('click', closeTrailerModal);
+  closeBtn?.addEventListener('click', closeMediaModal);
+  stillsCloseBtn?.addEventListener('click', closeMediaModal);
+
+  stillsPrevBtn?.addEventListener('click', () => {
+    if (stills.length <= 1) return;
+    stillIndex -= 1;
+    updateStillsModal();
+  });
+
+  stillsNextBtn?.addEventListener('click', () => {
+    if (stills.length <= 1) return;
+    stillIndex += 1;
+    updateStillsModal();
+  });
 
   trailerModal.addEventListener('click', (e) => {
-    if (e.target === trailerModal) closeTrailerModal();
+    if (e.target === trailerModal) closeMediaModal();
   });
 
   document.addEventListener('keydown', (e) => {
-    if (!trailerModal.hidden && e.key === 'Escape') closeTrailerModal();
+    if (trailerModal.hidden) return;
+
+    if (e.key === 'Escape') {
+      closeMediaModal();
+      return;
+    }
+
+    if (stillsPanel && !stillsPanel.hidden) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        stillIndex -= 1;
+        updateStillsModal();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        stillIndex += 1;
+        updateStillsModal();
+      }
+    }
+  });
+}
+
+const stillsMoreBtn = document.querySelector('.stills-more-btn');
+
+if (stillsMoreBtn) {
+  stillsMoreBtn.addEventListener('click', () => {
+    openStillsModal(0);
   });
 }
 
@@ -459,7 +596,7 @@ if (castMoreBtn) {
     }
 
     castMoreBtn.setAttribute('aria-expanded', String(isCastExpanded));
-    castMoreBtn.textContent = isCastExpanded ? '< 배우 접기' : '배우 더보기 >';
+    castMoreBtn.textContent = isCastExpanded ? '< 배우 목록 접기' : '배우 목록 더보기 >';
 
     renderCast({ cast });
 
@@ -469,5 +606,15 @@ if (castMoreBtn) {
         behavior: 'smooth',
       });
     }
+  });
+}
+
+const stillsListEl = document.querySelector('.stills-list');
+
+if (stillsListEl) {
+  stillsListEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.stills-btn');
+    if (!btn) return;
+    openStillsModal(Number(btn.dataset.index));
   });
 }

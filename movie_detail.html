@@ -93,6 +93,9 @@
 
           <div class="stills-wrapper">
             <ul class="stills-list" aria-live="polite"></ul>
+            <div class="stills-more-wrapper" hidden>
+              <button type="button" class="stills-more-btn">스틸컷 더보기</button>
+            </div>
           </div>
         </section>
 
@@ -118,7 +121,7 @@
         hidden
         role="dialog"
         aria-modal="true"
-        aria-labelledby="trailer-title"
+        aria-label="미디어 보기"
       >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
 
@@ -138,6 +141,26 @@
               allow="autoplay; encrypted-media; picture-in-picture"
               allowfullscreen
             ></iframe>
+          </div>
+        </div>
+
+        <h2 id="stills-modal-title" class="sr-only" hidden>스틸컷 크게 보기</h2>
+
+        <div class="stills-panel" role="document" hidden>
+          <div class="stills-head">
+            <p class="stills-head-title" aria-hidden="true">스틸컷</p>
+            <button type="button" class="stills-close" aria-label="스틸컷 닫기">×</button>
+          </div>
+
+          <div class="stills-frame">
+            <button type="button" class="stills-nav stills-prev" aria-label="이전 스틸컷">‹</button>
+
+            <figure class="stills-figure">
+              <img class="stills-modal-img" alt="" />
+              <figcaption class="stills-counter" aria-live="polite"></figcaption>
+            </figure>
+
+            <button type="button" class="stills-nav stills-next" aria-label="다음 스틸컷">›</button>
           </div>
         </div>
       </div>
