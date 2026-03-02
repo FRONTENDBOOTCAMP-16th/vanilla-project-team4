@@ -6,6 +6,9 @@ import { buttonUtil } from '../scripts/utils/carousel/carousel_btn_utils.js';
 import { addClones } from '../scripts/utils/carousel/crousel_clone_node.js';
 
 const HOME_URL = '/index.html';
+let cast = [];
+let isCastExpanded = false;
+let trailerKey = null;
 
 function redirectHome(message) {
   if (message) alert(message);
@@ -76,6 +79,7 @@ fetch(creditsUrl, options)
   })
   .then((data) => {
     if (!data) return renderCast({ cast: [] });
+    console.log('cast', data);
     renderCast(data);
   })
   .catch((err) => {
@@ -166,20 +170,55 @@ function renderMovieDetail(data) {
 
 function renderCast(credits) {
   const castList = document.querySelector('.cast-list');
-  const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
+  const moreWrapper = document.querySelector('.cast-more-wrapper');
+  const moreBtn = document.querySelector('.cast-more-btn');
 
-  if (castArr.length === 0) {
+  const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
+  const actorsOnly = castArr.filter(
+    (person) => person?.known_for_department === 'Acting' || person?.known_for_department == null,
+  );
+
+  cast = actorsOnly;
+
+  if (!castList) return;
+
+  if (actorsOnly.length === 0) {
+    isCastExpanded = false;
+    castList.classList.remove('is-expanded');
+
+    if (moreWrapper) moreWrapper.hidden = true;
+    if (moreBtn) {
+      moreBtn.disabled = true;
+      moreBtn.setAttribute('aria-expanded', 'false');
+      moreBtn.textContent = '배우 더보기 >';
+    }
+
     renderEmptyState(castList, '배우 정보가 없습니다.');
     return;
   }
 
+  const needsMore = actorsOnly.length > 6;
+
+  if (!needsMore) {
+    isCastExpanded = false;
+    castList.classList.remove('is-expanded');
+  }
+
+  if (moreWrapper) moreWrapper.hidden = !needsMore;
+
+  if (moreBtn) {
+    moreBtn.disabled = !needsMore;
+    moreBtn.setAttribute('aria-expanded', String(isCastExpanded));
+    moreBtn.textContent = isCastExpanded ? '< 배우 접기' : '배우 더보기 >';
+  }
+
   castList.textContent = '';
+  const renderCount = isCastExpanded ? actorsOnly.length : Math.min(6, actorsOnly.length);
 
-  castArr.slice(0, 10).forEach((actor) => {
-    castList.appendChild(createCastItem(actor));
-  });
+  for (let i = 0; i < renderCount; i += 1) {
+    castList.appendChild(createCastItem(actorsOnly[i]));
+  }
 }
-
 function createCastItem(actor) {
   const li = createElement('li', ['cast-item']);
   const figure = createElement('figure', ['cast-avatar']);
@@ -273,25 +312,20 @@ fetch(videosUrl, options)
   })
   .then((data) => {
     if (!data) return;
-    console.log('트레일러', data);
-    // 여기서 Trailer/Teaser 중 하나 고르기
+
     const results = Array.isArray(data?.results) ? data.results : [];
 
-    // 1순위: YouTube Trailer
     const trailer =
       results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
-      // 2순위: YouTube Teaser
       results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
-      // 3순위: 그 외 YouTube 아무거나
       results.find((v) => v?.site === 'YouTube' && v?.key) ||
       null;
 
-    // 다음 단계에서 모달 열 때 쓰려고 전역/상태로 저장할 예정
-    window.__TRAILER_KEY__ = trailer?.key ?? null;
+    trailerKey = trailer?.key ?? null;
   })
   .catch((err) => {
     console.error(err);
-    window.__TRAILER_KEY__ = null;
+    trailerKey = null;
   });
 
 function renderEmptyState(listEl, message) {
@@ -316,7 +350,7 @@ const emptyMessage = trailerModal?.querySelector('.trailer-empty');
 function openTrailerModal() {
   if (!trailerModal) return;
 
-  const key = window.__TRAILER_KEY__;
+  const key = trailerKey;
 
   trailerModal.hidden = false;
   trailerModal.classList.remove('is-closing', 'is-open');
@@ -407,4 +441,33 @@ function unlockScroll() {
 
   window.scrollTo(0, savedScrollY);
   savedScrollY = 0;
+}
+
+const castMoreBtn = document.querySelector('.cast-more-btn');
+
+if (castMoreBtn) {
+  castMoreBtn.addEventListener('click', () => {
+    if (!Array.isArray(cast) || cast.length <= 6) return;
+
+    const wasExpanded = isCastExpanded;
+
+    isCastExpanded = !isCastExpanded;
+
+    const castListEl = document.querySelector('.cast-list');
+    if (castListEl) {
+      castListEl.classList.toggle('is-expanded', isCastExpanded);
+    }
+
+    castMoreBtn.setAttribute('aria-expanded', String(isCastExpanded));
+    castMoreBtn.textContent = isCastExpanded ? '< 배우 접기' : '배우 더보기 >';
+
+    renderCast({ cast });
+
+    if (wasExpanded) {
+      document.getElementById('cast-title')?.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth',
+      });
+    }
+  });
 }

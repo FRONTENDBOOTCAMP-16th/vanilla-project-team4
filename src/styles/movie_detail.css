@@ -202,19 +202,22 @@
 
 .cast-list {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 150px;
+  grid-template-columns: repeat(6, 150px);
   gap: 40px;
   list-style: none;
   margin: 0;
   padding: 10px 0;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .cast-list:has(.empty-state) {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.cast-list.is-expanded {
+  overflow: visible;
 }
 
 .cast-item {
@@ -249,9 +252,10 @@
   margin: 0;
   font-size: 15px;
   font-weight: 800;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 150px;
 }
 
@@ -260,10 +264,37 @@
   font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.55);
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 150px;
+}
+
+.cast-more-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.cast-more-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cast-more-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#cast-title {
+  scroll-margin-top: 300px;
 }
 
 .stills-wrapper {
