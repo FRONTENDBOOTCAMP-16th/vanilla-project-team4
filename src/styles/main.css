@@ -13,3 +13,4 @@
 @import './movie_list.css' layer(subpages);
 @import './movie_detail.css' layer(subpages);
 @import './movie_main.css' layer(subpages);
+@import './footer.css' layer(components);
