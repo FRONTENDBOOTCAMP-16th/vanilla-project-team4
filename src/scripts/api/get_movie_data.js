@@ -1,4 +1,4 @@
-import options from '../api/connect';
+import options from '/src/scripts/api/connect';
 export function getMovieData(url, count) {
   const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
   const FALLBACK_IMG = '/images/fallback.png';

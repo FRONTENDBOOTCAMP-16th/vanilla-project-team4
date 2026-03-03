@@ -1,4 +1,4 @@
-import options from '../api/connect';
+import options from '/src/scripts/api/connect';
 
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
 
