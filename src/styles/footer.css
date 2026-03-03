@@ -2,7 +2,7 @@
   width: 100%;
   background-color: var(--bg-page);
   border-top: 1px solid #f1f1f182;
-  padding: 4rem 0;
+  padding: 2rem 0 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
