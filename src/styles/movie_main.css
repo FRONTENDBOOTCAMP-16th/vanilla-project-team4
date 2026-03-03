@@ -15,10 +15,26 @@
 
   .area-title {
     font-size: 2rem;
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
+  }
+
+  .main {
+    padding: 80px 0;
+  }
+
+  .main {
+    section {
+      margin: 50px 0 0;
+      &:first-child {
+        margin: 0;
+      }
+
+      h2 {
+        margin: 0 0 20px 0;
+      }
+    }
   }
 }
-
 .intro-banner-area {
   position: relative;
   aspect-ratio: 4 / 1;
@@ -83,7 +99,7 @@
 }
 
 .trending-movies-area {
-  padding: 2rem;
+  /* padding: 0 0 2rem 0; */
 
   .section-title {
     font-size: var(--fs-title);
@@ -95,7 +111,7 @@
     display: flex;
     gap: 0.75rem;
     justify-content: flex-end;
-    margin-top: 0.75rem;
+    /* margin-top: 0.75rem; */
   }
 
   .carousel-btn {
@@ -157,6 +173,9 @@
   .info-title {
     font-size: 1.05rem;
     font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .info-description {
@@ -178,7 +197,7 @@
 }
 
 .quick-move-area {
-  padding: 58px 48px 50px 48px;
+  /* padding: 58px 0; */
 
   .quick-move-wrap {
     display: flex;
@@ -189,7 +208,7 @@
   display: flex;
   width: 680px;
   aspect-ratio: 4/1;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   a {
     display: flex;
     background-color: var(--accent-primary);
@@ -219,7 +238,7 @@
 }
 
 .advertisement-banner-area {
-  padding: 16px 48px;
+  /* padding: 16px 0; */
   h2 {
     margin-bottom: 0.5em;
   }
@@ -275,7 +294,6 @@
   --poster-w: 324px;
   --poster-gap: 2rem;
   --poster-radius: 1rem;
-  padding: 3rem;
 
   h2 {
     font-size: 2rem;
@@ -285,13 +303,13 @@
     display: flex;
     justify-content: center;
     gap: var(--poster-gap);
-    margin-top: 3rem;
+    padding: 3rem 0 0;
   }
 }
 
 .upcoming-area .movie-item {
   position: relative;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 
   > div:first-child {
     font-size: 1.3rem;
@@ -407,7 +425,7 @@
     display: flex;
     width: 240px;
     aspect-ratio: 4/1;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
 
     a svg {
       font-size: 0.875rem;
