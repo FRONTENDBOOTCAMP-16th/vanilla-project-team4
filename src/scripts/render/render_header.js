@@ -1,4 +1,4 @@
-import { createSkipLink } from '/src/scripts/components/ui/skip_link';
+import { createSkipLink } from '/src/scripts/components/ui/create_skip_link';
 import { createHeader } from '/src/scripts/components/ui/create_header_ui';
 
 function renderHeader() {

@@ -4,8 +4,8 @@ import '/src/styles/movie_main.css';
 import '/detail/movie_detail.css';
 
 import options from '/src/scripts/api/connect.js';
-import { getMovieData } from '/src/scripts/data/get_movie_data.js';
-import { createMovieList } from '/src/scripts/components/ui/createMovieList.js';
+import { getMovieData } from '/src/scripts/api/get_movie_data.js';
+import { createMovieList } from '/src/scripts/components/ui/create_movie_list.js';
 import { buttonUtil } from '/src/scripts/utils/carousel/carousel_btn_utils.js';
 import { addClones } from '/src/scripts/utils/carousel/crousel_clone_node.js';
 import { createDetailState } from '/detail/detail_state.js';
