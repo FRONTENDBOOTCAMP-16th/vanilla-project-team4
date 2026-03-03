@@ -32,7 +32,7 @@ const MODAL_TIME = 300;
 const loading = createLoadingOverlay('영화 목록을 불러오는 중...');
 
 function redirectToError(status) {
-  window.location.href = `/error.html?status=${status}`;
+  window.location.href = `/error?status=${status}`;
 }
 
 function getValidMovieId(rawId) {
