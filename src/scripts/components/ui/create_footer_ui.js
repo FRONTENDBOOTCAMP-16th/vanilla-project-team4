@@ -18,10 +18,10 @@ export function createFooter() {
   const supportList = createElement('ul', ['footer-group-list']);
 
   const faqLi = createElement('li');
-  const faqLink = createElement('a', ['footer-group-link'], { href: '#' }, '자주 묻는 질문');
+  const faqLink = createElement('a', ['footer-group-link'], { href: '#none' }, '자주 묻는 질문');
 
   const centerLi = createElement('li');
-  const centerLink = createElement('a', ['footer-group-link'], { href: '#' }, '고객센터');
+  const centerLink = createElement('a', ['footer-group-link'], { href: '#none' }, '고객센터');
 
   const snsTitle = createElement('h3', ['footer-group-title'], null, 'Follow Us');
   const snsList = createElement('ul', ['footer-group-sns-list']);
