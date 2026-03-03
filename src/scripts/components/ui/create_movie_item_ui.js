@@ -11,6 +11,7 @@ export function createMovieItem({
 }) {
   const movieLinkA = createElement('a', ['movie-link'], {
     href: `/movie_detail.html?id=${movieId}`,
+    'aria-label': `${movieTitle} 링크 이동하기`,
   });
 
   const movieItemLi = createElement('li', ['movie-item']);
@@ -19,13 +20,19 @@ export function createMovieItem({
     src: movieImage,
     alt: movieTitle,
     loading: 'lazy',
+    'aria-hidden': true,
   });
 
-  const movieInfoDiv = createElement('div', ['movie-info']);
-  const movieTitleH3 = createElement('h3', ['info-title', 'aria-hidden'], null, movieTitle);
-  const movieDescriptionP = createElement('p', ['info-description'], null, movieDescription);
+  const movieInfoDiv = createElement('div', ['movie-info'], { 'aria-hidden': true });
+  const movieTitleH3 = createElement('h3', ['info-title'], { 'aria-hidden': true }, movieTitle);
+  const movieDescriptionP = createElement(
+    'p',
+    ['info-description'],
+    { 'aria-hidden': true },
+    movieDescription,
+  );
 
-  const movieInfoDetailDl = createElement('dl', ['movie-info-detail']);
+  const movieInfoDetailDl = createElement('dl', ['movie-info-detail'], { 'aria-hidden': true });
 
   if (movieOpen) {
     const movieDateDt = createElement('dt', ['sr-only'], null, '개봉연도');

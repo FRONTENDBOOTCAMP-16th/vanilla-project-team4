@@ -13,7 +13,14 @@ export function getTodayMovieData(url, pageNum, maxIndex) {
   const MAX = maxIndex;
 
   return fetch(todayUrl, options)
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        const error = new Error(`HTTP ${res.status}`);
+        error.status = res.status;
+        throw error;
+      }
+      return res.json();
+    })
     .then((json) => {
       const pageMovies = (json.results ?? [])
         .filter((item) => (item.release_date ?? '') >= today)
@@ -37,5 +44,10 @@ export function getTodayMovieData(url, pageNum, maxIndex) {
 
       page += 1;
       return getTodayMovieData(url, page, maxIndex);
+    })
+    .catch((err) => {
+      console.error(err);
+      const status = err.status ?? 0;
+      window.location.href = `/error.html?status=${status}`;
     });
 }
