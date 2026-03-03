@@ -4,9 +4,3 @@ document.addEventListener('click', (e) => {
 
   e.preventDefault();
 });
-
-document.addEventListener('click', (e) => {
-  const button = e.target.closest('button');
-
-  if (!button) return;
-});

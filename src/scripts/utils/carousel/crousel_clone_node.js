@@ -10,6 +10,7 @@ export function addClones(list) {
   items.forEach((item) => {
     const clone = item.cloneNode(true);
     clone.dataset.cloned = 'true';
+    clone.setAttribute('aria-hidden', 'true');
     list.appendChild(clone);
   });
 
@@ -18,6 +19,7 @@ export function addClones(list) {
     .forEach((item) => {
       const clone = item.cloneNode(true);
       clone.dataset.cloned = 'true';
+      clone.setAttribute('aria-hidden', 'true');
       list.insertBefore(clone, list.firstChild);
     });
 

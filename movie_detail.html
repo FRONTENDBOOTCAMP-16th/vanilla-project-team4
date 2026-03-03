@@ -15,11 +15,11 @@
     <meta property="og:site_name" content="스크립트 디렉터스" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <script type="module" src="/src/main.js"></script>
-    <script type="module" src="/src/scripts/movie_detail.js"></script>
+    <script type="module" src="/src/scripts/detail/detail-page.js"></script>
     <title>스크립트 디렉터스</title>
   </head>
   <body>
-    <main class="container">
+    <main class="container detail-container">
       <article class="movie-detail" aria-labelledby="movie-title">
         <section class="movie-summary" aria-label="영화 요약">
           <figure class="movie-poster">
@@ -52,11 +52,11 @@
             </dl>
 
             <div class="movie-button">
-              <!-- 버튼 컴포넌트화 예정 -->
               <button
                 type="button"
                 aria-haspopup="dialog"
                 aria-controls="trailer-modal"
+                aria-expanded="false"
                 class="button-trailer js-trailer"
               >
                 <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -76,79 +76,94 @@
           </div>
         </section>
 
-        <section class="cast" aria-labelledby="cast-title">
-          <h2 id="cast-title" class="cast-header">배우</h2>
+        <section class="cast detail-section" aria-labelledby="cast-title">
+          <h2 id="cast-title" class="detail-section-title">배우</h2>
 
           <ul class="cast-list" aria-live="polite"></ul>
+
+          <div class="cast-more-wrapper" hidden>
+            <button type="button" class="cast-more-btn" aria-expanded="false">
+              배우 목록 더보기 &gt;
+            </button>
+          </div>
         </section>
 
-        <section class="stills" aria-labelledby="stills-title">
-          <h2 id="stills-title" class="stills-title">스틸컷</h2>
+        <section class="stills detail-section" aria-labelledby="stills-title">
+          <h2 id="stills-title" class="detail-section-title">스틸컷</h2>
 
           <div class="stills-wrapper">
-            <ul class="stills-list">
-              <li class="stills-item">
-                <figure class="stills-card">
-                  <img
-                    src="/src/assets/image/detail-test.webp"
-                    alt="스틸컷 이미지"
-                    class="stills-img"
-                  />
-                </figure>
-              </li>
+            <ul class="stills-list" aria-live="polite"></ul>
+            <button type="button" class="stills-more-btn" hidden>
+              <span class="sr-only">스틸컷 더보기</span>
+              +
+            </button>
+          </div>
+        </section>
 
-              <li class="stills-item">
-                <figure class="stills-card">
-                  <img
-                    src="/src/assets/image/test-actor.webp"
-                    alt="스틸컷 이미지"
-                    class="stills-img"
-                  />
-                </figure>
-              </li>
+        <section class="reco detail-section trending-movies-area" aria-labelledby="reco-title">
+          <h2 id="reco-title" class="detail-section-title">비슷한 영화</h2>
 
-              <li class="stills-item">
-                <figure class="stills-card">
-                  <img src="/src/assets/image/test.jpg" alt="스틸컷 이미지" class="stills-img" />
-                </figure>
-              </li>
-            </ul>
+          <div class="carousel-controls" role="group" aria-label="캐러셀 이동"></div>
+
+          <div
+            class="card-carousel"
+            role="region"
+            aria-roledescription="carousel"
+            aria-labelledby="reco-title"
+          >
+            <ul class="movie-item-list"></ul>
           </div>
         </section>
       </article>
 
-      <section aria-labelledby="reco-title" class="reco">
-        <h2 id="reco-title">추천 목록</h2>
-
-        <ul class="recommendations-list">
-          <li class="recommendations-item">
-            <a href="/" class="recommendations-link">
-              <div class="recommendations-rating">
-                <span aria-hidden="true">★</span>
-                <span> <span class="sr-only">10점 만점에 </span>8.4점 </span>
-              </div>
-
-              <!-- <img /> -->
-
-              <div class="recommendations-info">
-                <h3 class="recommendations-title">Neon Requiem</h3>
-                <p class="recommendations-year">
-                  <time datetime="2024">2024</time>
-                </p>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </section>
-
       <div
         id="trailer-modal"
+        class="trailer-modal"
         hidden
         role="dialog"
         aria-modal="true"
-        aria-labelledby="trailer-title"
+        aria-label="미디어 보기"
       >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
+
+        <div class="trailer-panel" role="document">
+          <div class="trailer-head">
+            <p class="trailer-head-title" aria-hidden="true">트레일러 재생</p>
+
+            <button type="button" class="trailer-close" aria-label="예고편 닫기">×</button>
+          </div>
+
+          <div class="trailer-frame">
+            <p class="trailer-empty" hidden>예고편 영상이 없습니다.</p>
+
+            <iframe
+              class="trailer-iframe"
+              title="예고편 영상"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+
+        <h2 id="stills-modal-title" class="sr-only" hidden>스틸컷 크게 보기</h2>
+
+        <div class="stills-panel" role="document" hidden>
+          <div class="stills-head">
+            <p class="stills-head-title" aria-hidden="true">스틸컷</p>
+            <button type="button" class="stills-close" aria-label="스틸컷 닫기">×</button>
+          </div>
+
+          <div class="stills-frame">
+            <button type="button" class="stills-nav stills-prev" aria-label="이전 스틸컷">‹</button>
+
+            <figure class="stills-figure">
+              <img class="stills-modal-img" alt="" />
+              <figcaption class="stills-counter" aria-live="polite"></figcaption>
+            </figure>
+
+            <button type="button" class="stills-nav stills-next" aria-label="다음 스틸컷">›</button>
+          </div>
+        </div>
       </div>
     </main>
   </body>

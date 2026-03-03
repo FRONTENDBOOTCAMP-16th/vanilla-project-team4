@@ -1,0 +1,51 @@
+.error-wrap {
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+.error-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+}
+
+.error-code {
+  color: white;
+  font-size: 8rem;
+  letter-spacing: 4px;
+  margin-top: -3rem;
+}
+
+.error-title {
+  color: white;
+  font-size: 1.8rem;
+  margin: 1rem 0;
+}
+
+.error-home-btn {
+  border: 1px solid white;
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  color: white;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.error-home-btn:hover,
+.error-home-btn:focus-visible {
+  background: white;
+  color: black;
+}
+
+.error-visual {
+  width: 30rem;
+  aspect-ratio: 1/1;
+  background: url('/src/assets/images/seat.png') center / contain no-repeat;
+  animation: float 3s ease-in-out infinite;
+}

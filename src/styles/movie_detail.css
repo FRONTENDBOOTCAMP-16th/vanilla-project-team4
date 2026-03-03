@@ -1,22 +1,47 @@
-/* 나중 삭제 - 헤더 없어서 넣어둔 것  */
-.movie-detail {
-  margin-top: 20px;
-}
-/*  */
-
-.movie-summary {
-  /* 나중 삭제 */
-  /* border: 1px solid #e50914; */
+.detail-container {
   color: #fff;
-  /*  */
+}
 
+/* detail page - 공통 사용 class */
+.detail-section {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: transparent;
+}
+
+.detail-section-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.empty-state {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.detail-section .empty-state {
+  margin: 0 auto;
+}
+
+/* summary */
+.movie-summary {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 42px;
   padding: 48px;
   min-height: 710px;
-
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -47,7 +72,7 @@
   z-index: -1;
 }
 
-.movie-poster {
+.movie-detail .movie-poster {
   width: 400px;
   aspect-ratio: 2 / 3;
   border-radius: 18px;
@@ -73,7 +98,7 @@
   font-size: 60px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -151,11 +176,9 @@
   gap: 8px;
   border-radius: 8px;
   background: #e50914;
-  color: white;
   font-weight: 600;
   box-shadow: 0 25px 50px -12px rgba(229, 9, 20, 0.3);
 }
-
 /* .js-trailer 추가 예정 */
 
 .button-icon {
@@ -173,39 +196,28 @@
   line-height: 1.6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 8;
   overflow: hidden;
-}
-
-/* 임시 방편: 공통 section 배경 제거 */
-.movie-detail section {
-  background-color: transparent !important;
-}
-/*  */
-
-.cast {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 48px;
-  color: #fff;
-}
-
-.cast-header {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
 }
 
 .cast-list {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 150px;
+  grid-template-columns: repeat(6, 150px);
   gap: 40px;
   list-style: none;
   margin: 0;
   padding: 10px 0;
-  overflow-x: auto;
+  overflow: hidden;
+}
+
+.cast-list:has(.empty-state) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cast-list.is-expanded {
+  overflow: visible;
 }
 
 .cast-item {
@@ -240,9 +252,10 @@
   margin: 0;
   font-size: 15px;
   font-weight: 800;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 150px;
 }
 
@@ -251,46 +264,68 @@
   font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.55);
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 150px;
 }
 
-.stills {
+.cast-more-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 48px;
+  justify-content: center;
 }
 
-.stills-title {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
+.cast-more-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cast-more-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#cast-title {
+  scroll-margin-top: 300px;
 }
 
 .stills-wrapper {
-  position: relative;
-  /* 나중 버튼 추가 */
+  display: flex;
+  align-items: center;
+  gap: 1px;
 }
 
 .stills-list {
+  flex: 1;
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 360px;
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
   list-style: none;
   margin: 0;
   padding: 8px 0;
-  overflow-x: auto;
+}
+
+.stills-btn {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
 }
 
 .stills-card {
   margin: 0;
-  border-radius: 16px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
 }
@@ -302,9 +337,403 @@
   display: block;
 }
 
+.stills-more-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.stills-more-btn {
+  padding: 12px 10px;
+  border-radius: 0 12px 12px 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.75);
+  height: 285px;
+  font-weight: 800;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.stills-more-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.trailer-modal .stills-panel {
+  width: min(980px, 92vw);
+  border-radius: 16px;
+  background: rgba(15, 15, 15, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.trailer-modal .stills-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trailer-modal .stills-head-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.trailer-modal .stills-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.trailer-modal .stills-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.trailer-modal .stills-close:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+.trailer-modal .stills-frame {
+  position: relative;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailer-modal .stills-figure {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.trailer-modal .stills-modal-img {
+  width: 100%;
+  max-height: min(75vh, 820px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.trailer-modal .stills-counter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.trailer-modal .stills-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+
+  height: 46px;
+  width: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.trailer-modal .stills-prev {
+  left: 22px;
+}
+
+.trailer-modal .stills-next {
+  right: 22px;
+}
+
+.trailer-modal .stills-nav:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.trailer-modal .stills-nav:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+.stills-list:has(.empty-state) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .reco {
-  /* 임시 */
-  border: 1px solid #e50914;
-  padding: 48px;
-  /*  */
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'title controls'
+    'carousel carousel';
+  align-items: center;
+}
+
+.reco .detail-section-title {
+  grid-area: title;
+}
+
+.reco .carousel-controls {
+  grid-area: controls;
+  display: inline-flex;
+  gap: 10px;
+}
+
+.reco .card-carousel {
+  grid-area: carousel;
+}
+
+/* overlay */
+.trailer-modal[hidden] {
+  display: none;
+}
+
+.trailer-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
+}
+
+.trailer-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.trailer-modal.is-closing {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* panel trailer+stills */
+.trailer-modal .trailer-panel,
+.trailer-modal .stills-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: min(960px, 100%);
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+
+  transform: translateY(8px) scale(0.98);
+  transition: transform 300ms ease;
+}
+
+.trailer-modal.is-open .trailer-panel,
+.trailer-modal.is-open .stills-panel {
+  transform: translateY(0) scale(1);
+}
+
+.trailer-modal.is-closing .trailer-panel,
+.trailer-modal.is-closing .stills-panel {
+  transform: translateY(8px) scale(0.98);
+}
+
+/* head trailer+stills */
+.trailer-modal .trailer-head,
+.trailer-modal .stills-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trailer-modal .trailer-head-title,
+.trailer-modal .stills-head-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.trailer-modal .trailer-close,
+.trailer-modal .stills-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.trailer-modal .trailer-close:hover,
+.trailer-modal .stills-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.trailer-modal .trailer-close:focus-visible,
+.trailer-modal .stills-close:focus-visible {
+  outline: 2px solid rgba(229, 9, 20, 0.85);
+  outline-offset: 3px;
+}
+
+/* trailer */
+.trailer-modal .trailer-panel {
+  aspect-ratio: 16 / 9;
+}
+
+.trailer-modal .trailer-frame {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.trailer-modal .trailer-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  text-align: center;
+  padding: 16px;
+  z-index: 1;
+}
+
+.trailer-modal .trailer-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* stills */
+.trailer-modal .stills-panel {
+  aspect-ratio: auto;
+}
+
+.trailer-modal .stills-frame {
+  position: relative;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailer-modal .stills-figure {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.trailer-modal .stills-modal-img {
+  width: 100%;
+  max-height: min(75vh, 820px);
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.trailer-modal .stills-counter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.trailer-modal .stills-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  height: 46px;
+  width: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.trailer-modal .stills-prev {
+  left: 22px;
+}
+.trailer-modal .stills-next {
+  right: 22px;
+}
+
+/* 접근성: 모션 최소화 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .trailer-modal,
+  .trailer-modal .trailer-panel {
+    transition: none;
+  }
+}
+
+body.modal-open {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+body.modal-open .header {
+  padding-right: var(--scrollbar-width, 0px);
 }

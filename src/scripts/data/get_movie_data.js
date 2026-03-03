@@ -1,13 +1,19 @@
 import options from '../api/connect';
-
 export function getMovieData(url, count) {
   const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
   const FALLBACK_IMG = '/images/fallback.png';
 
   return fetch(url, options)
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        const error = new Error(`HTTP ${res.status}`);
+        error.status = res.status;
+        throw error;
+      }
+      return res.json();
+    })
     .then((json) => {
-      return (json.results ?? []).slice(0, `${count}`).map((item) => {
+      return (json.results ?? []).slice(0, Number(count)).map((item) => {
         const movieId = item.id;
         const title = item.title ?? item.name ?? '제목 없음';
         const date = item.release_date ?? item.first_air_date ?? null;
@@ -23,6 +29,7 @@ export function getMovieData(url, count) {
     })
     .catch((err) => {
       console.error(err);
-      return [];
+      const status = err.status ?? 0;
+      window.location.href = `/error.html?status=${status}`;
     });
 }
