@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create_element_utils';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
 
 export function createMovieItem({
   movieId,
@@ -10,7 +10,7 @@ export function createMovieItem({
   movieRate,
 }) {
   const movieLinkA = createElement('a', ['movie-link'], {
-    href: `/movie_detail.html?id=${movieId}`,
+    href: `/detail?id=${movieId}`,
     'aria-label': `${movieTitle} 링크 이동하기`,
   });
 

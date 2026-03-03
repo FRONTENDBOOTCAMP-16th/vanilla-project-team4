@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create_element_utils';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
 
 export function createHeader() {
   const header = createElement('header', ['header']);
@@ -28,7 +28,7 @@ export function createHeader() {
   const movieListPage = createElement(
     'a',
     ['sub-nav'],
-    { href: '/movie_list.html', 'aria-label': '영화 목록 페이지로 이동' },
+    { href: '/list', 'aria-label': '영화 목록 페이지로 이동' },
     '영화 목록',
   );
 
