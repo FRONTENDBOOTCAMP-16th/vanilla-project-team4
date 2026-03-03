@@ -7,14 +7,6 @@
   flex-direction: column;
   align-items: center;
 
-  .footer-logo {
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .footer-logo-img {
-    width: 10rem;
-  }
-
   .footer-group-title {
     color: var(--text-title);
     font-size: 1.2rem;

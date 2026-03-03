@@ -5,15 +5,6 @@ export function createFooter() {
 
   const footerTitle = createElement('h2', ['sr-only'], null, '서비스 정보 및 정책 영역');
 
-  const footerLogo = createElement('a', ['footer-logo'], {
-    href: '/',
-    'aria-label': '스크립트 디벨로퍼스 홈으로 이동',
-  });
-
-  const footerLogoImg = createElement('img', ['footer-logo-img'], {
-    src: '/logo.svg',
-    alt: '스크립트 디벨로퍼스 로고',
-  });
   const supportTitle = createElement('h3', ['footer-group-title'], null, 'Support');
   const supportList = createElement('ul', ['footer-group-list']);
 
@@ -79,8 +70,6 @@ export function createFooter() {
     `© ${new Date().getFullYear()} SCRIPT DIRECTORS. All rights reserved.`,
   );
 
-  footerLogo.append(footerLogoImg);
-
   faqLi.append(faqLink);
   centerLi.append(centerLink);
   supportList.append(faqLi, centerLi);
@@ -96,16 +85,7 @@ export function createFooter() {
 
   snsList.append(githubLi, notionLi, lionLi);
 
-  footer.append(
-    footerTitle,
-    footerLogo,
-    supportTitle,
-    supportList,
-    snsTitle,
-    snsList,
-    tmdbText,
-    copyright,
-  );
+  footer.append(footerTitle, supportTitle, supportList, snsTitle, snsList, tmdbText, copyright);
 
   document.body.append(footer);
 }
