@@ -7,6 +7,7 @@ export function createHeader() {
   const nav = createElement('nav', ['navigation'], { 'aria-label': '주요 메뉴' });
   const h2 = createElement('h2', ['sr-only'], null, '주요 메뉴');
   const div = createElement('div', ['logo']);
+  const lnbDiv = createElement('div', ['lnb']);
 
   const logo = createElement('a', ['logo'], {
     href: '/',
@@ -33,7 +34,8 @@ export function createHeader() {
 
   logo.append(logoImg);
   div.append(logo);
-  nav.append(h2, div, home, movieListPage);
+  lnbDiv.append(home, movieListPage);
+  nav.append(h2, div, lnbDiv);
   header.append(h1, nav);
 
   document.body.prepend(header);
