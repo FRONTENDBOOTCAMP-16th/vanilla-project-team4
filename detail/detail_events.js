@@ -1,4 +1,4 @@
-import { renderCast } from './detail-render.js';
+import { renderCast } from '/detail/detail_render.js';
 
 export function bindDetailEvents({ ui, state, modal }) {
   if (ui.trailerBtn && ui.trailerModal) {
