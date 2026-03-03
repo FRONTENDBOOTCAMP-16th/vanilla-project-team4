@@ -1,4 +1,7 @@
 import { createElement } from '/src/scripts/utils/create_element_utils.js';
+import fallbackProfileUrl from '/src/assets/fallback-profile.webp';
+import fallbackPosterUrl from '/src/assets/fallback-poster.webp';
+import fallbackBackdropUrl from '/src/assets/fallback-backdrop.webp';
 
 export function renderEmptyState(listEl, message) {
   if (!listEl) return;
@@ -29,7 +32,7 @@ export function renderMovieDetail(ui, data) {
   const backdropUrl =
     typeof data.backdrop_path === 'string' && data.backdrop_path.startsWith('/')
       ? `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`
-      : "url('/src/assets/fallback-backdrop.webp')";
+      : `url(${fallbackBackdropUrl})`;
 
   movieSummary.style.setProperty('--backdrop-url', backdropUrl);
 
@@ -39,7 +42,7 @@ export function renderMovieDetail(ui, data) {
       : '';
 
   if (posterImg) {
-    posterImg.src = imgUrl || '/src/assets/fallback-poster.webp';
+    posterImg.src = imgUrl || fallbackPosterUrl;
     posterImg.alt = data.title ? `${data.title} 포스터` : '영화 포스터';
   }
 
@@ -79,7 +82,7 @@ export function renderMovieDetail(ui, data) {
       frag.appendChild(createElement('span', ['genre-item'], null, g.name ?? ''));
     });
 
-    genreDd.replaceChildren(frag); // 🔥 여기 필수
+    genreDd.replaceChildren(frag);
   } else {
     genreDd.replaceChildren(createElement('span', ['genre-item'], null, '정보 없음'));
   }
@@ -91,7 +94,7 @@ export function createCastItem(actor) {
   const figure = createElement('figure', ['cast-avatar']);
   const img = createElement('img');
 
-  const fallbackProfile = '/src/assets/fallback-profile.webp';
+  const fallbackProfile = fallbackProfileUrl;
   const profilePath =
     actor && typeof actor.profile_path === 'string' && actor.profile_path.startsWith('/')
       ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
