@@ -179,6 +179,7 @@ export function renderCast(ui, state, credits) {
 export function renderStills(ui, state, data) {
   const list = ui.stillsList;
   const moreWrapper = ui.stillsMoreWrapper;
+  const moreBtn = ui.stillsMoreBtn;
 
   if (!list) return;
 
@@ -189,6 +190,7 @@ export function renderStills(ui, state, data) {
     state.stills = [];
     renderEmptyState(list, '스틸컷 이미지가 없습니다.');
     if (moreWrapper) moreWrapper.hidden = true;
+    if (moreBtn) moreBtn.hidden = true;
     return;
   }
 
@@ -229,4 +231,5 @@ export function renderStills(ui, state, data) {
 
   const needsMore = state.stills.length > 3;
   if (moreWrapper) moreWrapper.hidden = !needsMore;
+  if (moreBtn) moreBtn.hidden = !needsMore;
 }
