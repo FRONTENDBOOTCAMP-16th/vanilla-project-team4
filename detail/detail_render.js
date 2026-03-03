@@ -29,26 +29,40 @@ export function renderMovieDetail(ui, data) {
 
   const overviewText = movieSummary.querySelector('.overview-text');
 
-  const backdropUrl =
-    typeof data.backdrop_path === 'string' && data.backdrop_path.startsWith('/')
-      ? `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`
-      : `url(${fallbackBackdropUrl})`;
+  const candidateBackdrop =
+    typeof data?.backdrop_path === 'string' && data.backdrop_path.startsWith('/')
+      ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
+      : null;
 
-  movieSummary.style.setProperty('--backdrop-url', backdropUrl);
+  const finalBackdrop = candidateBackdrop ?? fallbackBackdropUrl;
 
-  const imgUrl =
-    typeof data.poster_path === 'string' && data.poster_path.startsWith('/')
+  const pre = new Image();
+  pre.onload = () => {
+    movieSummary.style.setProperty('--backdrop-url', `url(${finalBackdrop})`);
+  };
+  pre.onerror = () => {
+    movieSummary.style.setProperty('--backdrop-url', `url(${fallbackBackdropUrl})`);
+  };
+  pre.src = finalBackdrop;
+
+  const posterSrc =
+    typeof data?.poster_path === 'string' && data.poster_path.startsWith('/')
       ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-      : '';
+      : fallbackPosterUrl;
 
   if (posterImg) {
-    posterImg.src = imgUrl || fallbackPosterUrl;
-    posterImg.alt = data.title ? `${data.title} 포스터` : '영화 포스터';
+    posterImg.src = posterSrc;
+    posterImg.alt = data?.title ? `${data.title} 포스터` : '영화 포스터';
+
+    posterImg.onerror = () => {
+      posterImg.onerror = null;
+      posterImg.src = fallbackPosterUrl;
+    };
   }
 
-  if (titleEl) titleEl.textContent = data.title ?? '';
+  if (titleEl) titleEl.textContent = data?.title ?? '';
 
-  const vote = typeof data.vote_average === 'number' ? data.vote_average : null;
+  const vote = typeof data?.vote_average === 'number' ? data.vote_average : null;
   if (ratingText && ratingA11y) {
     if (vote !== null) {
       const score = vote.toFixed(1);
@@ -60,26 +74,27 @@ export function renderMovieDetail(ui, data) {
     }
   }
 
-  const year = typeof data.release_date === 'string' ? data.release_date.slice(0, 4) : '';
+  const year = typeof data?.release_date === 'string' ? data.release_date.slice(0, 4) : '';
   if (yearText) yearText.textContent = year || '정보 없음';
 
-  if (runtimeText)
-    runtimeText.textContent = Number.isFinite(data.runtime) ? `${data.runtime}분` : '정보 없음';
+  if (runtimeText) {
+    runtimeText.textContent = Number.isFinite(data?.runtime) ? `${data.runtime}분` : '정보 없음';
+  }
 
   if (overviewText) {
     overviewText.textContent =
-      data.overview && data.overview.trim() !== ''
+      typeof data?.overview === 'string' && data.overview.trim() !== ''
         ? data.overview
         : '해당 언어의 줄거리가 존재하지 않습니다.';
   }
 
   if (!genreDd) return;
 
-  if (Array.isArray(data.genres) && data.genres.length) {
+  if (Array.isArray(data?.genres) && data.genres.length) {
     const frag = document.createDocumentFragment();
 
     data.genres.forEach((g) => {
-      frag.appendChild(createElement('span', ['genre-item'], null, g.name ?? ''));
+      frag.appendChild(createElement('span', ['genre-item'], null, g?.name ?? ''));
     });
 
     genreDd.replaceChildren(frag);
@@ -94,24 +109,23 @@ export function createCastItem(actor) {
   const figure = createElement('figure', ['cast-avatar']);
   const img = createElement('img');
 
-  const fallbackProfile = fallbackProfileUrl;
-  const profilePath =
-    actor && typeof actor.profile_path === 'string' && actor.profile_path.startsWith('/')
-      ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
-      : fallbackProfile;
+  const profilePath = actor?.profile_path?.startsWith('/')
+    ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+    : fallbackProfileUrl;
 
   img.src = profilePath;
-  img.alt = actor && actor.name ? `${actor.name} 프로필` : '배우 프로필';
+  img.alt = actor?.name ? `${actor.name} 프로필` : '배우 프로필';
+
   img.onerror = () => {
     img.onerror = null;
-    img.src = fallbackProfile;
+    img.src = fallbackProfileUrl;
   };
 
   figure.appendChild(img);
 
-  const nameText = actor && actor.name ? actor.name : '이름 정보 없음';
+  const nameText = actor?.name ? actor.name : '이름 정보 없음';
   const roleText =
-    actor && typeof actor.character === 'string' && actor.character.trim()
+    typeof actor?.character === 'string' && actor.character.trim()
       ? actor.character
       : '배역 정보 없음';
 
@@ -130,14 +144,14 @@ export function renderCast(ui, state, credits) {
   const moreWrapper = ui.castMoreWrapper;
   const moreBtn = ui.castMoreBtn;
 
+  if (!castList) return;
+
   const castArr = Array.isArray(credits?.cast) ? credits.cast : [];
   const actorsOnly = castArr.filter(
     (person) => person?.known_for_department === 'Acting' || person?.known_for_department == null,
   );
 
   state.cast = actorsOnly;
-
-  if (!castList) return;
 
   if (actorsOnly.length === 0) {
     state.isCastExpanded = false;
@@ -220,8 +234,14 @@ export function renderStills(ui, state, data) {
     const img = document.createElement('img');
     img.className = 'stills-img';
     img.loading = 'lazy';
+
     img.src = `${IMAGE_BASE}${SIZE}${item.file_path}`;
     img.alt = `스틸컷 이미지 ${idx + 1}`;
+
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = fallbackBackdropUrl;
+    };
 
     figure.appendChild(img);
     btn.appendChild(figure);
