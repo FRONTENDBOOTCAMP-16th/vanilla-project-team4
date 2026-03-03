@@ -7,6 +7,9 @@
 </div>
 
 <br>
+## 배포 주소
+
+[배포주소 바로가기](https://script-directors.netlify.app/)
 
 ## ⚒️ 기술 스택 (Tech Stack)
 
