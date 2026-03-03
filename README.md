@@ -96,3 +96,21 @@ project-name/
 [discord-url]: https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white
 [notion-url]: https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white
 [figma-url]: https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
+
+<br>
+
+## ✨ 시작하기
+
+| 단계 | 설명 |
+|------|------|
+| 📦 Install | `npm install` |
+| 🔐 Environment | `.env` 파일에 `VITE_RMDB_API_KEY` 설정 |
+| ▶ Run | `npm run dev` |
+
+---
+
+## 🛠 Troubleshooting
+
+> 프로젝트 진행 중 발생한 문제 해결 기록입니다.  
+> 🔎 [노션 문서 바로가기](https://www.notion.so/30573873401a80c48606c4b5ee35a58c)
+
