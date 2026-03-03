@@ -1,5 +1,6 @@
 import '/src/main.js';
 
+import '/src/styles/movie_main.css';
 import '/detail/movie_detail.css';
 
 import options from '/src/scripts/api/connect.js';

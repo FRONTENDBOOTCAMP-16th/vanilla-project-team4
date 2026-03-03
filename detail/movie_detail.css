@@ -157,11 +157,11 @@
 }
 
 .year::before {
-  background-image: url('../assets/calendar-icon.svg');
+  background-image: url('/src/assets/calendar-icon.svg');
 }
 
 .runtime::before {
-  background-image: url('../assets/runtime-icon.svg');
+  background-image: url('/src/assets/runtime-icon.svg');
 }
 
 .movie-button {
