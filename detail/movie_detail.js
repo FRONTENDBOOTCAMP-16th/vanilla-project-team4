@@ -1,9 +1,15 @@
-import options from './api/connect.js';
-import { createElement } from './utils/create_element_utils.js';
-import { getMovieData } from '../scripts/data/get_movie_data.js';
-import { createMovieList } from '../scripts/components/ui/createMovieList.js';
-import { buttonUtil } from '../scripts/utils/carousel/carousel_btn_utils.js';
-import { addClones } from '../scripts/utils/carousel/crousel_clone_node.js';
+// 공통 import
+import './styles/main.css';
+
+// 자신 페이지 import
+import '../movie_detail.css';
+
+import options from '../src/scripts/api/connect.js';
+import { createElement } from '../src/scripts/utils/create_element_utils.js';
+import { getMovieData } from '../src/scripts/data/get_movie_data.js';
+import { createMovieList } from '../src/scripts/components/ui/createMovieList.js';
+import { buttonUtil } from '../src/scripts/utils/carousel/carousel_btn_utils.js';
+import { addClones } from '../src/scripts/utils/carousel/crousel_clone_node.js';
 
 const HOME_URL = '/index.html';
 const MODAL_TIME = 300;

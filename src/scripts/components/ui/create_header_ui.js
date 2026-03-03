@@ -28,7 +28,7 @@ export function createHeader() {
   const movieListPage = createElement(
     'a',
     ['sub-nav'],
-    { href: '/movie_list.html', 'aria-label': '영화 목록 페이지로 이동' },
+    { href: '/list/movie_list.html', 'aria-label': '영화 목록 페이지로 이동' },
     '영화 목록',
   );
 

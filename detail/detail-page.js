@@ -1,23 +1,30 @@
-import options from '../api/connect.js';
-import { getMovieData } from '../../scripts/data/get_movie_data.js';
-import { createMovieList } from '../../scripts/components/ui/createMovieList.js';
-import { buttonUtil } from '../../scripts/utils/carousel/carousel_btn_utils.js';
-import { addClones } from '../../scripts/utils/carousel/crousel_clone_node.js';
-import { createDetailState } from './detail-state.js';
-import { createDetailSelectors } from './detail-selectors.js';
+import '/src/main.js';
+
+import options from '/src/scripts/api/connect.js';
+import { getMovieData } from '/src/scripts/data/get_movie_data.js';
+import { createMovieList } from '/src/scripts/components/ui/createMovieList.js';
+import { buttonUtil } from '/src/scripts/utils/carousel/carousel_btn_utils.js';
+import { addClones } from '/src/scripts/utils/carousel/crousel_clone_node.js';
+import { createDetailState } from '/detail/detail-state.js';
+import { createDetailSelectors } from '/detail/detail-selectors.js';
 import {
   buildDetailUrls,
   fetchDetail,
   fetchCredits,
   fetchStills,
   fetchTrailerKey,
-} from './detail-api.js';
-import { renderMovieDetail, renderCast, renderStills, renderEmptyState } from './detail-render.js';
-import { createDetailModalController } from './detail-modal.js';
-import { bindDetailEvents } from './detail-events.js';
+} from '/detail/detail-api.js';
+import {
+  renderMovieDetail,
+  renderCast,
+  renderStills,
+  renderEmptyState,
+} from '/detail/detail-render.js';
+import { createDetailModalController } from '/detail/detail-modal.js';
+import { bindDetailEvents } from '/detail/detail-events.js';
 
 const MODAL_TIME = 300;
-const HOME_URL = '/index.html';
+const HOME_URL = '/';
 
 // 임시 방편 (404 페이지로 대체)
 function redirectHome(message) {

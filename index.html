@@ -12,10 +12,8 @@
     <meta property="og:image" content="src/images/scriptDirector.jpg" />
     <meta property="og:url" content="https://script-directors.netlify.app/" />
     <meta property="og:site_name" content="스크립트 디렉터스" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>스크립트 디렉터스</title>
-    <script type="module" src="/src/main.js"></script>
-    <script type="module" src="/src/scripts/components/render/reder_main_movies.js"></script>
+    <script type="module" src="/src/scripts/movie_main.js"></script>
   </head>
   <body class="wrap main-wrap">
     <section class="intro-banner-area" aria-labelledby="intro-banner">
@@ -24,7 +22,7 @@
         <video
           class="banner-video"
           poster="/src/assets/images/main-banenr-poster.jpg"
-          src="./src/assets/video/mainbanner.webm"
+          src="/src/assets/video/mainbanner.webm"
           muted
           autoplay
           loop
@@ -61,7 +59,7 @@
         <h2 class="area-title quick-move-title" id="quickMove">빠른 이동</h2>
         <div class="quick-move-wrap">
           <article>
-            <a class="active" href="./movie_list.html">
+            <a class="active" href="list/index.html">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="32"
