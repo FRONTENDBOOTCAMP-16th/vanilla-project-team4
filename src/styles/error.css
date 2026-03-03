@@ -1,5 +1,6 @@
 .error-wrap {
   display: flex;
+  flex-direction: column;
   min-height: 100dvh;
   align-items: center;
   justify-content: center;

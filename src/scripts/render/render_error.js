@@ -1,5 +1,5 @@
-import { getErrorMessage } from '../../data/error_message_data';
-import { createElement } from '../../utils/create_element_utils';
+import { getErrorMessage } from '/src/scripts/data/error_message_data.js';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
 
 const params = new URLSearchParams(window.location.search);
 const status = Number(params.get('status')) || 0;

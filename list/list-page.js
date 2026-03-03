@@ -1,6 +1,9 @@
-import options from './api/connect.js';
-import { createElement } from './utils/create_element_utils.js';
-import { createLoadingOverlay } from './utils/loading.js';
+import '/src/main.js';
+import '/list/movie_list.css';
+
+import options from '/src/scripts/api/connect.js';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
+import { createLoadingOverlay } from '/src/scripts/utils/loading.js';
 
 /**
  * 영화 목록 페이지
@@ -310,7 +313,7 @@ function renderMovies(movies) {
     const movieItem = createElement('li');
 
     // a
-    const movieLink = createElement('a', ['movie'], { href: `movie_detail.html?id=${movie.id}` });
+    const movieLink = createElement('a', ['movie'], { href: `/detail?id=${movie.id}` });
 
     // img
     const moviePoster = createElement('img', ['movie-poster'], {

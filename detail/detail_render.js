@@ -1,4 +1,4 @@
-import { createElement } from '../utils/create_element_utils.js';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
 
 export function renderEmptyState(listEl, message) {
   if (!listEl) return;
@@ -151,7 +151,7 @@ export function renderCast(ui, state, credits) {
     return;
   }
 
-  const needsMore = actorsOnly.length > 6;
+  const needsMore = actorsOnly.length > 7;
 
   if (!needsMore) {
     state.isCastExpanded = false;
@@ -166,7 +166,7 @@ export function renderCast(ui, state, credits) {
     moreBtn.textContent = state.isCastExpanded ? '배우 목록 접기' : '배우 목록 더보기';
   }
 
-  const renderCount = state.isCastExpanded ? actorsOnly.length : Math.min(6, actorsOnly.length);
+  const renderCount = state.isCastExpanded ? actorsOnly.length : Math.min(7, actorsOnly.length);
   const frag = document.createDocumentFragment();
 
   for (let i = 0; i < renderCount; i += 1) {

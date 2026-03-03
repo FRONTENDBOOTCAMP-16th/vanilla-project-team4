@@ -16,6 +16,7 @@ body {
     'Segoe UI Symbol',
     sans-serif;
   line-height: 1.5;
+  background-color: var(--bg-page);
 }
 blockquote,
 body,

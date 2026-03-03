@@ -1,4 +1,4 @@
-import { createPrevButton, createNextButton } from '../ui/create_button';
+import { createPrevButton, createNextButton } from '/src/scripts/components/ui/create_button';
 
 const buttonContainer = document.querySelector('.carousel-controls');
 
