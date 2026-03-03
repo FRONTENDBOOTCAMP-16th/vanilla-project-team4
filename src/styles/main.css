@@ -7,5 +7,6 @@
 @import '/src/styles/common/_a11y.css' layer(utilities);
 @import '/src/styles/common/_loading.css' layer(utilities);
 @import '/src/styles/header.css' layer(components);
+@import '/src/styles/footer.css' layer(components);
 
 @import '/src/styles/error.css' layer(subpages);
