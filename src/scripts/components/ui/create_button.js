@@ -1,4 +1,6 @@
-import { createElement } from '../../utils/create_element_utils';
+import { createElement } from '/src/scripts/utils/create_element_utils';
+import leftArrow from '/src/assets/icon/left-arrow.svg';
+import rightArrow from '/src/assets/icon/right-arrow.svg';
 
 export function createPrevButton() {
   const button = createElement('button', ['prev', 'carousel-btn'], {
@@ -7,7 +9,7 @@ export function createPrevButton() {
   });
 
   const img = createElement('img', null, {
-    src: '/src/assets/icon/left-arrow.svg',
+    src: leftArrow,
     alt: '',
   });
 
@@ -22,7 +24,7 @@ export function createNextButton() {
   });
 
   const img = createElement('img', null, {
-    src: '/src/assets/icon/right-arrow.svg',
+    src: rightArrow,
     alt: '',
   });
 

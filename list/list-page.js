@@ -1,4 +1,6 @@
 import '/src/main.js';
+import '/list/movie_list.css';
+
 import options from '/src/scripts/api/connect.js';
 import { createElement } from '/src/scripts/utils/create_element_utils.js';
 import { createLoadingOverlay } from '/src/scripts/utils/loading.js';

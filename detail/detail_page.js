@@ -1,35 +1,34 @@
 import '/src/main.js';
 
+import '/detail/movie_detail.css';
+
 import options from '/src/scripts/api/connect.js';
 import { getMovieData } from '/src/scripts/data/get_movie_data.js';
 import { createMovieList } from '/src/scripts/components/ui/createMovieList.js';
 import { buttonUtil } from '/src/scripts/utils/carousel/carousel_btn_utils.js';
 import { addClones } from '/src/scripts/utils/carousel/crousel_clone_node.js';
-import { createDetailState } from '/detail/detail-state.js';
-import { createDetailSelectors } from '/detail/detail-selectors.js';
+import { createDetailState } from '/detail/detail_state.js';
+import { createDetailSelectors } from '/detail/detail_selectors.js';
 import {
   buildDetailUrls,
   fetchDetail,
   fetchCredits,
   fetchStills,
   fetchTrailerKey,
-} from '/detail/detail-api.js';
+} from '/detail/detail_api.js';
 import {
   renderMovieDetail,
   renderCast,
   renderStills,
   renderEmptyState,
-} from '/detail/detail-render.js';
-import { createDetailModalController } from '/detail/detail-modal.js';
-import { bindDetailEvents } from '/detail/detail-events.js';
+} from '/detail/detail_render.js';
+import { createDetailModalController } from '/detail/detail_modal.js';
+import { bindDetailEvents } from '/detail/detail_events.js';
 
 const MODAL_TIME = 300;
-const HOME_URL = '/';
 
-// 임시 방편 (404 페이지로 대체)
-function redirectHome(message) {
-  if (message) alert(message);
-  window.location.replace(HOME_URL);
+function redirectToError(status) {
+  window.location.href = `/error.html?status=${status}`;
 }
 
 function getValidMovieId(rawId) {
@@ -39,24 +38,6 @@ function getValidMovieId(rawId) {
   if (!Number.isInteger(num) || num <= 0) return null;
 
   return num;
-}
-
-function handleHttpError(status) {
-  switch (status) {
-    case 401:
-    case 403:
-      return redirectHome('인증에 실패했습니다. 관리자에게 문의해주세요. (401/403)');
-    case 404:
-      return redirectHome('해당 영화를 찾을 수 없습니다. (404)');
-    case 429:
-      return redirectHome('요청이 너무 많습니다. 잠시 후 다시 시도해주세요. (429)');
-    case 500:
-    case 502:
-    case 503:
-      return redirectHome('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요. (5xx)');
-    default:
-      return redirectHome(`알 수 없는 오류가 발생했습니다. (${status})`);
-  }
 }
 
 function renderSimilarMovies(movieId, ui) {
@@ -83,8 +64,7 @@ async function initDetailPage() {
   const movieNum = getValidMovieId(rawId);
 
   if (movieNum === null) {
-    redirectHome('잘못된 접근입니다. (유효하지 않은 영화 id)');
-    throw new Error('Invalid movie id');
+    window.location.href = `/error.html?status=${movieNum}`;
   }
 
   const urls = buildDetailUrls(movieNum);
@@ -94,7 +74,7 @@ async function initDetailPage() {
 
   const detail = await fetchDetail(urls.detailUrl, options);
   if (!detail.ok) {
-    handleHttpError(detail.status);
+    redirectToError(detail.status);
     return;
   }
   renderMovieDetail(ui, detail.data);
@@ -104,7 +84,7 @@ async function initDetailPage() {
 
   const stills = await fetchStills(urls.stillsUrl, options);
   if (!stills.ok) {
-    handleHttpError(stills.status);
+    redirectToError(detail.status);
     return;
   }
   renderStills(ui, state, stills.data);
@@ -114,8 +94,6 @@ async function initDetailPage() {
   state.trailerKey = await fetchTrailerKey(urls.videosUrl, options);
 }
 
-initDetailPage().catch((err) => {
-  console.error(err);
-  alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
-  window.location.replace(HOME_URL);
+initDetailPage().catch(() => {
+  redirectToError(0);
 });

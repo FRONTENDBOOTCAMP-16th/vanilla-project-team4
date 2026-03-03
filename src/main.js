@@ -1,4 +1,5 @@
-import './scripts/components/render/render_header';
-import './scripts/components/render/render_button';
-import './styles/main.css';
-import './scripts/utils/disable_link';
+import '/src/styles/main.css';
+
+import '/src/scripts/components/render/render_header';
+import '/src/scripts/components/render/render_button';
+import '/src/scripts/utils/disable_link';

@@ -1,4 +1,4 @@
-import { lockScroll, unlockScroll } from './detail-scrolllock.js';
+import { lockScroll, unlockScroll } from '/detail/detail_scrolllock.js';
 
 export function createDetailModalController({ ui, state, modalTime = 300 }) {
   function showTrailerPanel() {
