@@ -15,7 +15,7 @@
     <meta property="og:site_name" content="스크립트 디렉터스" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <script type="module" src="/src/main.js"></script>
-    <script type="module" src="/src/scripts/movie_detail.js"></script>
+    <script type="module" src="/src/scripts/detail/detail-page.js"></script>
     <title>스크립트 디렉터스</title>
   </head>
   <body>
@@ -80,6 +80,12 @@
           <h2 id="cast-title" class="detail-section-title">배우</h2>
 
           <ul class="cast-list" aria-live="polite"></ul>
+
+          <div class="cast-more-wrapper" hidden>
+            <button type="button" class="cast-more-btn" aria-expanded="false">
+              배우 목록 더보기 &gt;
+            </button>
+          </div>
         </section>
 
         <section class="stills detail-section" aria-labelledby="stills-title">
@@ -87,6 +93,10 @@
 
           <div class="stills-wrapper">
             <ul class="stills-list" aria-live="polite"></ul>
+            <button type="button" class="stills-more-btn" hidden>
+              <span class="sr-only">스틸컷 더보기</span>
+              +
+            </button>
           </div>
         </section>
 
@@ -112,7 +122,7 @@
         hidden
         role="dialog"
         aria-modal="true"
-        aria-labelledby="trailer-title"
+        aria-label="미디어 보기"
       >
         <h2 id="trailer-title" class="sr-only">예고편</h2>
 
@@ -132,6 +142,26 @@
               allow="autoplay; encrypted-media; picture-in-picture"
               allowfullscreen
             ></iframe>
+          </div>
+        </div>
+
+        <h2 id="stills-modal-title" class="sr-only" hidden>스틸컷 크게 보기</h2>
+
+        <div class="stills-panel" role="document" hidden>
+          <div class="stills-head">
+            <p class="stills-head-title" aria-hidden="true">스틸컷</p>
+            <button type="button" class="stills-close" aria-label="스틸컷 닫기">×</button>
+          </div>
+
+          <div class="stills-frame">
+            <button type="button" class="stills-nav stills-prev" aria-label="이전 스틸컷">‹</button>
+
+            <figure class="stills-figure">
+              <img class="stills-modal-img" alt="" />
+              <figcaption class="stills-counter" aria-live="polite"></figcaption>
+            </figure>
+
+            <button type="button" class="stills-nav stills-next" aria-label="다음 스틸컷">›</button>
           </div>
         </div>
       </div>
