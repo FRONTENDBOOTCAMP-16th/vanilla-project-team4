@@ -27,6 +27,11 @@ export function renderMovies(movieLists, movies, { genreMap, selectedGenreId }) 
         : fallbackPoster,
     });
 
+    moviePoster.onerror = () => {
+      moviePoster.onerror = null;
+      moviePoster.src = fallbackPoster;
+    };
+
     const movieInfo = createElement('div', ['movie-info']);
     const movieTitle = createElement('h3', ['info-tit'], null, movie.title);
 
