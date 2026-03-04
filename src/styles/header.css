@@ -15,6 +15,9 @@ body {
   z-index: 999;
   display: flex;
   justify-content: center;
+  a {
+    display: inline-block;
+  }
 
   .navigation {
     display: flex;
