@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="스크립트 디렉터스" />
+    <meta
+      property="og:description"
+      content="영화 정보를 직관적인 UI와 인터랙션으로 제공하는 바닐라 자바스크립트 기반 콘텐츠 탐색 웹 서비스"
+    />
+    <meta property="og:image" content="src/images/scriptDirector.jpg" />
+    <meta property="og:url" content="https://script-directors.netlify.app/" />
+    <meta property="og:site_name" content="스크립트 디렉터스" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>스크립트 디렉터스</title>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/error/error.js"></script>
+  </head>
+  <body class="error-wrap">
+    <main class="error-main">
+      <section class="error-content" aria-labelledby="errorCode">
+        <h1 class="sr-only" id="errorCode">잘못된 페이지 입니다</h1>
+        <div class="error-container"></div>
+      </section>
+    </main>
+  </body>
+</html>

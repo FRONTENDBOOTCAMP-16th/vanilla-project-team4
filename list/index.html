@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="스크립트 디렉터스" />
+    <meta
+      property="og:description"
+      content="영화 정보를 직관적인 UI와 인터랙션으로 제공하는 바닐라 자바스크립트 기반 콘텐츠 탐색 웹 서비스"
+    />
+    <meta property="og:image" content="src/images/scriptDirector.jpg" />
+    <!-- <meta property="og:image" content="https://너의도메인주소.com/scriptDirector.jpg" /> -->
+    <!-- <meta property="og:url" content="" /> -->
+    <meta property="og:site_name" content="스크립트 디렉터스" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script type="module" src="/list/list-page.js"></script>
+    <title>스크립트 디렉터스 - 영화 목록</title>
+  </head>
+  <body class="wrap">
+    <main class="container movie-list-wrap">
+      <header class="page-header-area">
+        <h1 class="header-tit">영화목록</h1>
+        <p class="header-descrip">다양한 영화 목록을 확인해 보세요.</p>
+      </header>
+      <section class="genre-area area" aria-labelledby="genre-title">
+        <h2 id="genre-title" class="genre-tit tit">장르</h2>
+        <form action="" class="genre-list">
+          <fieldset>
+            <legend class="sr-only">장르 선택</legend>
+            <div class="genres"></div>
+          </fieldset>
+
+          <p id="filter-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </section>
+
+      <section class="movie-area area" aria-labelledby="genre-result">
+        <h2 id="genre-result" class="result-tit tit">
+          코미디 <span class="result-total">(&nbsp;<span class="num">0</span>&nbsp;)</span>
+        </h2>
+
+        <div class="movie-list">
+          <!-- 데이터가 없을 경우 -->
+          <p class="no-results" aria-live="polite">현재 선택한 장르의 영화가 없습니다.</p>
+
+          <!-- 데이터가 있을 경우 -->
+          <ul class="lists" aria-label="영화 목록"></ul>
+        </div>
+      </section>
+      <nav class="pagination" aria-label="영화 목록 페이지">
+        <button type="button" class="pagination-btn" aria-label="이전 10페이지" disabled>
+          <span aria-hidden="true">&lsaquo;</span>
+        </button>
+
+        <ul class="pagination-list" aria-label="페이지 번호"></ul>
+
+        <button type="button" class="pagination-btn" aria-label="다음 10페이지">
+          <span aria-hidden="true">&rsaquo;</span>
+        </button>
+      </nav>
+    </main>
+  </body>
+</html>

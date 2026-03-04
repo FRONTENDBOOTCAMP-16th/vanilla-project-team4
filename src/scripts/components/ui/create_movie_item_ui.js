@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create_element_utils';
+import { createElement } from '/src/scripts/utils/create_element_utils.js';
 
 export function createMovieItem({
   movieId,
@@ -10,7 +10,8 @@ export function createMovieItem({
   movieRate,
 }) {
   const movieLinkA = createElement('a', ['movie-link'], {
-    href: `/movie_detail.html?id=${movieId}`,
+    href: `/detail?id=${movieId}`,
+    'aria-label': `${movieTitle} 링크 이동하기`,
   });
 
   const movieItemLi = createElement('li', ['movie-item']);
@@ -19,13 +20,19 @@ export function createMovieItem({
     src: movieImage,
     alt: movieTitle,
     loading: 'lazy',
+    'aria-hidden': true,
   });
 
-  const movieInfoDiv = createElement('div', ['movie-info']);
-  const movieTitleH3 = createElement('h3', ['info-title'], null, movieTitle);
-  const movieDescriptionP = createElement('p', ['info-description'], null, movieDescription);
+  const movieInfoDiv = createElement('div', ['movie-info'], { 'aria-hidden': true });
+  const movieTitleH3 = createElement('h3', ['info-title'], { 'aria-hidden': true }, movieTitle);
+  const movieDescriptionP = createElement(
+    'p',
+    ['info-description'],
+    { 'aria-hidden': true },
+    movieDescription,
+  );
 
-  const movieInfoDetailDl = createElement('dl', ['movie-info-detail']);
+  const movieInfoDetailDl = createElement('dl', ['movie-info-detail'], { 'aria-hidden': true });
 
   if (movieOpen) {
     const movieDateDt = createElement('dt', ['sr-only'], null, '개봉연도');
@@ -43,7 +50,6 @@ export function createMovieItem({
 
   movieInfoDiv.append(movieTitleH3, movieDescriptionP, movieInfoDetailDl);
 
-  // 평점은 카드 강조 요소로 분리
   if (movieRate != null) {
     const movieRateDiv = createElement('div', ['rate']);
     const movieRateSpan = createElement(
