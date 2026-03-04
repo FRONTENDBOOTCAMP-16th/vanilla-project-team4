@@ -8,6 +8,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         list: resolve(__dirname, 'list/index.html'),
         detail: resolve(__dirname, 'detail/index.html'),
+        error: resolve(__dirname, 'error/index.html'),
       },
     },
   },
@@ -21,6 +22,7 @@ export default defineConfig({
 
           if (path === '/detail' || path === '/detail/') req.url = '/detail/index.html';
           if (path === '/list' || path === '/list/') req.url = '/list/index.html';
+          if (path === '/error' || path === '/error/') req.url = '/error/index.html';
 
           next();
         });

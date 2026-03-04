@@ -22,4 +22,3 @@ export function renderError() {
   wrap.append(errCode, errMessage, link);
   errorContainer.append(wrap);
 }
-renderError();
