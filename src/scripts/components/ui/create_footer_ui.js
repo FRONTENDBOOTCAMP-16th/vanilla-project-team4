@@ -1,4 +1,7 @@
 import { createElement } from '../../utils/create_element_utils';
+import githubIcon from '/src/assets/icon/github.svg';
+import notionIcon from '/src/assets/icon/notion.svg';
+import likelionIcon from '/src/assets/icon/likelion.svg';
 
 export function createFooter() {
   const footer = createElement('footer', ['footer']);
@@ -33,7 +36,7 @@ export function createFooter() {
     'aria-label': '깃허브',
   });
   const githubImg = createElement('img', ['footer-sns-icon'], {
-    src: '/src/assets/icon/github.svg',
+    src: githubIcon,
     alt: '',
   });
 
@@ -43,7 +46,7 @@ export function createFooter() {
     'aria-label': '노션',
   });
   const notionImg = createElement('img', ['footer-sns-icon'], {
-    src: '/src/assets/icon/notion.svg',
+    src: notionIcon,
     alt: '',
   });
 
@@ -53,7 +56,7 @@ export function createFooter() {
     'aria-label': '멋쟁이사자처럼',
   });
   const lionImg = createElement('img', ['footer-sns-icon'], {
-    src: '/src/assets/icon/likelion.svg',
+    src: likelionIcon,
     alt: '',
   });
 

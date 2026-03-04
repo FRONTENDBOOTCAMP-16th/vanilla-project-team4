@@ -8,56 +8,50 @@ export function buildDetailUrls(movieNum) {
   };
 }
 
-export async function fetchJsonOrThrow(url, options) {
-  const res = await fetch(url, options);
-  return { res, data: res.ok ? await res.json() : null };
+async function fetchJson(url, options) {
+  try {
+    const res = await fetch(url, options);
+    let data = null;
+
+    try {
+      if (res.ok) data = await res.json();
+    } catch {
+      data = null;
+    }
+
+    return { ok: res.ok, status: res.status, data, res };
+  } catch (err) {
+    return { ok: false, status: 0, data: null, err, res: null };
+  }
 }
 
 export async function fetchDetail(url, options) {
-  try {
-    const { res, data } = await fetchJsonOrThrow(url, options);
-    if (!res.ok) return { ok: false, status: res.status, data: null };
-    return { ok: true, status: res.status, data };
-  } catch (err) {
-    return { ok: false, status: 0, data: null, err };
-  }
-}
-
-export async function fetchCredits(url, options) {
-  try {
-    const { res, data } = await fetchJsonOrThrow(url, options);
-    if (!res.ok || !data) return { cast: [] };
-    return data;
-  } catch {
-    return { cast: [] };
-  }
+  const { ok, status, data, err } = await fetchJson(url, options);
+  return ok ? { ok: true, status, data } : { ok: false, status, data: null, err };
 }
 
 export async function fetchStills(url, options) {
-  try {
-    const { res, data } = await fetchJsonOrThrow(url, options);
-    if (!res.ok) return { ok: false, status: res.status, data: null };
-    return { ok: true, status: res.status, data };
-  } catch (err) {
-    return { ok: false, status: 0, data: null, err };
-  }
+  const { ok, status, data, err } = await fetchJson(url, options);
+  return ok ? { ok: true, status, data } : { ok: false, status, data: null, err };
+}
+
+export async function fetchCredits(url, options) {
+  const { ok, data } = await fetchJson(url, options);
+  if (!ok || !data) return { cast: [] };
+  return data;
 }
 
 export async function fetchTrailerKey(url, options) {
-  try {
-    const { res, data } = await fetchJsonOrThrow(url, options);
-    if (!res.ok || !data) return null;
+  const { ok, data } = await fetchJson(url, options);
+  if (!ok || !data) return null;
 
-    const results = Array.isArray(data?.results) ? data.results : [];
+  const results = Array.isArray(data?.results) ? data.results : [];
 
-    const trailer =
-      results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
-      results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
-      results.find((v) => v?.site === 'YouTube' && v?.key) ||
-      null;
+  const trailer =
+    results.find((v) => v?.site === 'YouTube' && v?.type === 'Trailer' && v?.key) ||
+    results.find((v) => v?.site === 'YouTube' && v?.type === 'Teaser' && v?.key) ||
+    results.find((v) => v?.site === 'YouTube' && v?.key) ||
+    null;
 
-    return trailer?.key ?? null;
-  } catch {
-    return null;
-  }
+  return trailer?.key ?? null;
 }
