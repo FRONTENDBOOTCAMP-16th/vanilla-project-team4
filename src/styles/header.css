@@ -1,6 +1,7 @@
 :root {
   --header-height: 80px;
 }
+
 body {
   padding-top: var(--header-height);
 }
@@ -8,56 +9,66 @@ body {
 .header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: var(--header-height);
   background-color: var(--bg-page);
   border-bottom: 1px solid #f1f1f182;
   z-index: 999;
+
   display: flex;
   justify-content: center;
-  a {
-    display: inline-block;
-  }
+}
 
-  .navigation {
-    display: flex;
-    width: 1280px;
-    align-items: center;
-    padding: 1rem 0;
-  }
+.header a {
+  display: inline-block;
+}
 
-  .logo {
-    flex: 9;
-    border-radius: 1rem;
-  }
+.header .navigation {
+  display: flex;
+  width: 1280px;
+  align-items: center;
+  padding: 1rem 0;
+}
 
-  .logo .logo-img {
-    width: 10rem;
-  }
+.header .logo {
+  flex: 9;
+  border-radius: 1rem;
+}
 
-  .sub-nav {
-    flex: 1;
-    align-items: center;
-    padding: 0.5rem;
-    font-size: 1.3rem;
-    color: var(--text-title);
-    text-align: center;
-    border-radius: 1rem;
-  }
+.header .logo .logo-img {
+  width: 10rem;
+}
+
+.header .sub-nav {
+  flex: 1;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: var(--text-title);
+  text-align: center;
+  border-radius: 1rem;
 }
 
 .skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: black;
-  color: white;
-  padding: 0.5rem 1rem;
-  z-index: 999;
+  position: fixed;
+  left: 1rem;
+  top: calc(-1 * var(--header-height));
+  padding: 0.75rem 1rem;
+
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 1rem;
+
+  z-index: 1000;
+  outline: none;
+
+  transition: top 0.15s ease;
 }
 
+.skip-link:focus,
 .skip-link:focus-visible {
-  border-radius: 1rem;
   top: 1rem;
-  left: 1rem;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
 }

@@ -1,5 +1,5 @@
 import { createElement } from '/src/scripts/utils/create_element_utils.js';
-
+import { createSkipLink } from './create_skip_link';
 export function createHeader() {
   const header = createElement('header', ['header']);
 
@@ -38,5 +38,5 @@ export function createHeader() {
   nav.append(h2, div, lnbDiv);
   header.append(h1, nav);
 
-  document.body.prepend(header);
+  document.body.prepend(createSkipLink(), header);
 }
