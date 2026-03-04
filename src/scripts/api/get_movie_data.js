@@ -30,6 +30,6 @@ export function getMovieData(url, count) {
     .catch((err) => {
       console.error(err);
       const status = err.status ?? 0;
-      window.location.href = `/error.html?status=${status}`;
+      window.location.href = `/error?status=${status}`;
     });
 }
