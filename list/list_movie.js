@@ -1,4 +1,5 @@
 import { createElement } from '/src/scripts/utils/create_element_utils.js';
+import fallbackPoster from '/src/assets/fallback-backdrop.webp';
 
 export function renderMovies(movieLists, movies, { genreMap, selectedGenreId }) {
   if (!movieLists) return;
@@ -23,7 +24,7 @@ export function renderMovies(movieLists, movies, { genreMap, selectedGenreId }) 
       alt: movie.title ?? '',
       src: movie.poster_path
         ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
-        : '/src/assets/fallback-backdrop.webp',
+        : fallbackPoster,
     });
 
     const movieInfo = createElement('div', ['movie-info']);
